@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+
+	<ui:define name="head">
+		<script type="text/javascript">
+			//<![CDATA[
+			function skinChart() {
+				this.cfg.shadow = false;
+				this.cfg.title = '';
+				this.cfg.seriesColors = [ '#007be5', '#20d077' ];
+				this.cfg.grid = {
+					background : '#ffffff',
+					borderColor : '#ffffff',
+					gridLineColor : '#F5F5F5',
+					shadow : false
+				};
+				this.cfg.axesDefaults = {
+					rendererOptions : {
+						textColor : '#666F77'
+					}
+				};
+				this.cfg.seriesDefaults = {
+					shadow : false,
+					lineWidth : 1,
+					markerOptions : {
+						shadow : false,
+						size : 7,
+						style : 'circle'
+					}
+				}
+			}
+			//]]>
+		</script>
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+</style>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card">
+							<h1>
+								<b>Reset Security Answers</b>
+							</h1>
+
+							<h:panelGroup>
+								<ui:repeat var="question" varStatus="each2"
+									value="#{resetSecurityAnswer.securityQuestionList}">
+									<h:panelGroup rendered="#{question.quesStatus ne 'D'}">
+										<p:panelGrid columns="2" layout="grid">
+											<span> <b> Question#{each2.index+1} : </b></span>
+										</p:panelGrid>
+
+										<p:panelGrid columns="4" layout="grid">
+											<h:outputText value="#{question.securityQues}" />
+											<p:inputText value="#{question.securityAns}"
+												disabled="#{!question.editEnable}" />
+											<p:commandLink
+												action="#{resetSecurityAnswer.editQuestion(each2.index)}"
+												update="form">
+												<p:graphicImage name="images/template/edit_revised.png"
+													library="cp-layout" class="mobile" />
+											</p:commandLink>
+											<p:commandLink
+												action="#{resetSecurityAnswer.deleteQuestion(each2.index)}"
+												update="form">
+												<p:graphicImage name="images/template/delete_icon.png"
+													library="cp-layout" class="mobile" />
+											</p:commandLink>
+										</p:panelGrid>
+									</h:panelGroup>
+								</ui:repeat>
+							</h:panelGroup>
+							<br></br>
+
+							<h:panelGroup>
+								<span><b>Add Security Questions</b></span>
+								<br></br>
+								<br></br>
+								<p:selectOneMenu id="secretQuestion" required="true"
+									requiredMessage="Please select valid question"
+									value="#{resetSecurityAnswer.addedQuestion.securityQues}">
+									<f:selectItem itemLabel="Select Security Question" />
+									<f:selectItems value="#{resetSecurityAnswer.cpQuestionList}" />
+									<p:ajax listener="#{resetSecurityAnswer.validateSecurityQues}"
+										event="change" update="secretQuestion" />
+								</p:selectOneMenu>
+								<br></br>
+								<br></br>
+								<p:inputText id="secAns" placeholder="Please enter the answer"
+									value="#{resetSecurityAnswer.addedQuestion.securityAns}" />
+								<br></br> <br></br>
+								<div class="row">
+								<p:panelGrid columns="2" layout="grid">
+								<p:commandButton
+											value="Close"
+											action="#{resetSecurityAnswer.btnClear}" immediate="true"
+											update="form" />
+											<p:commandButton
+											value="Save"
+											action="#{resetSecurityAnswer.btnSaveQuestions}"
+											update="form"></p:commandButton>
+								</p:panelGrid>
+									
+										
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

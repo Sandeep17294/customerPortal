@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['customeruser.fundtableheading']}</b>
+						</h1>
+						<div class="row">
+							<h:panelGroup>
+								<div class="row">
+									<p:selectOneMenu value="#{homeDetailsAction.selectPolicyNo}"
+										style="margin-bottom:10px;">
+										
+										<f:selectItems value="#{homeDetailsAction.fundPolicyListMap}" />
+										<p:ajax event="valueChange" update="form"
+											listener="#{homeDetailsAction.getMyFunds}" />
+									</p:selectOneMenu>
+								</div> <br></br>
+								<div class="row">
+								 <span>#{msg['customeruser.fundtable.fundamttot']}:</span> <span>#{homeDetailsAction.totalFunds}</span><br> </br> 
+								  <span>#{msg['customeruser.fundtable.fundtot']}:</span> <span>#{homeDetailsAction.toalAmountImPlanCurr}</span> 	
+								</div>
+								<br></br>
+								<div class="row">
+									<p:dataTable id="MyFunds" var="fund" emptyMessage="#{msg['datatable.empty.msg']}"
+										value="#{homeDetailsAction.fundsDetailsList}" >
+										<f:facet name="header">
+                                                #{msg['customeruser.fundtableheadingfacet']}
+                                        </f:facet>
+										<p:ajax event="page" update="@this"
+											listener="#{homeDetailsAction.getMyFunds}" />
+										<p:column headerText="#{msg['customeruser.plantabele.policyNo']}" sortBy="#{fund.fundName}" styleClass="centeredColumnContent">
+											<h:outputText value="#{fund.policyno}" />
+										</p:column>
+										<p:column headerText="#{msg['customeruser.fundtable.name']}" sortBy="#{fund.fundName}" styleClass="centeredColumnContent">
+											<h:outputText value="#{fund.fundName}" />
+										</p:column>
+										<p:column headerText="#{msg['customeruser.fundtable.sharePer']}"
+											sortBy="#{fund.fundSharePer}" styleClass="centeredColumnContent">
+											<h:outputText value="#{fund.fundSharePer}" />
+											<h:outputText value="%" />
+										</p:column>
+										<p:column headerText="#{msg['customeruser.fundtable.unitprice']}"
+											sortBy="#{fund.balanceUnit}" styleClass="centeredColumnContent">
+											<h:outputText value="#{fund.balanceUnit}">
+											<f:convertNumber pattern="###,##0.00" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.fundtable.nav']}" sortBy="#{fund.navValue}" styleClass="centeredColumnContent">
+											<h:outputText value="#{fund.navValue}">
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.fundtable.fcurrency']}"
+											sortBy="#{fund.fundValue}" styleClass="centeredColumnContent">
+											<h:outputText value="#{fund.fundCurrency}&#160;" />
+											<h:outputText value="#{fund.fundValue}">
+												<f:convertNumber pattern="###,##0.00" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.fundtable.pcurrency']}"
+											sortBy="#{fund.planValue}" styleClass="centeredColumnContent">
+											<h:outputText value="#{fund.planCurrency}&#160;" />
+											<h:outputText value="#{fund.planValue}">
+												<f:convertNumber pattern="###,##0.00" />
+											</h:outputText>
+										</p:column>
+									</p:dataTable>
+									<br></br>
+									<h:commandLink id="excelsheet">
+										<p:graphicImage name="images/template/excelo.png"
+											library="cp-layout" class="mobile" />
+										<p:dataExporter type="xls" target="MyFunds" fileName="MyFund"/>
+										<p:tooltip id="toolTipFadeDocument" for="excelsheet"
+											value="#{msg['customeruser.plantabele.excel']}" position="right"
+											style="color:green !important; background-color:white !important;font-size:13px !important;" />
+									</h:commandLink>
+									<br></br>
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

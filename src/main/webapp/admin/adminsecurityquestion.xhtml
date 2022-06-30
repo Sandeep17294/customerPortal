@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['adminuser.secquestion']}</b>
+						</h1>
+						<div class="card">
+							<h:panelGroup id="securitypanel">
+								<h:panelGroup>
+									<ui:repeat var="question" varStatus="each2"
+										value="#{adminHomeAction.questionList}">
+										<p:panelGrid columns="2"
+											columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-6" layout="grid">
+											<p:outputLabel value="#{msg['adminuser.secquestion.english']}" />
+											<p:inputText id="quesEng" value="#{question.quesEN}"
+												style="border:none;border-bottom:1px solid; border-color:green" />
+										</p:panelGrid>
+										<p:panelGrid columns="2"
+											columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-6" layout="grid">
+											<p:outputLabel value="#{msg['adminuser.secquestion.arabic']}" />
+											<p:inputText id="quesArb" value="#{question.quesAR}"
+												style="border:none;border-bottom:1px solid; border-color:green" />
+										</p:panelGrid>
+										<p:panelGrid columns="1" layout="grid">
+											<p:commandLink
+												action="#{adminHomeAction.btnDeleteQuestion(question)}"
+												immediate="true" update="form" style="float:left;">
+												<p:graphicImage name="images/template/delete_icon.png"
+													library="cp-layout" styleClass="mobile" />
+											</p:commandLink>
+										</p:panelGrid>
+										<p style="border-bottom: 2px solid;"></p>
+									</ui:repeat>
+								</h:panelGroup>
+								<br></br>
+								<div class="row">
+									<h:panelGroup id="quespanel"
+										rendered="#{adminHomeAction.addNewQuestion}">
+										<b><p:outputLabel value="#{msg['adminuser.secquestion1']}" /></b>
+										<br></br>
+										<br></br>
+										<div class="row">
+											<p:panelGrid columns="2"
+												columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-6"
+												layout="grid">
+												<p:outputLabel value="#{msg['adminuser.secquestion.english']}" />
+												<p:inputText value="#{adminHomeAction.addedQuestion.quesEN}"
+													style="border:none;border-bottom:1px solid; border-color:green" />
+											</p:panelGrid>
+											<p:panelGrid columns="2"
+												columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-6"
+												layout="grid">
+												<p:outputLabel value="#{msg['adminuser.secquestion.arabic']}" />
+												<p:inputText value="#{adminHomeAction.addedQuestion.quesAR}"
+													style="border:none;border-bottom:1px solid; border-color:green" />
+											</p:panelGrid>
+											<p:panelGrid columns="2"
+												columnClasses="ui-g-12 ui-md-1,ui-g-12 ui-md-4"
+												layout="grid">
+												<p:commandButton
+													action="#{adminHomeAction.btnSaveQuestions}" value="#{msg['save']}"
+													update="securitypanel,form" style="float:right" />
+												<p:commandButton value="#{msg['close']}"
+													action="#{adminHomeAction.btnClear}"
+													update="securitypanel,form" style="float:right" />
+											</p:panelGrid>
+										</div>
+									</h:panelGroup>
+								</div>
+								<p:panelGrid columns="2"
+									columnClasses="ui-g-12 ui-md-1,ui-g-12 ui-md-4" layout="grid">
+									<p:commandButton action="#{adminHomeAction.btnQuestionSubmit}"
+										value="#{msg['submit']}" update="securitypanel,form" style="float:right" />
+									<p:commandButton value="#{msg['adminuser.secquestion.addBut']}"
+										actionListener="#{adminHomeAction.clearQuestionValues()}"
+										action="#{adminHomeAction.addQuestionDetails()}"
+										update="securitypanel,form" style="float:right" />
+								</p:panelGrid>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

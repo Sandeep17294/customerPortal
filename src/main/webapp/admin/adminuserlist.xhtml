@@ -1,0 +1,127 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card card-w-title">
+						<h1>
+							<b>#{msg['admin.userlist']}</b>
+						</h1>
+						<p:dataTable id="userListId" var="userList"
+							value="#{adminHomeAction.userDetailsList}" reflow="true" widgetVar="usersTable"
+							paginator="true" rows="10" paginatorPosition="bottom" filteredValue="#{adminHomeAction.userDetailsListfilter}">
+
+                         <f:facet name="header">
+								<p:outputPanel>
+							    <span>
+									<h:outputText value="#{msg['businessuser.servicetrs.all']}" />
+								</span>
+								<span>	
+									<p:inputText id="globalFilter"
+										onkeyup="PF('usersTable').filter()" style="width:150px"
+										placeholder="#{msg['businessuser.servicetrs.srch']}" />
+								</span>	
+								</p:outputPanel>
+							</f:facet>
+
+							<p:column filterBy="#{userList.userName}" headerText="#{msg['admin.id']}" sortBy="#{userList.userName}"
+							onchange="PF('usersTable').filter()" filterMatchMode="contains">
+								<h:outputText value="#{userList.userName}" />
+							</p:column>
+
+							<p:column filterBy="#{userList.userName}" headerText="#{msg['admin.disname']}" sortBy="#{userList.prefName}"
+							onchange="PF('usersTable').filter()" filterMatchMode="contains">
+								<h:outputText value="#{userList.prefName}" />
+							</p:column>
+
+							<p:column filterBy="#{userList.emailId}" headerText="#{msg['admin.emailid']}" sortBy="#{userList.emailId}"
+							onchange="PF('usersTable').filter()" filterMatchMode="contains">
+								<h:outputText value="#{userList.emailId}" />
+							</p:column>
+
+							<p:column filterBy="#{userList.status}" headerText="#{msg['admin.useerstts']}" sortBy="#{userList.status}"
+							onchange="PF('usersTable').filter()" filterMatchMode="contains">
+								<h:outputText value="#{userList.status}" />
+							</p:column>
+
+							<p:column filterBy="#{userList.locked}" headerText="#{msg['admin.userlocst']}" sortBy="#{userList.locked}"
+							onchange="PF('usersTable').filter()" filterMatchMode="contains">
+								<h:outputText value="#{userList.locked}" />
+							</p:column>
+
+							<p:column headerText="#{msg['detailsearch']}">
+								<p:commandButton icon="fa fa-search" update="form"
+									oncomplete="PF('carDialog').show()">
+									<f:setPropertyActionListener value="#{userList}"
+										target="#{adminHomeAction.selecteduserlist}" />
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+
+						<p:dialog
+							header="#{msg['admin.usrino']} #{adminHomeAction.selecteduserlist.userName}"
+							widgetVar="carDialog" modal="true" hideEffect="fade"
+							resizable="false" responsive="true" width="auto"
+							showEffect="explode">
+
+							<p:outputPanel id="selectedCarDetail" style="text-align:center;">
+								<p:panelGrid columns="2" columnClasses="label,value"
+									style="width:100%">
+
+									<h:outputText value="#{msg['admin.id']}" />
+									<h:outputText
+										value="#{adminHomeAction.selecteduserlist.userName}" />
+
+									<h:outputText value="#{msg['admin.disname']}" />
+									<h:outputText
+										value="#{adminHomeAction.selecteduserlist.prefName}" />
+
+									<h:outputText value="#{msg['admin.emailid']}" />
+									<h:outputText
+										value="#{adminHomeAction.selecteduserlist.emailId}" />
+
+									<h:outputText value="#{msg['admin.cntc']}" />
+									<h:outputText
+										value="#{adminHomeAction.selecteduserlist.contactNo}" />
+									
+									<h:outputText value="#{msg['admin.ustyp']}" />
+									<h:outputText
+										value="#{adminHomeAction.selecteduserlist.userType}" />
+
+									<h:outputText value="#{msg['admin.useerstts']}" />
+									<p:selectOneMenu
+										value="#{adminHomeAction.selecteduserlist.status}"
+										style="margin-bottom:10px;width:150px;">
+										<f:selectItem itemLabel="#{msg['act']}" itemValue="Active" />
+										<f:selectItem itemLabel="#{msg['inact']}" itemValue="In Active" />
+										<p:ajax event="change" update="form"
+											listener="#{adminHomeAction.updateUserStatus(adminHomeAction.selecteduserlist)}" />
+									</p:selectOneMenu>
+
+									<h:outputText value="#{msg['admin.userlocst']}" />
+									<p:selectOneMenu
+										value="#{adminHomeAction.selecteduserlist.locked}"
+										style="margin-bottom:10px;width:150px;">
+										<f:selectItem itemLabel="#{msg['yes']}" itemValue="YES" />
+										<f:selectItem itemLabel="#{msg['no']}" itemValue="NO" />
+										<p:ajax event="valueChange"
+											listener="#{adminHomeAction.updateUserLockStatus(adminHomeAction.selecteduserlist)}"
+											update="form" />
+									</p:selectOneMenu>
+									
+
+								</p:panelGrid>
+							</p:outputPanel>
+						</p:dialog>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['covid1']}</b>
+						</h1>
+						<div class="row">
+							<h:panelGroup>
+								<div class="row">
+									<p:selectOneMenu styleClass="homeListSelect"
+										value="#{homeDetailsAction.selectPolForPremiumDefer}">
+										<f:selectItem itemLabel="Select Policy" itemValue="A" />
+										<f:selectItems value="#{homeDetailsAction.policyListMap}" />
+										<p:ajax event="change"
+								             update="form"
+											listener="#{homeDetailsAction.getPolicyPremiumDeferment}" />
+									</p:selectOneMenu>
+								</div>
+								<br></br>
+								<div class="row">
+									<p:dataTable id="premium"  var="premium" paginatorPosition="bottom"
+									value="#{homeDetailsAction.fectchPremiumDefermentsByPolicy}" rows="10" paginator="true"
+										emptyMessage="#{msg['datatable.empty.msg']}">
+										
+										<p:column headerText="#{msg['covid2']}"
+											styleClass="centeredColumnContent">
+											<h:outputText value="#{premium.vPolicyNo}" disabled="#{premium.deferStartDate !=null}"/>
+										</p:column>
+
+										<p:column headerText="#{msg['covid3']}"
+											styleClass="centeredColumnContent">
+											<h:outputText value="#{premium.policyStatus}" disabled=""/>
+										</p:column>
+
+										<p:column headerText="#{msg['covid4']}"
+											styleClass="centeredColumnContent">
+											<h:outputText value="#{premium.commencementDate}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['covid5']}"
+											styleClass="centeredColumnContent">
+											<h:outputText value="#{premium.premiumDueDate}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['covid6']}"
+											styleClass="centeredColumnContent">
+											<h:outputText value="#{premium.outstandingDueDate}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['covid7']}"
+											styleClass="centeredColumnContent">
+											<p:calendar id="dat1" disabled="#{homeDetailsAction.disabled}" value="#{premium.deferStartDate}" navigator="true" pattern="dd/MM/yyyy">
+											<p:ajax event="dateSelect" update="dat1"/>
+											</p:calendar>
+										</p:column>
+
+										<p:column headerText="#{msg['covid8']}"
+											styleClass="centeredColumnContent">
+											<p:inputText id="dat2" value="#{premium.deferPeriod}" disabled="#{homeDetailsAction.disabled}">
+											<p:ajax event="blur" update="dat2">
+											</p:ajax>
+											</p:inputText>
+										</p:column>
+
+										<p:column headerText="#{msg['covid9']}"
+											styleClass="centeredColumnContent">
+											<h:outputText value="#{premium.vReqStatus}"/>
+										</p:column>
+
+										<p:column headerText="#{msg['covid10']}"
+											styleClass="centeredColumnContent">
+											<h:inputText id="dat3" disabled="#{homeDetailsAction.disabled}" value="#{premium.vRemarks}">
+											<p:ajax event="blur" update="dat3">
+											</p:ajax>
+											</h:inputText>
+										</p:column>
+
+									</p:dataTable> <br></br>
+									
+									<p:commandButton id="continuelater" disabled="#{homeDetailsAction.disabled}"
+									 value="Save" action="#{homeDetailsAction.savePremiumDeferment}"
+							         update="form" style="float:right" />
+									
+									<br></br>
+									<h:commandLink id="excelsheet">
+										<p:graphicImage name="images/template/excelo.png"
+											library="cp-layout" class="mobile" />
+										<p:dataExporter type="xls" target="premium" fileName="premium"
+											pageOnly="true" />
+										<p:tooltip id="toolTipFadeDocument" for="excelsheet"
+											value="#{msg['customeruser.plantabele.excel']}"
+											position="right"
+											style="color:green !important; background-color:white !important;font-size:13px !important;" />
+									</h:commandLink>
+									<br></br>
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

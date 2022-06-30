@@ -1,0 +1,234 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['partialwithdraw']}</b>
+						</h1>
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">
+									#{homeDetailsAction.searchPolicyList.productName} |
+									#{homeDetailsAction.searchPolicyList.planNumber} |
+									#{homeDetailsAction.searchPolicyList.premiumPayStatus} </span>
+							</div>
+						</div>
+						<br></br> <br></br>
+						<p:panelGrid columns="5" layout="grid">
+							<p:outputLabel value="Please Select Withdraw Criteria" />
+							<p:selectOneMenu id="withdcriteria"
+								value="#{partialWithdrawalAction.withdrawcritaria}">
+								<f:selectItem itemLabel="#{msg['estatment.select']}"
+									itemValue="" />
+								<f:selectItem itemLabel="#{msg['customeruser.partwi.amt']}"
+									itemValue="A" />
+								<f:selectItem itemLabel="#{msg['customeruser.partwi.per']}"
+									itemValue="P" />
+								<p:ajax event="valueChange" listener="#{partialWithdrawalAction.checking()}" update="withdcriteria,table" />
+							</p:selectOneMenu>
+						</p:panelGrid>
+						<br></br>
+						<div class="row">
+							<p:dataTable id="table" var="fundDetails" rowIndexVar="index"
+								emptyMessage="#{msg['datatable.empty.msg']}"
+								value="#{partialWithdrawalAction.fundsDetailsList}"
+								paginator="true" rows="10">
+								<f:facet name="header">
+                                     #{msg['customeruser.partwi.facet']} #{homeDetailsAction.searchPolicyList.planNumber}
+                                </f:facet>
+								<p:column headerText="#{msg['customeruser.partwi..fundName']}">
+									<h:outputText value="#{fundDetails.fundName}" />
+								</p:column>
+								<p:column
+									headerText="#{msg['customeruser.partwi.fundtable.share']}"
+									style="width:80px;">
+									<h:outputText value="#{fundDetails.allocationPercentage}" />
+								</p:column>
+								<p:column
+									headerText="#{msg['customeruser.partwi.fundtable.fundCurrency']}"
+									style="width:80px;">
+									<h:outputText value="#{fundDetails.fundCrr}" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.partwi.fundtable.fundValue']}">
+									<h:outputText value="#{fundDetails.fundValueInFundCrr}">
+										<f:convertNumber pattern="###,##0.00" />
+									</h:outputText>
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.partwi.fundtable.withdrwacrte']}">
+									<p:inputText id="criteriavalue"
+										disabled="#{fundDetails.overfund == 0}"
+										value="#{fundDetails.fundCriteriaValue}">
+										<p:ajax event="blur"
+											listener="#{partialWithdrawalAction.validation(fundDetails)}"
+											update="table" />
+
+									</p:inputText>
+								</p:column>
+							</p:dataTable>
+						</div>
+						<br></br>
+						<!-- <br></br>
+						<div class="row">
+							<span style="color: red;"><b>#{msg['customeruser.partwi.term']}</b></span>
+							<br></br> <br></br>
+							<ui:repeat var="contributionValues"
+								value="#{partialWithdrawalAction.noteslist1}">
+								<b><p:outputLabel value="#{contributionValues.notes}">.
+								</p:outputLabel></b>
+								<br/>
+							</ui:repeat>
+						</div>
+						<br></br> <br></br> -->
+
+						
+						<br></br>
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">#{msg['termscondheading']}</span>
+							</div>
+							<div id="j_idt149_content"
+								class="ui-panel-content ui-widget-content" style="border: none;">
+								<ui:repeat
+									value="#{partialWithdrawalAction.termsConditionYesNo}"
+									var="details">
+									<span style="color: green;">*</span>
+									<em><p:outputLabel
+											style="color: green!important; margin-left: 0px;"
+											value="Info : ">
+										</p:outputLabel></em>
+									<p:outputLabel rendered="#{!guestPreferences.orientationRTL}"
+										style="margin-left: 11px; line-height:2; display: contents"
+										value="#{details.conditionEng}">
+									</p:outputLabel>
+									<p:outputLabel rendered="#{guestPreferences.orientationRTL}"
+										style="margin-left: 11px; line-height:2; display: contents"
+										value="#{details.conditionArb}">
+									</p:outputLabel>
+									<br />
+								</ui:repeat>
+								<ui:repeat
+									value="#{partialWithdrawalAction.termsConditionYesYes}"
+									var="details">
+									<p:selectBooleanCheckbox id="cond" style="width: 21px; ">
+										<f:validator validatorId="termsConditionsValidator" />
+									</p:selectBooleanCheckbox>
+									<p:outputLabel rendered="#{!guestPreferences.orientationRTL}"
+										style="margin-left: 11px; line-height:2; display: contents;"
+										value="#{details.conditionEng}">
+									</p:outputLabel>
+									<p:outputLabel rendered="#{guestPreferences.orientationRTL}"
+										style="margin-left: 11px; line-height:2; display: contents;direction:rtl;"
+										value="#{details.conditionArb}">
+									</p:outputLabel>
+									<br />
+									<br />
+								</ui:repeat>
+								<p:selectBooleanCheckbox id="terms"
+									value="#{partialWithdrawalAction.termsCondition}"
+									type="checkbox" style="width:20px;">
+									<f:validator validatorId="termsConditionsValidator" />
+								</p:selectBooleanCheckbox>
+								<span style="color: red;">*</span> <strong>#{msg['termscondmain']}.</strong>
+							</div>
+						</div>
+						<br></br>
+
+						<div class="row">
+							<div class="row">
+								<p:commandButton id="continuelater1"
+									actionListener="#{partialWithdrawalAction.btncontinuelater}"
+									action="#{otpValidation.btnPrintForm()}" rendered="#{!partialWithdrawalAction.fatcaFlagpopUp==true}"
+									value="#{msg['submit']}" update="form,otpform"
+									style="float:right" />
+								
+						<p:commandButton value="Fatca Form Submit"   style="float:right" rendered="#{partialWithdrawalAction.fatcaFlagpopUp==true}"
+						actionListener="#{partialWithdrawalAction.btncontinuelaterfatca}" 
+						action="#{partialWithdrawalAction.fatcasample()}"  update="form" />	
+									
+							</div>
+						</div>
+						<br></br>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<h:panelGroup>
+			<p:dialog id="successTab" modal="true"
+				header="#{homeDetailsAction.searchPolicyList.productName} | #{homeDetailsAction.searchPolicyList.planNumber} | #{homeDetailsAction.searchPolicyList.premiumPayStatus}"
+				widgetVar="dlg3" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform">
+					<b><span>#{msg['otp.securityques']}</span></b>
+					<br></br>
+
+					<p:panelGrid columns="1" layout="grid">
+						<p:inputText id="questionn" value="#{otpValidation.securityQues}"
+							style="border:none;" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.answer']}</span></b>
+						<p:inputText value="#{otpValidation.userSecurityAns}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.enter']}</span></b>
+						<p:password id="otp" value="#{otpValidation.userOTP}"
+							disabled="#{otpValidation.enableResendOTP}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span style="color: red;">#{msg['otp.valid']}</span></b>
+						<p:commandLink value="#{msg['otp.resend']}"
+							actionListener="#{otpValidation.smsGenerator}" immediate="true"
+							update="form" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="3" layout="grid">
+						<p:poll interval="#{otpValidation.OTPTimeLimit}"
+							listener="#{otpValidation.checkTime()}" immediate="true"
+							update="form" autoStart="#{otpValidation.renderStartTime}"
+							stop="#{otpValidation.renderStopTime}" />
+						<p:commandButton type="submit" value="#{msg['ok']}"
+							actionListener="#{otpValidation.validateOTP}"
+							update="form,otpform12"
+							disabled="#{otpValidation.enableResendOTP}" />
+						<p:commandButton value="#{msg['cancel']}"
+							actionListener="#{otpValidation.delete}" update="form" />
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+
+		<h:panelGroup>
+			<p:dialog id="successTab156" header="#{msg['top.not']}" modal="true"
+				widgetVar="dlg4" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform12">
+					<b><span>#{otpValidation.popmsg}</span></b>
+					<br></br>
+					<br></br>
+					<p:commandButton value="#{msg['ok']}" style="float:center"
+						action="#{homeDetailsAction.servicelist()}" update="form" />
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+
+
+	</ui:define>
+</ui:composition>

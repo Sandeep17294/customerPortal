@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card card-w-title">
+						<h1>
+							<b>#{msg['adminuser.login.trails']}</b>
+						</h1>
+						<p:dataTable id="audittrails" var="lists"
+							value="#{adminHomeAction.cpLoginAuditTrailsDTO}" reflow="true"
+							paginator="true" rows="10" paginatorPosition="bottom">
+							<f:facet name="header">
+                                #{msg['adminuser.login.trails.list']}
+                            </f:facet>
+                            
+                            <p:column headerText="#{msg['adminuser.login.trails.id']}" sortBy="#{lists.username}">
+                                <h:outputText value="#{lists.username}" />
+                            </p:column>
+                            
+                            <p:column headerText="#{msg['adminuser.login.trails.lit']}" sortBy="#{lists.loggedInTime}">
+                                <h:outputText value="#{lists.loggedInTime}" />
+                            </p:column>
+                            
+                            <p:column headerText="#{msg['adminuser.login.trails.lot']}" sortBy="#{lists.logoutTime}">
+                                <h:outputText value="#{lists.logoutTime}" />
+                            </p:column>
+                            
+                            <!-- <p:column headerText="User Loacked Status" sortBy="#{lists.userLocked}">
+                                <h:outputText value="#{lists.userLocked}" />
+                            </p:column> -->
+                            
+                            <p:column headerText="#{msg['adminuser.login.trails.usa']}" sortBy="#{lists.unsuccessfullAttempts}">
+                                <h:outputText value="#{lists.unsuccessfullAttempts}" />
+                            </p:column>
+                            
+                            <p:column headerText="#{msg['adminuser.login.trails.ae']}" sortBy="#{lists.noOfUnsuccessfullAttemptsExceed}">
+                                <h:outputText value="#{lists.noOfUnsuccessfullAttemptsExceed}" />
+                            </p:column>
+                            
+                            <p:column headerText="#{msg['adminuser.login.trails.aclt']}" sortBy="#{lists.userlockedtime}">
+                                <h:outputText value="#{lists.userlockedtime}" />
+                            </p:column>
+                            
+                            </p:dataTable>
+                            					
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

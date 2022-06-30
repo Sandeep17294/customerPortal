@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['customeruser.planstableheading']}</b>
+						</h1>
+						<p:dataTable id="policy1" var="policy"
+							emptyMessage="#{msg['datatable.empty.msg']}"
+							value="#{homeDetailsAction.policyDetailsList}" rows="10">
+							<f:facet name="header">
+                                #{msg['customeruser.planstableheadingfacet']}
+                            </f:facet>
+							<p:column
+								headerText="#{msg['customeruser.plantabele.policyName']}"
+								sortBy="#{policy.policyName}" styleClass="centeredColumnContent">
+								<h:outputText style="font-weight:600;"
+									value="#{policy.policyName}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.plantabele.policyNo']}"
+								sortBy="#{policy.policyNo}" styleClass="centeredColumnContent">
+								<h:commandLink style="font-weight:600;"
+									value="#{policy.policyNo}"
+									action="#{homeDetailsAction.getPolicyDetails(policy.policyNo)}"
+									update="form" />
+							</p:column>
+							<p:column
+								headerText="#{msg['customeruser.plantabele.policystatus']}"
+								sortBy="#{policy.policyStatus}"
+								styleClass="centeredColumnContent">
+								<h:outputText style="font-weight:600;"
+									value="#{policy.policyStatus}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.plantabele.outprem']}"
+								sortBy="#{policy.outstandingCurrencyCode}"
+								styleClass="centeredColumnContent">
+								<h:outputText style="font-weight:600;"
+									value="#{policy.outstandingCurrencyCode}&#160;&#160;" />
+								<h:outputText value="#{policy.outstandingAmt}"
+									style="font-weight:600;">
+									<f:convertNumber pattern="###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msg['customeruser.plantabele.due.date']}"
+								sortBy="#{policy.premiumDueDate.time}"
+								styleClass="centeredColumnContent">
+								<h:outputText value="#{policy.premiumDueDate.time}"
+									style="font-weight:600;">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+						<br></br>
+						<h:commandLink id="excelsheet">
+							<p:graphicImage name="images/template/excelo.png"
+								library="cp-layout" class="mobile" />
+							<p:dataExporter type="xls" target="policy1" fileName="policy"/>
+							<p:tooltip id="toolTipFadeDocument" for="excelsheet"
+								value="#{msg['customeruser.plantabele.excel']}" position="right"
+								style="color:green !important; background-color:white !important;font-size:13px !important;" />
+						</h:commandLink>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

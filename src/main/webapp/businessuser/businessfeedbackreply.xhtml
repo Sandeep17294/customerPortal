@@ -1,0 +1,163 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>Feedback Reply</b>
+						</h1>
+
+						<span> <b><h:outputText value="Complaint No" /></b>: <h:outputText
+								value="#{feedbackAction.getFeedbackDTO.complaintNo}" />, <b><h:outputText
+									value="Service Type" /></b> : <h:outputText
+								value="#{feedbackAction.getFeedbackDTO.servType}" />, <b><h:outputText
+									value="Plan No" /></b> :<h:outputText
+								value="#{feedbackAction.getFeedbackDTO.policyNo}" />, <b><h:outputText
+									value="Submitted on" /></b> :<h:outputText
+								value="#{feedbackAction.getFeedbackDTO.compDate}" /> <br></br>
+							<b><h:outputText value="Submitted by" /></b> :<h:outputText
+								value="#{feedbackAction.getFeedbackDTO.userId}" />, <b><h:outputText
+									value="Rating" /></b> :<h:outputText
+								value="#{feedbackAction.getFeedbackDTO.feedRate}" />, <b><h:outputText
+									value="Description" /></b> :<h:outputText
+								value="#{feedbackAction.getFeedbackDTO.feedbackNote}" />,
+						</span>
+
+						<div class="row">
+							<h:panelGroup>
+								<br></br>
+								<p:commandLink  rendered="#{feedbackAction.linkFlag}"
+								value="Insert Reply" actionListener="#{feedbackAction.enableReplyPanel}"
+								style="color:#3500ff !important;" update="form">
+								<f:attribute name="replyId" value="#{feedbackAction.replyId}" />
+								</p:commandLink>
+								<br></br>
+								<br></br>
+
+								<ui:repeat var="feed" value="#{feedbackAction.replyList}">
+									<p:panel>
+										<p:panelGrid columns="1" layout="grid">
+											<a></a>
+										</p:panelGrid>
+										<h:outputText value="#{feed.lastupdUser}" />
+										<h:outputText
+											value="#{feed.userType == 'u' ?   'Customer Service Replied on':'You Replied on'}" />
+										<h:outputText value="#{feed.replyDate.time}">
+											<f:convertDateTime pattern="dd/MM/yyyy 'at' hh:mm:ss a" />
+										</h:outputText>
+										<br></br>
+										<h:outputText value="#{feed.replyNote}" />
+									</p:panel>
+									<br></br>
+
+									<p:dataTable id="replyDocs" rendered="#{feed.fileUpload}"
+										var="replyDocs" value="#{feed.feedbackReplyDocsDTO}"
+										styleClass="alignCenter">
+
+										<p:column id="idFileNameHeader" headerText="File Name">
+											<h:commandLink target="_blank" immediate="false"
+												value="#{replyDocs.fileName}"
+												action="#{feedbackAction.openFile}" styleClass="alignCenter">
+												<f:param name="fileName" value="#{replyDocs.fileName}" />
+											</h:commandLink>
+										</p:column>
+										<p:column id="idFileDateHeader" headerText="Uploaded Date">
+											<h:outputText id="idFileDateVal"
+												value="#{replyDocs.uploadDate}" />
+										</p:column>
+									</p:dataTable>
+
+									<span> <p:commandLink id="replymsg"
+											actionListener="#{feedbackAction.enableReplyPanel}"
+											update="form">
+											<p:graphicImage name="images/template/reply_icon.png"
+												library="cp-layout" class="mobile" />
+
+											<f:attribute name="replyId" value="#{feed.replyId}" />
+											<p:tooltip id="toolTipFadeDocument" for="replymsg"
+												value="Insert Reply" position="left"
+												style="color:#fff !important; background-color:#000 !important;font-size:13px !important;" />
+										</p:commandLink>
+									</span>
+								</ui:repeat>
+
+								<p:messages id="messages" showDetail="true" closable="true">
+									<p:autoUpdate />
+								</p:messages>
+								
+								<h:panelGroup id="successReply"
+									rendered="#{feedbackAction.successReplyFlag}">
+									<ui:repeat var="saveMap" value="#{feedbackAction.replySaveMap}">
+										<div class="cust-reply-box">
+											<div class="fed-executive-img">
+												<img
+													src="${request.contextPath}/resources/images/fed-executive.png" />
+											</div>
+											<div class="fed-exec-details">
+												<h:outputText value="#{saveMap.userid} -" />
+												Replied By Me on
+												<h:outputText value="&#160;" />
+												<h:outputText value="#{feedbackAction.now}">
+													<f:convertDateTime pattern="dd/MM/yyyy 'at' hh:mm:ss aa" />
+												</h:outputText>
+											</div>
+											<div class="fed-exec-reply">
+												<h:outputText value="#{saveMap.replyNote}" />
+												<br />
+												<h:outputText value="#{saveMap.replyRate}"
+													style="color:red;" />
+												<br />
+												<h:outputText value="#{saveMap.CloseComp}" />
+											</div>
+										</div>
+									</ui:repeat>
+								</h:panelGroup>
+
+								<h:panelGroup id="replyPanel"
+									rendered="#{feedbackAction.replyVisibleFlag}">
+									<p:panel>
+										<h:outputLabel value="Reply Comment" />
+										<a> 
+										</a>
+										<div
+											class="write_your_feedback reply-box form-group custReplyTextArb">
+											<p:inputTextarea styleClass="form-control" id="compNote"
+												placeholder="Enter Details" style="border:none;width:80%;"
+												value="#{feedbackAction.replyNote}" required="true"
+												requiredMessage="Please provide Note"
+												validatorMessage="Special characters are not allowed">
+											</p:inputTextarea>
+											<p:message for="compNote" closable="true" />
+										</div>
+										
+										<div class="review-sec reply-rating"></div>
+										<div class="fed-action-btns text-right">
+											<span> <p:commandButton value="cancel"
+													actionListener="#{feedbackAction.closeReplyPanel}"
+													immediate="true" update="form" />
+											</span> <span> <p:commandButton value="Send" update="form"
+													title="Send Message"
+													actionListener="#{feedbackAction.btnSaveReplyFeedback}" />
+											</span>
+										</div>
+										<div class="form-group"></div>
+
+									</p:panel>
+								</h:panelGroup>
+								<br></br>
+								<br></br>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

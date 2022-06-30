@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>Contribution Alteration</h1>
+						<div class="row">
+							<h4
+								style="margin-bottom: 0px; height: 50px; overflow: hidden; background: #e5e5e5 !important; margin-top: -7px !important; line-height: 10px; color: #1a616d; font-size: 14px; font-weight: bold; padding: 20px; width: 100%;">
+								<h:outputText
+									value="#{homeDetailsAction.searchPolicyList.productName}" />
+								|
+								<h:outputText
+									value="#{homeDetailsAction.searchPolicyList.planNumber}" />
+								|
+								<h:outputText
+									value="#{homeDetailsAction.searchPolicyList.premiumPayStatus}" />
+							</h4>
+						</div>
+						<br></br>
+						<div class="row">
+							<h5>Please select the type of alteration</h5>
+						</div>
+
+						<div class="row">
+							<p:panelGrid columns="2" layout="grid">
+								<p:outputLabel value="Type of alteration" />
+								<p:selectOneRadio columns="2" layout="responsive" id="alter"
+									value="#{contributionAlterationAction.contributionAterationDetails.alterationType}"
+									required="true"
+									requiredMessage="#{msg['pls_select_Ateration_tymsg']}">
+									<f:selectItem itemLabel="Increase in Regular Contribution"
+										itemValue="I" />
+									<f:selectItem itemLabel="Decrease in Regular Congribution"
+										itemValue="D" />
+									<p:ajax listener="#{contributionAlterationAction.displayPanel}"
+										event="change" />
+								</p:selectOneRadio>
+								<p:message for="alter" />
+							</p:panelGrid>
+						</div>
+
+
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class="row">
+				<h:panelGroup id="modalPanel">
+					<div id="OTP-popup" class="modal fade" tabindex="-1" role="dialog"
+						data-keyboard="false">
+						<div class="modal-dialog param">
+
+							<div class="modal-content" style="height: 320px; width: 610px;">
+								<div class="modal-header">
+									<p:commandButton styleClass="close" value="X"
+										actionListener="#{otpValidation.closeModal}" immediate="true" />
+									<h4 class="modal-title">
+										<h:outputLabel value="PLan Name" />
+										<h:outputLabel value="Policy Ni" />
+										<h:outputLabel value="Premium Status" />
+									</h4>
+								</div>
+
+
+								<br /> <br /> <br />
+							</div>
+						</div>
+					</div>
+				</h:panelGroup>
+			</div>
+
+
+			<Script>
+				function popOpen() {
+					$('#OTP-popup').modal('show');
+				}
+
+				function popClose() {
+					$('#OTP-popup').modal('hide');
+				}
+			</Script>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

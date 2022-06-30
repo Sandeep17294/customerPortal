@@ -1,0 +1,618 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<style></style>
+	<ui:define name="title">search policy</ui:define>
+	<ui:define name="viewname">
+	</ui:define>
+	<ui:define name="head">
+	 <script type="text/javascript">
+        function skinChart() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#ed3c76', '#3e9018', '#599597'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#dce2e7',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinBar() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                renderer: $.jqplot.BarRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinArea() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#dce2e7',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinBubble() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                renderer: $.jqplot.BubbleRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinZoom() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinPie() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#ed3c76', '#3e9018', '#ffb200'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#dce2e7',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560',
+                }
+            };
+            this.cfg.seriesDefaults = {
+                renderer: $.jqplot.PieRenderer,
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinDonut() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#ed3c76', '#3e9018', '#ffb200'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560',
+                }
+            };
+            this.cfg.seriesDefaults = {
+                renderer: $.jqplot.DonutRenderer,
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinBarAndLine() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 5,
+                renderer: $.jqplot.BarRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinMeterGauge() {
+            this.cfg.title = '';
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 5,
+                renderer: $.jqplot.MeterGaugeRenderer,
+                rendererOptions: {
+                    shadow: false,
+                    min: 100,
+                    max: 800,
+                    intervals: [200, 300, 400, 500, 600, 700, 800],
+                    intervalColors: ['#147df0', '#ed3c76', '#3e9018', '#da2f31', '#ffb200', '#ffb200', '633ea5']
+                }
+            }
+        }
+
+        function skinMultiAxis() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#3984b8', '#f6ac2b'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'bdc3c9',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth:1,
+                renderer: $.jqplot.BarRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+        </script>
+		<style type="text/css">
+.back {
+	text-align: center;
+}
+
+.pro {
+	background: url(resources/cp-layout/images/dashboard/bg-cover.png)
+		no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	width: 100%;
+	height: 230px;
+	background-size: cover;
+	position: relative;
+	font-size: 17px;
+}
+.jqplot-xaxis-label, .jqplot-yaxis-label, .jqplot-y2axis-label, .jqplot-x2axis-label {
+                color: #757575; 
+            }
+            
+            table.jqplot-table-legend {
+                background-color: #ffffff;
+                color: #434560;
+                border-color: #d8dae2;
+            }
+            
+ .underline {
+    border-bottom-width: 1px;
+  border-bottom-style: solid;
+      width: 100%;
+}
+.line {
+    border-bottom-width: 1px;
+  border-bottom-style: solid;
+      width: 25%;
+}
+.statusline input{
+    border: none;
+    border-bottom: 1px solid grey;
+    width: 100%;
+}
+.form-control-plaintext{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+</style>
+	</ui:define>
+	<ui:define name="content">
+		<h:outputStylesheet name="css/custom/english/styles.css" library="cp-layout" />
+		<h:outputStylesheet name="css/custom/english/bootstrap.min.css"
+			library="cp-layout" />
+		<h:outputStylesheet name="css/custom/english/bootstrap_limitless.min.css"
+			library="cp-layout" />
+		<h:outputStylesheet name="css/custom/english/layout.min.css"
+			library="cp-layout" />
+		<h:outputStylesheet name="css/custom/english/components.min.css"
+			library="cp-layout" />
+		<h:outputStylesheet name="css/custom/english/colors.min.css"
+			library="cp-layout" />
+			<h:outputScript name="js/custom/echarts.min.js" library="cp-layout" />
+			<h:outputScript name="js/custom/pies_donuts.js" library="cp-layout" />
+		<h:form id="form">
+
+			<div class="row">
+				<div class="col-md-3">
+
+					<div class="card">
+					
+						<div class="card-body bg-blue text-center card-img-top">
+
+							<h6 class="font-weight-semibold mb-0"><b>LIFE INSURANCE COVER</b></h6>
+							<span class="font-weight-semibold mb-0"><b>SAR: 1222,000</b></span>
+
+
+						</div>
+
+						<div class="card-body border-top-0">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Person cover in this policy:</b></div>
+								
+								<div class="form-control-plaintext" >
+								<p:outputLabel value="GANESH" styleClass="underline"/>
+								</div>
+								
+								
+							</div>
+							
+							
+
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Policy Status</b></div>
+								<div class="form-control-plaintext">
+								<p:outputLabel value="In Force" styleClass="underline"/>
+								</div>
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Commencement Date</b></div>
+								<div class="form-control-plaintext">
+								<p:outputLabel value="28/09/2024" styleClass="underline"/>
+								</div>
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Maturity Date</b></div>
+								<div class="form-control-plaintext">
+								<p:outputLabel value="28/09/2024" styleClass="underline"/>
+								</div>
+							</div>
+					
+					</div>
+				</div>
+				
+			</div>
+			
+		
+		
+		
+			
+			<div class="col-md-9">
+			<div class="card">
+							<div class="card-header header-elements-inline">
+								<h6 class="card-title">Policy Details</h6>
+								
+							</div>
+							
+							<div class="card-body statusline">
+							<div class="row">
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Remaining Term:</b></div>
+								<div class="form-control-plaintext" >
+								<p:inputText value="9 Years 8 months" styleClass="line"/>
+								</div>
+								
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Annual Contribution SAR:</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="8000" styleClass="line"/>
+								</div>
+							</div>
+							
+							
+                            <div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Contribution Due Date</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="28/09/2020" styleClass="line"/>
+								</div>
+							</div>
+							
+							</div>
+							<div class="col-md-4">
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext" ><b>Payment Mode:</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="Yearly" styleClass="line"/>
+								</div>
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Last Paid Contribution SAR:</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="8000" styleClass="line"/>
+								</div>
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Contribution Payment End Date</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="28/09/2020" styleClass="line"/>
+								</div>
+							</div>
+							
+							
+							
+							</div>
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Total Due SAR:</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="5000" styleClass="line"/>
+								</div>
+							</div>
+							
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Total Paid Contribution</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="2000" styleClass="line"/>
+								</div>
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Last Paid Date</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="28/09/2020" styleClass="line"/>
+								</div>
+							</div>
+							
+							
+							</div>
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Contribution Payment Term</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="10 Years" styleClass="line"/>
+								</div>
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Fund Value SAR:</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="5000" styleClass="line"/>
+								</div>
+							</div>
+							
+							
+							</div>
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Contribution Holiday</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="Eligible" styleClass="line"/>
+								</div>
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Payment Method</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="Receipting" styleClass="line"/>
+								</div>
+							</div>
+							</div>
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Auto Debit Date</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="15/10/2020" styleClass="line"/>
+								</div>
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Partial Withdraw Amount</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="5000" styleClass="line"/>
+								</div>
+							</div>
+							</div>
+							</div>
+							
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Assignment</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="NO" styleClass="line"/>
+								</div>
+							</div>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							</div>
+						</div>
+			
+			</div>
+			
+			
+		</div>	
+		<div class="row">
+		
+		
+		<div class="ui-g-12">
+                <div class="card card-w-title">
+                    <h1>TabView</h1>
+                    <p:tabView>
+                        <p:tab title="Fund Details">
+                            <h:outputText>
+                            
+                            </h:outputText>
+                        </p:tab>
+                        <p:tab title="Beneficiary Details">
+                           <h:outputText>
+                            
+                            </h:outputText>
+                        </p:tab>
+                        <p:tab title="Plan Benefits" >
+                            <h:outputText>
+                            
+                            </h:outputText>
+                        </p:tab>
+                    </p:tabView>
+                </div>
+            </div>
+		
+		
+		</div>
+		
+		
+		<div class="row">
+		
+		<div class="col-md-3">
+
+					<div class="ui-g">
+				<div class="ui-g-8">
+					<div class="card card-w-title">
+
+						
+
+						<p:donutChart model="#{feedbackAction.donutModel}"
+							style="width: 100%; height: 250px;" />
+					</div>
+				</div>
+			</div>
+					</div>
+		
+		
+		
+		</div>
+		<div class="card">
+                        <h1>Steps</h1>
+                        <p:steps activeIndex="0">
+                            <p:menuitem value="Personal" />
+                            <p:menuitem value="Seat" />
+                            <p:menuitem value="Payment" />
+                            <p:menuitem value="Confirm" />
+                        </p:steps>
+                    </div>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>

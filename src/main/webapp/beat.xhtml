@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Customer User</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+
+					<div class="card card-w-title">
+						<h1>DataList</h1>
+
+						<p:dataGrid id="UserDetails" var="feedback"
+							value="#{feedbackAction.feedBusUserList}" columns="3"
+							layout="grid" rows="6" paginator="true">
+							<f:facet name="header">
+                                Complaints List
+                            </f:facet>
+
+						<p:panel header="#{feedback.complaintNo}"
+								style="text-align:center" action="#{feedbackAction.getFeedbackInfo(feedback)}">
+								
+								<h:panelGrid columns="2" style="width:100%" cellpadding="6">
+								
+								
+									<f:facet name="header">
+									</f:facet>
+									
+									<h:outputText value="Complaint Type" />
+									<h:outputText value="#{feedback.feedbackType == 'c' ?'Complaint':'Query'}"/>
+									
+									<h:outputText value="Service Type" />
+									<h:outputText value="#{feedback.servType}" />
+									
+									<h:outputText value="Plan Number"/>
+									<h:outputText value="#{feedback.policyNo}" />
+									
+									<h:outputText value="Description"/>
+									<h:outputText value="#{feedback.feedbackNote}" />
+									
+									<p:commandButton icon="fa fa-search" update="form"
+										oncomplete="PF('carDialog').show()">
+										<f:setPropertyActionListener value="#{feedback}"
+											target="#{feedbackAction.selectfeedbacklist}" />
+									</p:commandButton>
+						
+
+								</h:panelGrid>
+							</p:panel>
+							
+							<p:dialog header="User Info" widgetVar="carDialog" modal="true"
+								showEffect="fade" hideEffect="fade" resizable="false"
+								responsive="true" width="300">
+								<p:outputPanel id="selectedCarDetail" style="text-align:center;">
+									<p:panelGrid columns="2"
+										rendered="#{not empty feedbackAction.selectfeedbacklist}"
+										columnClasses="label,value" style="width:100%">
+
+
+										<h:outputText value="Complaint Date" />
+										<h:outputText value="#{feedback.compDate}">
+										<f:convertDateTime pattern="dd-MM-yyyy" />
+										</h:outputText>
+										
+										<h:outputText value="Call Time" />
+										<h:outputText value="#{feedbackAction.selectfeedbacklist.callTime}"/>
+										
+										<h:outputText value="Respective Day Time" />
+										<h:outputText value="#{feedbackAction.selectfeedbacklist.calltimeDay}"/>
+										
+										<h:outputText value="Submited By" />
+										<h:outputText value="#{feedbackAction.selectfeedbacklist.userId}"/>
+										
+										<h:outputText value="Status"></h:outputText>
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.feedStatus =='OPEN'?msg['businessuser.feedback.open']:msg['businessuser.feedback.closed']}" />
+
+									<h:outputText value="Rating"></h:outputText>
+									<h:outputText value="#{feedbackAction.selectfeedbacklist.feedRate}" />
+										
+										
+
+
+
+
+									</p:panelGrid>
+								</p:outputPanel>
+							</p:dialog>
+							
+
+
+						</p:dataGrid>
+
+
+
+
+
+
+					</div>
+				</div>
+				
+				
+				
+			</div>
+			<!-- <Script>
+			$('.ui-panel').click(function() {
+				alert('redirect to feedback page');
+				});
+			</Script> -->
+			
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

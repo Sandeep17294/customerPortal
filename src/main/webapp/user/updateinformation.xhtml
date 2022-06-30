@@ -1,0 +1,610 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['updateinformation']}</b>
+						</h1>
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">
+									#{homeDetailsAction.searchPolicyList.productName} |
+									#{homeDetailsAction.searchPolicyList.planNumber} |
+									#{homeDetailsAction.searchPolicyList.premiumPayStatus} </span>
+							</div>
+						</div>
+						<br></br>
+
+						<p:tabView id="tabView">
+							<p:tab
+								title="#{msg['customeruser.updateinformation.NFAlt.PersonalDetails']}">
+								<br></br>
+								<span style="color: red;"><b>Info: Please be informed
+										that you cannot change the personal details. You can update
+										contact address details.</b></span>
+								<p:panelGrid id="personaldetails"
+									style="margin-top:10px;width: 50%;">
+									<p:row>
+										<p:column>
+											<h:outputLabel
+												value="#{msg['customeruser.updateinformation.NFAlt.Title']}"></h:outputLabel>
+										</p:column>
+										<p:column>
+											<h:outputText
+												value="#{updateInfoAction.customerInfoNonFinDTOMain.titleCode}"
+												readonly="true" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:outputLabel
+												value="#{msg['customeruser.updateinformation.NFAlt.GName']}"></h:outputLabel>
+										</p:column>
+										<p:column>
+											<h:outputText
+												value="#{updateInfoAction.customerInfoNonFinDTOMain.givenName}"
+												readonly="true" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:outputLabel
+												value="#{msg['customeruser.updateinformation.NFAlt.MiddleName']}"></h:outputLabel>
+										</p:column>
+										<p:column>
+											<h:outputText
+												value="#{updateInfoAction.customerInfoNonFinDTOMain.middleName}" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:outputLabel
+												value="#{msg['customeruser.updateinformation.NFAlt.SurName']}"></h:outputLabel>
+										</p:column>
+										<p:column>
+											<h:outputText
+												value="#{updateInfoAction.customerInfoNonFinDTOMain.lastName}" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:outputLabel
+												value="#{msg['customeruser.updateinformation.NFAlt.identType']}"></h:outputLabel>
+										</p:column>
+										<p:column>
+											<h:outputText
+												value="#{updateInfoAction.customerInfoNonFinDTOMain.propIdentityDesc}" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:outputLabel
+												value="#{msg['customeruser.updateinformation.NFAlt.idenNo']}"></h:outputLabel>
+										</p:column>
+										<p:column>
+											<h:outputText
+												value="#{updateInfoAction.customerInfoNonFinDTOMain.propIdentityNo}" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<h:outputLabel
+												value="#{msg['customeruser.updateinformation.NFAlt.idenExpDate']}"></h:outputLabel>
+										</p:column>
+										<p:column>
+											<h:outputText
+												value="#{updateInfoAction.customerInfoNonFinDTOMain.idenExpiryDate}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+							</p:tab>
+
+
+							<p:tab
+								title="#{msg['customeruser.updateinformation.NFAlt.AddressDetails']}">
+								<p:accordionPanel multiple="true">
+									<p:tab
+										title="#{msg['customeruser.updateinformation.NFAlt.mobileEmail']}">
+										<h:panelGroup id="mobilepanel">
+											<div class="row">
+												<p:panelGrid columns="5" layout="grid"
+													rendered="#{updateInfoAction.enableMobilePanel}">
+													<p:outputLabel
+														value="#{msg['customeruser.updateinformation.NFAlt.mobileno']}" />
+													<!-- <h:outputText readonly="true"
+														value="#{updateInfoAction.custNFAddressContactDTO1.userDialCode}" /> -->
+													<h:outputText id="checks" style="border:none;"
+														value="#{updateInfoAction.custNFAddressContactDTO1.contactNumber}"
+														readonly="true">
+													</h:outputText>
+													<p:commandButton value="#{msg['close']}"
+														action="#{updateInfoAction.updateMobileNo()}"
+														update="mobilepanel"
+														rendered="#{!updateInfoAction.enableMobilePanel}" />
+													<p:commandButton id="editbtn11" value="#{msg['edit']}"
+														action="#{updateInfoAction.cancelUpdateMobileNo()}"
+														update="mobilepanel"
+														rendered="#{updateInfoAction.enableMobilePanel}" />
+												</p:panelGrid>
+											</div>
+											<div class="row">
+												<p:panelGrid columns="3" layout="grid"
+													rendered="#{!updateInfoAction.enableMobilePanel}">
+													<p:outputLabel
+														value="#{msg['customeruser.updateinformation.NFAlt.newmobileno']}" />
+													<p:selectOneMenu
+														value="#{updateInfoAction.countryCodeSelected}"
+														id="dialCode" style="width:120px">
+														<f:selectItems value="#{updateInfoAction.dialCodes}" />
+														<p:ajax listener="#{updateInfoAction.saveMobileNo}"
+															event="change" update="dialCode"></p:ajax>
+														<!-- <f:selectItems value="#{updateInfoAction.dialCodes}"/> -->
+														<!-- <p:ajax listener="#{updateInfoAction.saveMobileNo}"
+															event="change" update="dialCode"></p:ajax> -->
+													</p:selectOneMenu>
+													<p:inputText id="mob" type="text"
+														placeholder="Example :509999999"
+														value="#{updateInfoAction.newMobileNumber}" maxlength="10">
+														<p:ajax event="blur" update="mob"></p:ajax>
+													</p:inputText>
+												</p:panelGrid>
+												<span><p:commandButton value="#{msg['cancel']}"
+														action="#{updateInfoAction.updateMobileNo()}"
+														update="mobilepanel"
+														rendered="#{!updateInfoAction.enableMobilePanel}" /></span> <span>
+													<p:commandButton value="#{msg['done']}"
+														actionListener="#{updateInfoAction.saveDetails}"
+														update="mobilepanel,checks"
+														rendered="#{!updateInfoAction.enableMobilePanel}" />
+												</span>
+											</div>
+										</h:panelGroup>
+
+										<h:panelGroup id="mailpanel">
+											<div class="row">
+												<p:panelGrid columns="3" layout="grid"
+													rendered="#{updateInfoAction.enableEmailPanel}">
+													<p:outputLabel
+														value="#{msg['customeruser.updateinformation.NFAlt.emailaddress']}" />
+													<p:inputText style="border:none;"
+														value="#{updateInfoAction.custNFAddressContactDTO1.email}"
+														readonly="true" />
+													<p:commandButton value="#{msg['close']}"
+														action="#{updateInfoAction.updateEmailId()}"
+														update="mailpanel"
+														rendered="#{!updateInfoAction.enableEmailPanel}" />
+													<p:commandButton id="editbtn14" value="#{msg['edit']}"
+														action="#{updateInfoAction.cancelUpdateEmailId()}"
+														update="mailpanel"
+														rendered="#{updateInfoAction.enableEmailPanel}" />
+												</p:panelGrid>
+											</div>
+
+											<div class="row">
+												<p:panelGrid columns="5" layout="grid"
+													rendered="#{!updateInfoAction.enableEmailPanel}">
+													<p:outputLabel
+														value="#{msg['customeruser.updateinformation.NFAlt.emailaddress1']}" />
+													<p:inputText value="#{updateInfoAction.newEmailId}"
+														placeholder="#{msg['customeruser.updateinformation.NFAlt.emailplaceholer']}">
+														<p:ajax
+															listener="#{updateInfoAction.emailValidationOnTAb}"
+															event="blur" update="mailpanel"></p:ajax>
+													</p:inputText>
+													<p:inputText value="#{updateInfoAction.newEmailId2}"
+														placeholder="#{msg['customeruser.updateinformation.NFAlt.emailplaceholer1']}">
+														<p:ajax
+															listener="#{updateInfoAction.emailValidationOnTAb}"
+															event="blur" update="mailpanel"></p:ajax>
+													</p:inputText>
+													<p:commandButton value="#{msg['cancel']}"
+														action="#{updateInfoAction.updateEmailId()}"
+														update="mailpanel"
+														rendered="#{!updateInfoAction.enableEmailPanel}" />
+													<p:commandButton value="#{msg['done']}"
+														action="#{updateInfoAction.saveEmailId()}"
+														update="mailpanel"
+														rendered="#{!updateInfoAction.enableEmailPanel}" />
+												</p:panelGrid>
+											</div>
+										</h:panelGroup>
+									</p:tab>
+
+									<p:tab
+										title="#{msg['customeruser.updateinformation.NFAlt.addrType']}">
+										<h:panelGroup id="addresspaneling">
+											<div class="row">
+												<p:panelGrid columns="4" layout="grid"
+													rendered="#{updateInfoAction.enableAddressPanel}">
+													<p:outputLabel value="#{msg['updateinfo.address1']}" />
+													<p:outputLabel
+														value="#{updateInfoAction.custNFAddressDTO1.address1}" />
+													<p:outputLabel value="#{msg['updateinfo.address2']}" />
+													<p:outputLabel
+														value="#{updateInfoAction.custNFAddressDTO1.address2}" />
+													<p:outputLabel value="#{msg['updateinfo.address3']}" />
+													<p:outputLabel
+														value="#{updateInfoAction.custNFAddressDTO1.address3}" />
+													<p:outputLabel value="#{msg['updateinfo.buildno']}" />
+													<p:outputLabel
+														value="#{updateInfoAction.custNFAddressDTO1.buildingno}" />
+													<p:outputLabel value="#{msg['updateinfo.unitno']}" />
+													<p:outputLabel
+														value="#{updateInfoAction.custNFAddressDTO1.unitno}" />
+													<p:outputLabel value="#{msg['updateinfo.addino']}" />
+													<p:outputLabel
+														value="#{updateInfoAction.custNFAddressDTO1.additionalno}" />
+
+													<p:outputLabel value="Correspondance Address" />
+													<p:selectOneMenu disabled="true" style="width:200px;"
+														value="#{updateInfoAction.custNFAddressDTO1.corresAddress}">
+														<f:selectItem itemLabel="Yes" itemValue="Y" />
+														<f:selectItem itemLabel="No" itemValue="N" />
+													</p:selectOneMenu>
+
+
+
+													<p:commandButton value="#{msg['close']}"
+														action="#{updateInfoAction.updateAddress()}"
+														update="addresspaneling"
+														rendered="#{!updateInfoAction.enableAddressPanel}" />
+													<p:commandButton value="#{msg['edit']}"
+														action="#{updateInfoAction.cancelUpdateAddress()}"
+														update="addresspaneling"
+														rendered="#{updateInfoAction.enableAddressPanel}" />
+												</p:panelGrid>
+											</div>
+
+											<div class="row">
+												<p:panelGrid columns="4" layout="grid"
+													rendered="#{!updateInfoAction.enableAddressPanel}">
+													<p:outputLabel value="#{msg['updateinfo.address1']}" />
+													<p:inputText value="#{updateInfoAction.newAdd1}" />
+													<p:outputLabel value="#{msg['updateinfo.address2']}" />
+													<p:inputText value="#{updateInfoAction.newAdd2}" />
+													<p:outputLabel value="#{msg['updateinfo.address3']}" />
+													<p:inputText value="#{updateInfoAction.newAdd3}" />
+
+													<p:outputLabel value="#{msg['updateinfo.buildno']}" />
+													<p:inputText value="#{updateInfoAction.buidlno}" />
+													<p:outputLabel value="#{msg['updateinfo.unitno']}" />
+													<p:inputText value="#{updateInfoAction.unitnol}" />
+													<p:outputLabel value="#{msg['updateinfo.addino']}" />
+													<p:inputText value="#{updateInfoAction.addino}" />
+
+													<p:outputLabel value="Correspondance Address" />
+													<p:selectOneMenu id="coread" style="width:200px;"
+														value="#{updateInfoAction.corredad}">
+														<f:selectItem itemLabel="Yes" itemValue="Y" />
+														<f:selectItem itemLabel="No" itemValue="N" />
+													</p:selectOneMenu>
+
+
+												</p:panelGrid>
+											</div>
+
+
+											<div class="row">
+												<p:panelGrid columns="2" layout="grid"
+													rendered="#{!updateInfoAction.enableAddressPanel}">
+													<p:commandButton value="#{msg['cancel']}"
+														action="#{updateInfoAction.updateAddress()}"
+														update="addresspaneling"
+														rendered="#{!updateInfoAction.enableAddressPanel}" />
+													<p:commandButton value="#{msg['done']}"
+														action="#{updateInfoAction.saveAddress()}"
+														update="addresspaneling"
+														rendered="#{!updateInfoAction.enableAddressPanel}" />
+												</p:panelGrid>
+											</div>
+
+											<div class="row">
+												<p:panelGrid columns="4" layout="grid"
+													rendered="#{updateInfoAction.enablePostPanel}">
+
+													<p:outputLabel value="City" />
+													<h:outputText
+														value="#{updateInfoAction.custNFAddressDTO1.citys}">
+													</h:outputText>
+
+													<p:outputLabel value="Postal Code" />
+													<h:outputText
+														value="#{updateInfoAction.custNFAddressDTO1.postalCode}">
+													</h:outputText>
+
+													<p:outputLabel value="P.O.Box" />
+													<h:outputText
+														value="#{updateInfoAction.custNFAddressDTO1.poBoxNo}" />
+
+													<p:outputLabel value="Town/Dist" />
+													<h:outputText
+														value="#{updateInfoAction.custNFAddressDTO1.town}">
+													</h:outputText>
+
+													<p:commandButton value="#{msg['close']}"
+														action="#{updateInfoAction.updatePostBox()}"
+														update="addresspaneling"
+														rendered="#{!updateInfoAction.enablePostPanel}" />
+													<p:commandButton value="#{msg['edit']}"
+														action="#{updateInfoAction.cancelUpdatePostBox()}"
+														update="addresspaneling"
+														rendered="#{updateInfoAction.enablePostPanel}" />
+
+												</p:panelGrid>
+											</div>
+
+
+											<div class="row">
+												<p:panelGrid columns="4" layout="grid"
+													rendered="#{!updateInfoAction.enablePostPanel}">
+
+													<p:outputLabel value="City" />
+													<p:selectOneMenu id="ciywe"
+														value="#{updateInfoAction.poBoxEmirates}">
+														<f:selectItem itemLabel="--Select--" itemValue="" />
+														<f:selectItems value="#{updateInfoAction.stateMap}" />
+														<p:ajax listener="#{updateInfoAction.savePostBoxAzax}"
+															event="change" update="ciywe"></p:ajax>
+													</p:selectOneMenu>
+
+													<p:outputLabel value="Postal Code" />
+													<p:selectOneMenu id="psoas"
+														value="#{updateInfoAction.postcode}">
+														<f:selectItem itemLabel="--Select--" itemValue="" />
+														<f:selectItems value="#{updateInfoAction.postcodelist}"
+															var="each" itemLabel="#{each.code}"
+															itemValue="#{each.code}" />
+														<p:ajax listener="#{updateInfoAction.savePostBoxAzax1}"
+															event="change" update="psoas"></p:ajax>
+													</p:selectOneMenu>
+
+													<p:outputLabel value="P.O.Box" />
+													<p:inputText value="#{updateInfoAction.poBoxNo}">
+													</p:inputText>
+
+
+													<p:outputLabel value="Town/Dist" />
+													<p:inputText value="#{updateInfoAction.town}">
+													</p:inputText>
+
+
+													<p:commandButton value="#{msg['cancel']}"
+														action="#{updateInfoAction.updatePostBox()}"
+														update="addresspaneling"
+														rendered="#{!updateInfoAction.enablePostPanel}" />
+													<p:commandButton value="#{msg['done']}"
+														action="#{updateInfoAction.savePostBox()}"
+														update="addresspaneling"
+														rendered="#{!updateInfoAction.enablePostPanel}" />
+												</p:panelGrid>
+											</div>
+
+											<div class="row">
+												<p:panelGrid columns="5" layout="grid">
+													<p:outputLabel
+														value="#{msg['customeruser.updateinformation.NFAlt.country']}" />:
+												<h:outputText
+														value="#{updateInfoAction.custNFAddressDTO1.countryENG}"
+														disabled="#{addressDTO.enableAllValue}" maxlength="30">
+													</h:outputText>
+												</p:panelGrid>
+											</div>
+											<br></br>
+
+											<p style="color: red;">NOTE:Please be informed that, If
+												you change your Correspondence Address to "YES". All the
+												mail we will transferred to respective Address.</p>
+
+										</h:panelGroup>
+									</p:tab>
+
+									<p:tab title="Documente Upload">
+										<h:panelGroup id="docupload">
+											<div class="row">
+												<h:form enctype="multipart/form-data">
+													<p:fileUpload id="fileupload"
+														fileUploadListener="#{updateInfoAction.upload}"
+														value="#{updateInfoAction.docFilepath}"
+														allowTypes="/(\.|\/)(gif|jpeg|jpg|png|pdf|doc|docx|xls|xlsx)$/"
+														fileLimit="3" update="fileupload" sizeLimit="5242880"
+														invalidFileMessage="Please select valid file"
+														fileLimitMessage="#{msg['bus.doc.req4']}">
+														<f:attribute name="documentDTO" value="#{document}" />
+													</p:fileUpload>
+													<p:message for="fileupload" />
+												</h:form>
+											</div>
+										</h:panelGroup>
+									</p:tab>
+
+
+								</p:accordionPanel>
+								<br></br>
+
+								<!-- <p:accordionPanel multiple="true">
+									<p:tab title="#{msg['medical.finance.heading']}"> 
+										<h:panelGroup>
+											<ui:repeat var="questions"
+												value="#{updateInfoAction.questionnaireList}">
+												<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+													<p:outputLabel value="#{questions.questionNameEng}"
+														rendered="#{questions.required eq 'Y'}"></p:outputLabel>
+												</div>
+												<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+													<h:inputText
+														rendered="#{questions.answerType eq 'T' and (questions.required eq 'Y')}"
+														value="#{questions.answer}"
+														required="#{questions.mandatory}"
+														styleClass="inputBorder bottom-space" />
+													<h:inputText
+														rendered="#{questions.answerType eq 'N' and (questions.required eq 'Y')}"
+														type="number" value="#{questions.answer}"
+														required="#{questions.mandatory}"
+														styleClass="inputBorder bottom-space" />
+													<p:calendar
+														rendered="#{questions.answerType eq 'D' and (questions.required eq 'Y')}"
+														pattern="dd/MM/yyyy" value="#{questions.date}"
+														required="#{questions.mandatory}"
+														styleClass="calendar-bottom" />
+
+													<p:dataTable
+														rendered="#{questions.answerType eq 'L' and (questions.required eq 'Y')}"
+														var="answers"
+														selection="#{updateInfoAction.selectedRecord}"
+														rowKey="#{answers.listId}"
+														value="#{questions.listBoxAnswers}">
+														<p:ajax event="toggleSelect"></p:ajax>
+														<f:facet name="header">
+                                                         #{msg['medical.finance.Serviceques']}  
+                                                        </f:facet>  
+														<p:column headerText="#{msg['medical.finance.listcode']}"> 
+															<p:inputText value="#{answers.answerCode}" />
+														</p:column>
+														<p:column headerText="#{msg['medical.finance.listvalue']}"> 
+															<p:inputText value="#{answers.answer}" />
+														</p:column>
+														<p:column selectionMode="multiple">
+														</p:column>
+													</p:dataTable>
+												</div>
+											</ui:repeat>
+										</h:panelGroup>
+
+									</p:tab>
+								</p:accordionPanel>
+								<br></br>
+ -->
+								<h:panelGroup id="termsandcod">
+									<div class="row">
+										<h4>
+											<b>#{msg['termscondheading']}</b>
+										</h4>
+										<ui:repeat value="#{updateInfoAction.termsConditionYesYes}"
+											var="details">
+											<p:selectBooleanCheckbox id="cond"
+												style="width:20px; margin-left: 20px;">
+												<f:validator validatorId="termsConditionsValidator" />
+											</p:selectBooleanCheckbox>
+											<span style="color: green;">* </span>
+											<em>#{details.conditionEng}</em>
+											<br />
+										</ui:repeat>
+										<ui:repeat value="#{updateInfoAction.termsConditionYesNo}"
+											var="details">
+											<span style="color: green;">*</span>
+											<em><p:outputLabel style="color: green!important;"
+													value="Info : " /></em>
+											<p:outputLabel style="margin-left: 5px;"
+												value="#{details.conditionEng}" />
+											<br />
+										</ui:repeat>
+										<p:selectBooleanCheckbox id="terms"
+											value="#{updateInfoAction.termsCondition}"
+											style="width:20px;">
+											<f:validator validatorId="termsConditionsValidator" />
+										</p:selectBooleanCheckbox>
+										<span style="color: red;">* </span>#{msg['termscondmain']}
+									</div>
+									<br></br>
+
+									<div class="row">
+										<p:commandButton id="continuelater"
+											rendered="#{updateInfoAction.fatcaFlagpopUp}"
+											actionListener="#{updateInfoAction.btnContinueLatertestfatca}"
+											action="#{updateInfoAction.fatcasample()}"
+											value="Fatca Form Submit" update="form" style="float:right" />
+										<p:commandButton id="continuelater1"
+											rendered="#{!updateInfoAction.fatcaFlagpopUp}"
+											actionListener="#{updateInfoAction.btnContinueLater}"
+											action="#{otpValidation.btnPrintForm()}"
+											value="#{msg['submit']}" update="form,otpform"
+											style="float:right" />
+									</div>
+									<br></br>
+									<br></br>
+								</h:panelGroup>
+							</p:tab>
+						</p:tabView>
+					</div>
+				</div>
+			</div>
+			<script>
+			function functionotpmsg(){
+				swal("OTP!", "Successfully sended to your registered email and conatact no!", "success")	
+			} 
+			</script>
+		</h:form>
+		<h:panelGroup>
+			<p:dialog id="successTab"
+				header="#{homeDetailsAction.searchPolicyList.productName} | #{homeDetailsAction.searchPolicyList.planNumber} | #{homeDetailsAction.searchPolicyList.premiumPayStatus}"
+				widgetVar="dlg3" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform">
+					<b><span>#{msg['otp.securityques']}</span></b>
+					<br></br>
+					<p:panelGrid columns="1" layout="grid">
+						<p:inputText id="questionn" value="#{otpValidation.securityQues}"
+							style="border:none;" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.answer']}</span></b>
+						<p:inputText value="#{otpValidation.userSecurityAns}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.enter']}</span></b>
+						<p:password id="otp" value="#{otpValidation.userOTP}"
+							disabled="#{otpValidation.enableResendOTP}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span style="color: red;">#{msg['otp.valid']}</span></b>
+						<p:commandLink value="#{msg['otp.resend']}"
+							actionListener="#{otpValidation.smsGenerator}" immediate="true"
+							update="form" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="3" layout="grid">
+						<p:poll interval="#{otpValidation.OTPTimeLimit}"
+							listener="#{otpValidation.checkTime()}" immediate="true"
+							update="form" autoStart="#{otpValidation.renderStartTime}"
+							stop="#{otpValidation.renderStopTime}" />
+						<p:commandButton type="submit" value="#{msg['ok']}"
+							actionListener="#{otpValidation.validateOTP}"
+							update="form,otpform12"
+							disabled="#{otpValidation.enableResendOTP}" />
+						<p:commandButton value="#{msg['cancel']}"
+							actionListener="#{otpValidation.delete}" update="form" />
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+
+		<h:panelGroup>
+			<p:dialog id="successTab156" header="#{msg['top.not']}" modal="true"
+				widgetVar="dlg4" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform12">
+					<b><span>#{otpValidation.popmsg}</span></b>
+					<br></br>
+					<br></br>
+					<p:commandButton value="#{msg['ok']}" style="float:center"
+						action="#{homeDetailsAction.servicelist()}" update="form" />
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+
+	</ui:define>
+</ui:composition>

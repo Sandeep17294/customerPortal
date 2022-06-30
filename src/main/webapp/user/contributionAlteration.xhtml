@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['customeruser.contributiontableheading']}</b>
+						</h1>
+						<div class="row">
+							<h:panelGroup>
+								<div class="row">
+									<p:selectOneMenu value="#{homeDetailsAction.selectPolicyNo}"
+										style="margin-bottom:10px;">
+										<f:selectItems value="#{homeDetailsAction.policyListMap}" />
+										<p:ajax event="change" update="form"
+											listener="#{homeDetailsAction.getMyOutstanding}" />
+									</p:selectOneMenu>
+									<br></br> <br></br>
+									<!-- <h:outputText value="#{msg['customeruser.contributiontable.outamttotss']}:"></h:outputText>
+									<h:outputText
+										value="#{homeDetailsAction.totalContributionAmtStr}" />
+									<h:outputText value="#{homeDetailsAction.totalOutstandingAmt}">
+										<f:convertNumber pattern="###,##0.00" />
+									</h:outputText>
+									<br></br> <br></br>
+									<h:outputText value="#{msg['customeruser.contributiontable.outreceipts']}:"></h:outputText>
+									<h:outputText
+										value="#{homeDetailsAction.totOutstandingReceipt}" /> -->
+								</div>
+								<br></br>
+								<div class="row">
+									<p:dataTable id="payments" var="outstanding" emptyMessage="#{msg['datatable.empty.msg']}"
+										value="#{homeDetailsAction.outstandingDetailsList}">
+										<f:facet name="header">
+                                                #{msg['customeruser.contributiontable.facet']}
+                                        </f:facet>
+										<p:column headerText="#{msg['customeruser.plantabele.policyNo']}" sortBy="#{fund.fundName}">
+											<h:outputText value="#{outstanding.policyno}" />
+										</p:column>
+										<p:column headerText="#{msg['customeruser.contributiontable.outduedate']}"
+											sortBy="#{outstanding.dueDate}">
+											<h:outputText value="#{outstanding.dueDate.time}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.contributiontable.outdueamt']}"
+											sortBy="#{outstanding.outstandingCurrencyCode}">
+											<h:outputText value="#{outstanding.outstandingCurrencyCode}" />
+											<h:outputText value="&#160;" />
+											<h:outputText value="#{outstanding.dueAmount}">
+												<f:convertNumber pattern="###,##0.00" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.contributiontable.outreceiptdate']}"
+											sortBy="#{outstanding.receiptingDate}">
+											<h:outputText value="#{outstanding.receiptingDate.time}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.contributiontable.outstatus']}" sortBy="#{outstanding.status}">
+											<h:outputText value="#{outstanding.status}" />
+										</p:column>
+									</p:dataTable>
+									<br></br>
+									<h:commandLink id="excelsheet">
+										<p:graphicImage name="images/template/excelo.png"
+											library="cp-layout" class="mobile" />
+										<p:dataExporter type="xls" target="payments" fileName="outstanding"/>
+										<p:tooltip id="toolTipFadeDocument" for="excelsheet"
+											value="#{msg['customeruser.plantabele.excel']}" position="right"
+											style="color:green !important; background-color:white !important;font-size:13px !important;" />
+									</h:commandLink>
+									<br></br>
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

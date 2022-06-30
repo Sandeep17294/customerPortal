@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ul class="route-bar-menu">
+	
+	<li>
+	
+	</li>
+
+		<li>
+		<h:form id="lanAr">
+		
+	<p:commandLink value="AR " ajax="false"><span><i class="fa fa-globe"></i></span>
+	 <f:actionListener binding="#{guestPreferences.setOrientationRTL(true)}"/>
+	 <f:actionListener binding="#{homeDetailsAction.submitNewRequestRendering()}"/>
+	</p:commandLink>
+	
+	</h:form>
+
+		</li>
+
+		<li>
+		<h:form id="lanEng">
+	<p:commandLink value="ENG " actionListener="#{guestPreferences.setOrientationRTL(false)}" ajax="false"><span><i class="fa fa-globe"></i></span></p:commandLink>
+	
+	</h:form>
+		</li>
+
+
+	</ul>
+
+	<p:tooltip globalSelector=".route-bar-menu a" position="bottom"
+		showDelay="0" />
+
+</ui:composition>

@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card card-w-title">
+						<h1>
+							<b>#{msg['adminuser.regaudit']}</b>
+						</h1>
+
+						<p:dataTable id="regTracking" var="trackList"
+							value="#{adminHomeAction.cpRegistartionAuditTrailsDTO}"
+							reflow="true" paginator="true" rows="10"
+							paginatorPosition="bottom">
+							<f:facet name="header">
+                                 #{msg['adminuser.regaudit.list']}
+                            </f:facet>
+
+							<p:column headerText="#{msg['adminuser.regaudit.id']}" sortBy="#{trackList.username}">
+								<h:outputText value="#{trackList.username}" />
+							</p:column>
+
+							<p:column headerText="#{msg['adminuser.regaudit.pno']}" sortBy="#{trackList.policyNo}"
+								style="width:300px;">
+								<h:outputText value="#{trackList.policyNo}" />
+							</p:column>
+
+							<p:column headerText="#{msg['adminuser.regaudit.stus']}"
+								sortBy="#{userList.registrationStatus}">
+								<h:outputText value="#{trackList.registrationStatus}" />
+							</p:column>
+
+							<p:column headerText="#{msg['detailsearch']}">
+								<p:commandButton icon="fa fa-search" update="form"
+									oncomplete="PF('carDialog').show()">
+									<f:setPropertyActionListener value="#{trackList}"
+										target="#{adminHomeAction.filteraduitlist}" />
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+
+						<p:dialog
+							header="#{msg['adminuser.regaudit.refas']}  #{adminHomeAction.filteraduitlist.username}"
+							widgetVar="carDialog" modal="true" hideEffect="fade"
+							resizable="false" responsive="true" width="auto"
+							showEffect="explode">
+
+							<p:outputPanel id="selectedCarDetail" style="text-align:center;">
+								<p:panelGrid columns="2" columnClasses="label,value"
+									style="width:100%">
+
+									<h:outputText value="#{msg['adminuser.regaudit.id']}" />
+									<h:outputText
+										value="#{adminHomeAction.filteraduitlist.username}" />
+										
+									<h:outputText value="#{msg['adminuser.regaudit.pno']}" />
+									<h:outputText
+										value="#{adminHomeAction.filteraduitlist.policyNo}" />
+								
+									<h:outputText value="#{msg['adminuser.regaudit.stus']}" />
+									<h:outputText
+										value="#{adminHomeAction.filteraduitlist.registrationStatus}" />
+									
+									<h:outputText value="#{msg['adminuser.regaudit.rema']}" />
+									<h:outputText
+										value="#{adminHomeAction.filteraduitlist.remarks}" />
+										
+									<h:outputText value="#{msg['adminuser.regaudit.rd']}" />
+									<h:outputText
+										value="#{adminHomeAction.filteraduitlist.registrationDate}" />	
+									
+									<h:outputText value="#{msg['adminuser.regaudit.aed']}" />
+									<h:outputText
+										value="#{adminHomeAction.filteraduitlist.activationDate}" />		
+
+								</p:panelGrid>
+							</p:outputPanel>
+						</p:dialog>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

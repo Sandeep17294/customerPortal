@@ -1,0 +1,231 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>Fatca Form</b>
+						</h1>
+
+						<p:graphicImage name="images/background/salamalogo.jpg"
+							library="cp-layout" class="mobile" />
+						<br></br> <br></br>
+
+						<div class="row">
+							<div id="j_idt149"
+								class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+								data-widget="widget_j_idt149">
+								<div id="j_idt149_header"
+									class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+									<span class="ui-panel-title">#{msg['customer.fatca.section11']}</span>
+								</div>
+								<span class="ui-panel-title">#{msg['customer.fatca.instructions']}</span>
+								<br></br> <br></br> <span class="ui-panel-title">#{msg['customer.fatca.foreignAccountTax']}</span><br></br>
+								<span style="color: #1a616d;" class="ui-panel-title">#{msg['customer.fatca.thomsonreuters']}</span><br></br>
+							</div>
+						</div>
+						<br></br>
+
+						<div class="row">
+							<div id="j_idt149"
+								class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+								data-widget="widget_j_idt149">
+								<div id="j_idt149_header"
+									class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+									<span class="ui-panel-title">#{msg['customer.fatca.section1.1']}</span>
+								</div>
+								<div id="j_idt149_content"
+									class="ui-panel-content ui-widget-content"
+									style="border: none;">
+									<p:panelGrid columns="3" layout="grid">
+										<p:outputLabel value="#{msg['customer.fatca.usperson']}" />
+										<p:selectOneRadio id="alter1"
+											value="#{otpValidation.fatcaDto.isUsPerson}" required="true"
+											requiredMessage="Pleasw Select">
+											<f:selectItem itemLabel="Yes" itemValue="Y" />
+											<span> </span>
+											<f:selectItem itemLabel="No" itemValue="N" />
+											<p:ajax listener="#{otpValidation.displayTinPanel}"
+												event="valueChange" update="alter1">
+											</p:ajax>
+										</p:selectOneRadio>
+										<p:message for="alter1" />
+									</p:panelGrid>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<strong><span>#{msg['customer.fatca.unitedStatedPerson']}</span></strong><br></br>
+							<span style="color: green;">Info*</span> <br /> <span>#{msg['customer.fatca.citizen']}</span>
+							<br /> <span>#{msg['customer.fatca.partnership']}</span> <br />
+							<span>#{msg['customer.fatca.estate']}</span> <br /> <span>#{msg['customer.fatca.trust']}</span>
+							<br /> <br /> <span>#{msg['customer.fatca.completesection']}</span>
+						</div>
+
+						<h:panelGroup>
+							<div class="row">
+								<div id="j_idt149"
+									class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+									data-widget="widget_j_idt149">
+									<div id="j_idt149_header"
+										class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+										<span class="ui-panel-title">#{msg['customer.fatca.section1.2']}</span>
+									</div>
+									<div id="j_idt149_content"
+										class="ui-panel-content ui-widget-content"
+										style="border: none;">
+										<p:panelGrid columns="4" layout="grid">
+											<p:outputLabel value="#{msg['customer.fatca.tin']}" />
+											<p:inputMask id="ssn" value="#{otpValidation.fatcaDto.tinNo}"
+												mask="999-99-9999" required="true"
+												requiredMessage="SSN Required">
+												<p:message for="ssn" />
+											</p:inputMask>
+										</p:panelGrid>
+									</div>
+								</div>
+							</div>
+						</h:panelGroup>
+
+						<div class="row">
+							<div id="j_idt149"
+								class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+								data-widget="widget_j_idt149">
+								<div id="j_idt149_header"
+									class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+									<span class="ui-panel-title">#{msg['customer.fatca.section1.3']}</span>
+								</div>
+								<div id="j_idt149_content"
+									class="ui-panel-content ui-widget-content"
+									style="border: none;">
+									<p:panelGrid columns="3" layout="grid">
+										<p:outputLabel value="#{msg['customer.fatca.uae']}" />
+										<p:selectOneRadio id="uaeResident"
+											value="#{otpValidation.fatcaDto.residentUAE}" required="true"
+											requiredMessage="Please Select">
+											<f:selectItem itemLabel="Yes" itemValue="Y" />
+											<f:selectItem itemLabel="No" itemValue="N" />
+										</p:selectOneRadio>
+										<p:message for="uaeResident" />
+
+										<p:outputLabel value="#{msg['customer.fatca.taxresident']}" />
+										<p:selectOneRadio id="alter"
+											value="#{otpValidation.fatcaDto.taxMoreThanOne}"
+											required="true" requiredMessage="Please Select">
+											<f:selectItem itemLabel="Yes" itemValue="Y" />
+											<f:selectItem itemLabel="No" itemValue="N" />
+											<p:ajax listener="#{otpValidation.displayTinPanel}"
+												event="valueChange" update="alter">
+											</p:ajax>
+										</p:selectOneRadio>
+										<p:message for="alter" />
+									</p:panelGrid>
+									<span> <strong>#{msg['customer.fatca.columnbelow']}</strong></span>
+								</div>
+
+								<h:panelGroup id="panelid">
+									<p:dataTable id="Datatable" var="list"
+										emptyMessage="#{msg['customer.fatca.addcountry']}"
+										value="#{otpValidation.countryList}"
+										expandableRowGroups="true">
+										<p:column headerText="#{msg['customer.fatca.jurisdiction']}">
+											<p:selectOneMenu style="margin-left: 110px;"
+												value="#{list.country}">
+												<f:selectItem itemLabel="--Select--" itemValue="--Select--" />
+												<f:selectItems value="#{otpValidation.countryMap}" />
+											</p:selectOneMenu>
+										</p:column>
+										<p:column headerText="#{msg['customer.fatca.reasontin']}">
+											<p:inputText value="#{list.tinOrReason}"
+												style="margin-left: 130px;" />
+										</p:column>
+									</p:dataTable>
+									<br></br>
+									<p:commandButton value="Add"
+										action="#{otpValidation.addFatcaInfo}" update="panelid"
+										process="panelid" style="float:right">
+									</p:commandButton>
+								</h:panelGroup>
+							</div>
+						</div>
+						<br></br> <br></br> <br></br>
+
+						<div class="row">
+							<div id="j_idt149"
+								class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+								data-widget="widget_j_idt149">
+								<div id="j_idt149_header"
+									class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+									<span class="ui-panel-title">#{msg['customer.fatca.section1.4']}</span>
+								</div>
+								<div id="j_idt149_content"
+									class="ui-panel-content ui-widget-content"
+									style="border: none;">
+									<span><strong>#{msg['customer.fatca.forusperson']}</strong><br />
+										<br />#{msg['customer.fatca.myknowledge']}<br /> <br />#{msg['customer.fatca.investmentplan']}<br />
+										<br />#{msg['customer.fatca.allpayments']}<br /> <br /> <strong>#{msg['customer.fatca.fatcaandCrs']}</strong><br />
+										<br />#{msg['customer.fatca.insurancecompany']}<br /> <br />#{msg['customer.fatca.iacknowledge']}<br />
+										<br />#{msg['customer.fatca.identificationnumber']}<br /> <br />#{msg['customer.fatca.authorizedtosign']}<br />
+										<br />#{msg['customer.fatca.allstatements']}<br /> <br />#{msg['customer.fatca.30dayschange']}
+									</span>
+								</div>
+							</div>
+						</div>
+						<br></br>
+
+						<div class="row">
+							<div id="j_idt149"
+								class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+								data-widget="widget_j_idt149">
+								<div id="j_idt149_header"
+									class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+									<span class="ui-panel-title">Terms and Condition</span>
+								</div>
+								<div id="j_idt149_content"
+									class="ui-panel-content ui-widget-content"
+									style="border: none;">
+									<h:selectBooleanCheckbox id="terms1"
+										value="#{otpValidation.termsConditionFatca}" type="checkbox"
+										required="true"
+										requiredMessage="#{msg['customer.home.checkBox']}"
+										style="width:20px;">
+										<f:validator validatorId="termsConditionsValidator" />
+									</h:selectBooleanCheckbox>
+									<span style="color: red;">*</span> <strong>I have read
+										and understand the above term and conditions.</strong>
+									<p:message for="terms1" />
+									<br></br>
+									<p:commandButton id="print" 
+										actionListener="#{otpValidation.btnPrintForm}"
+										value="Submit"
+										update="form,otpform12" style="float:right"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		
+		<h:panelGroup>
+			<p:dialog id="successTab156"
+				header="#{msg['top.not']}" modal="true"
+				widgetVar="dlg4" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform12">
+					<b><span>#{otpValidation.popmsg}</span></b>
+					<br></br><br></br>
+					<p:commandButton value="#{msg['ok']}"  style="float:center"
+							action="#{homeDetailsAction.servicelist()}" update="form" />
+					</h:form>
+			</p:dialog>
+		</h:panelGroup>
+		
+	</ui:define>
+</ui:composition>

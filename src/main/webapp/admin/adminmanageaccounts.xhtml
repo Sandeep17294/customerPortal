@@ -1,0 +1,230 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Admin User</ui:define>
+	<ui:define name="content">
+   
+		<h:form id="form">
+		 <p:growl id="growl" showDetail="true" sticky="true" />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1><b>#{msg['adminuser.manageAccounts']}</b></h1>
+						<div class="card">
+						
+							<h:panelGroup>
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.activationPeriod']}"
+											style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminuser.label1.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText style="text-align:center;" id="activationPeriod"
+											value="#{adminHomeAction.passwordRulesDTO.nActivationPeriod}"
+											required="true"
+											requiredMessage="#{msg['adminuser.manAcc.ActActive']}" />
+										<p:message for="activationPeriod" />
+									</div>
+								</div>
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.dormantPeriod']}"
+											style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminuser.label2.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText style="text-align:center;" id="dormantPeriod"
+											value="#{adminHomeAction.passwordRulesDTO.nDormantPeriod}"
+											required="true"
+											requiredMessage="#{msg['adminuser.manAcc.dormantPerAdm']}" />
+										<p:message for="dormantPeriod" />
+									</div>
+								</div>
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.passwordAge']}" style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminuser.label3.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText style="text-align:center;" id="age"
+											value="#{adminHomeAction.passwordRulesDTO.nPasswordAge}"
+											required="true"
+											requiredMessage="#{msg['adminuser.manAcc.entpwdAge']}" />
+										<p:message for="age" />
+									</div>
+								</div>
+
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.passwordSameAsUser']}"
+											style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminuser.label4.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+									<p:selectOneMenu id="passwordSameasUser"
+										value="#{adminHomeAction.passwordRulesDTO.vPasswordSameasUser}"
+										style="margin-bottom:10px;width:180px;">
+										<f:selectItem itemLabel="#{msg['yes']}" itemValue="Y" />
+										<f:selectItem itemLabel="#{msg['no']}" itemValue="N" />
+										<p:ajax event="change" update="passwordSameasUser"></p:ajax>
+									</p:selectOneMenu>
+										<p:message for="passwordSameasUser" />
+									</div>
+								</div>
+								
+								
+								
+
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.passwordHistory']}"
+											style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminuser.label5.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText style="text-align:center;" id="passwordHistory"
+											value="#{adminHomeAction.passwordRulesDTO.nPasswordHis}"
+											required="true"
+											requiredMessage="#{msg['adminuser.manAcc.entPwdHisotry']}" />
+										<p:message for="passwordHistory" />
+									</div>
+								</div>
+
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.passwordChangeRequired']}"
+											style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminuser.label6.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+									<p:selectOneMenu id="changePassReq"
+										value="#{adminHomeAction.passwordRulesDTO.vChangePassReq}"
+										style="margin-bottom:10px;width:180px;">
+										<f:selectItem itemLabel="#{msg['yes']}" itemValue="Y" />
+										<f:selectItem itemLabel="#{msg['no']}" itemValue="N" />
+										<p:ajax event="change" update="changePassReq"></p:ajax>
+									</p:selectOneMenu>
+										<p:message for="changePassReq" />
+									</div>
+								</div>
+								
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.accountLockout']}"
+											style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminuser.label7.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText style="text-align:center;" id="accountLockOut"
+											value="#{adminHomeAction.passwordRulesDTO.nAccntLockout}"
+											required="true"
+											requiredMessage="#{msg['adminuser.manAcc.entAccLock']}" />
+										<p:message for="accountLockOut" />
+									</div>
+								</div>
+
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.releaseAccountLockout']}"
+											style="font-weight: bold;" />
+										<BR />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+									<p:selectOneMenu id="releaseAccntLock"
+										value="#{adminHomeAction.passwordRulesDTO.vReleaseAccntLock}"
+										style="margin-bottom:10px;width:180px;">
+										<f:selectItem itemLabel="#{msg['yes']}" itemValue="Y" />
+										<f:selectItem itemLabel="#{msg['no']}" itemValue="N" />
+										<p:ajax event="change" update="releaseAccntLock"></p:ajax>
+									</p:selectOneMenu>
+										<p:message for="releaseAccntLock" />
+									</div>
+								</div>
+								
+								
+
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.timeoutReleaseAccountLockout']}"
+											style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminHome.label8.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText style="text-align:center;" id="timeLock"
+											value="#{adminHomeAction.passwordRulesDTO.nTimeReleaseAccntLock}"
+											required="true"
+											requiredMessage="#{msg['adminuser.manAcc.accLock']}" />
+										<p:message for="timeLock" />
+									</div>
+								</div>
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.captcha']}"
+											style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminuser.label9.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText style="text-align:center;" id="captcha"
+											value="#{adminHomeAction.passwordRulesDTO.nRequiredCaptcha}"
+											required="true"
+											requiredMessage="#{msg['adminuser.manAcc.reqCaptcha']}" />
+										<p:message for="captcha" />
+									</div>
+								</div>
+
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['adminuser.manageAccounts.ques']}"
+											style="font-weight: bold;" />
+										<BR />
+										<p:outputLabel
+											value="#{msg['adminuser.label9.manageAccount']}" />
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText style="text-align:center;" id="quesCount"
+											value="#{adminHomeAction.passwordRulesDTO.nQuestionCount}"
+											required="true"
+											requiredMessage="#{msg['adminuser.manAcc.reqCaptcha']}" />
+										<p:message for="quesCount" />
+									</div>
+								</div>
+
+								<div>
+									<p:commandButton value="#{msg['submit']}"
+										action="#{adminHomeAction.manageaccountsaveupdate}"
+										update="form"
+										style="margin-bottom:10px;" />
+								</div>
+
+							</h:panelGroup>
+							
+					
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

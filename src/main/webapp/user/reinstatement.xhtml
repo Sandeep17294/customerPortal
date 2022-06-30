@@ -1,0 +1,769 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['reinstatement']}</b>
+						</h1>
+
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">
+									#{homeDetailsAction.searchPolicyList.productName} |
+									#{homeDetailsAction.searchPolicyList.planNumber} |
+									#{homeDetailsAction.searchPolicyList.premiumPayStatus} </span>
+							</div>
+						</div>
+						<br></br>
+
+						<div class="row">
+							<h:panelGroup>
+								<p:dataTable rowIndexVar="indexNo" widgetVar="rein" var="policy"
+									reflow="true"
+									value="#{reinStatementAction.reinStatementDTOList}">
+									<f:facet name="header">
+                                #{msg['customeruser.reisnt.facet1']}
+                            </f:facet>
+
+									<p:column headerText="#{msg['customeruser.reisnt.plan']}"
+										sortBy="#{policy.policyNo}">
+										<h:outputText value="#{policy.policyNo}" />
+									</p:column>
+
+									<p:column headerText="#{msg['customeruser.reisnt.contdate']}"
+										sortBy="#{policy.premDue.time}">
+										<h:outputText value="#{policy.premDue.time}">
+											<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+										</h:outputText>
+
+									</p:column>
+
+									<p:column headerText="#{msg['customeruser.reisnt.status']}"
+										sortBy="#{policy.planStatus}">
+										<h:outputText style="font-weight:600;color:red;" value="#{policy.planStatus}" />
+									</p:column>
+
+									<p:column headerText="#{msg['customeruser.reisnt.stadate']}"
+										sortBy="#{policy.lapseDate.time}">
+										<h:outputText value="#{policy.lapseDate.time}">
+											<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+										</h:outputText>
+									</p:column>
+
+									<p:column headerText="#{msg['customeruser.reisnt.totcondate']}"
+										sortBy="#{policy.outstandingAmount}">
+										<h:outputText value="#{policy.outstandingAmount}">
+										<f:convertNumber pattern="###,##0.00" />
+										</h:outputText>
+									</p:column>
+
+									<p:column headerText="#{msg['customeruser.reisnt.date']}">
+										<p:selectBooleanCheckbox value="#{policy.status}" id="status"
+											validatorMessage="#{msg['customeruser.reisnt.psr']}">
+											<p:ajax
+												listener="#{reinStatementAction.showPlanDetails(indexNo)}"
+												update="form" />
+										</p:selectBooleanCheckbox>
+									</p:column>
+								</p:dataTable>
+							</h:panelGroup>
+						</div>
+						<br></br> <br></br>
+
+						<div class="row">
+							<h:panelGroup id="updateReinPanel">
+								<h:panelGroup id="panelupdate"
+									rendered="#{reinStatementAction.enablePanel}">
+
+									<div id="j_idt149"
+										class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+										data-widget="widget_j_idt149">
+										<div id="j_idt149_header"
+											class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+											<span class="ui-panel-title">#{msg['customeruser.reisnt.facet2']}</span>
+										</div>
+										<div id="j_idt149_content"
+											class="ui-panel-content ui-widget-content"
+											style="border: none;">
+
+											<p:panelGrid columns="4" layout="grid">
+												<span>#{msg['customeruser.reisnt.planno']}</span>
+												<h:outputText
+													value="#{reinStatementAction.reinStatementsDTO.selectedPlanNo}" />
+
+												<span>#{msg['customeruser.reisnt.planname']}</span>
+												<h:outputText
+													value="#{reinStatementAction.reinStatementsDTO.selectedPlanName}" />
+
+												<span>#{msg['customeruser.reisnt.first']}</span>
+												<h:outputText
+													value="#{reinStatementAction.reinStatementsDTO.firstCover}" />
+
+												<span>#{msg['customeruser.reisnt.dob']}</span>
+												<h:outputText
+													value="#{reinStatementAction.reinStatementsDTO.firstCoverDob}"
+													readonly="true">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+
+												<span>#{msg['customeruser.reisnt.second']}</span>
+												<h:outputText
+													value="#{reinStatementAction.reinStatementsDTO.secondCover}"
+													readonly="true" />
+
+												<span>#{msg['customeruser.reisnt.dob2']}</span>
+												<h:outputText
+													value="#{reinStatementAction.reinStatementsDTO.secondCoverDob}"
+													readonly="true">
+													<f:convertDateTime pattern="dd/MM/yyyy" />
+												</h:outputText>
+											</p:panelGrid>
+											<br></br>
+
+											<div class="row">
+												<span><b>#{msg['customeruser.reisnt..currencty']}:#{reinStatementAction.reinStatementsDTO.planCurr}
+														| #{msg['customeruser.reisnt.term']}:
+														#{reinStatementAction.reinStatementsDTO.planTerm} |
+														#{msg['customeruser.reisnt.conterm']}:
+														#{reinStatementAction.reinStatementsDTO.contribTerm} </b></span>
+											</div>
+											<br></br>
+
+											<div class="row">
+												<p:dataTable id="benefitDetails"
+													value="#{reinStatementAction.reinbenifitDTOList}"
+													var="policy" reflow="true">
+													<f:facet name="header">
+                                                        #{msg['customeruser.reisnt.facet3']}
+                                                     </f:facet>
+
+													<p:column headerText="#{msg['customeruser.reisnt.start']}"
+														sortBy="#{policy.benifitType}">
+														<h:outputText value="#{policy.benifitType}" />
+													</p:column>
+
+													<p:column headerText="#{msg['customeruser.reisnt.pba']}"
+														sortBy="#{policy.firstCoverbenifitAmt}">
+														<h:outputText value="#{policy.firstCoverbenifitAmt}" />
+													</p:column>
+
+
+													<p:column headerText="#{msg['customeruser.reisnt.bty']}"
+														sortBy="#{policy.firstCoverbenifitTerm}">
+														<h:outputText value="#{policy.firstCoverbenifitTerm}" />
+													</p:column>
+
+
+													<p:column headerText="#{msg['customeruser.reisnt.scm']}"
+														sortBy="#{policy.secondCoverbenifitAmt}">
+														<h:outputText value="#{policy.secondCoverbenifitAmt}" />
+													</p:column>
+
+													<p:column headerText="#{msg['customeruser.reisnt.bty']}"
+														sortBy="#{policy.secondCoverbenifitTerm}">
+														<h:outputText value="#{policy.secondCoverbenifitAmt}" />
+													</p:column>
+
+												</p:dataTable>
+											</div>
+											<br></br>
+
+											<div class="row">
+												<span><b>#{msg['customeruser.reisnt.rcc']} :
+														#{reinStatementAction.reinStatementsDTO.regulatContrib} </b></span>|
+												<span><b>#{msg['customeruser.reisnt.dfc']} :</b></span> <span><h:outputText
+														value="#{reinStatementAction.reinStatementsDTO.dueFirstContrib}">
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+													</h:outputText></span> <br></br> <span><b>#{msg['customeruser.reisnt.foc']}
+														:#{reinStatementAction.reinStatementsDTO.contribFreq} </b></span>| <span><b>Due
+														#{msg['customeruser.reisnt.doc']} :</b></span> <span><h:outputText
+														value="#{reinStatementAction.reinStatementsDTO.dueFinalContrib}">
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+													</h:outputText></span>
+											</div>
+											<br></br>
+
+											<h:panelGroup rendered="false">
+												<div class="row">
+													<div id="j_idt149"
+														class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+														data-widget="widget_j_idt149">
+														<div id="j_idt149_header"
+															class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+															<span class="ui-panel-title">#{msg['customeruser.reisnt.facet4']}</span>
+														</div>
+														<div id="j_idt149_content"
+															class="ui-panel-content ui-widget-content"
+															style="border: none;">
+
+															<p:panelGrid columns="3" layout="grid"
+																id="medicalAndLifeStyle">
+
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt..mlsd']}" />
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt.fircovmen']}" />
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt.seccobmem']}" />
+
+																<p:outputLabel
+																	value="#{msg['customeruser.reisnt.heights']}" />
+																<p:inputText id="height1"
+																	value="#{reinStatementAction.reinStatementsDTO.firstCoverHeight}">
+																</p:inputText>
+																<p:inputText id="height1Second"
+																	disabled="#{reinStatementAction.secondMember == null}"
+																	value="#{reinStatementAction.reinStatementsDTO.secondCoverHeight}">
+																</p:inputText>
+
+																<p:outputLabel
+																	value="#{msg['customeruser.reisnt.weight']}" />
+																<p:inputText id="weight1"
+																	value="#{reinStatementAction.reinStatementsDTO.firstCoverWeight}" />
+																<p:inputText id="weight1Second"
+																	disabled="#{reinStatementAction.secondMember == null}"
+																	value="#{reinStatementAction.reinStatementsDTO.secondCoverWeight}" />
+
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt.yesnocri']}" />
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt.yesnoo']}" />
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt.yesnoo']}" />
+
+																<p:outputLabel
+																	value="#{msg['customeruser.reisnt.que1']} ?" />
+																<p:selectOneRadio id="ques1"
+																	value="#{reinStatementAction.reinStatementsDTO.quesOneFirst}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+																<p:selectOneRadio id="ques1Second"
+																	disabled="#{reinStatementAction.secondMember == null}"
+																	value="#{reinStatementAction.reinStatementsDTO.quesOneSecond}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+
+
+																<p:outputLabel
+																	value="#{msg['customeruser.reisnt.ques2']}" />
+																<p:selectOneRadio>
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+																<p:selectOneRadio>
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+
+
+																<p:outputLabel value="#{msg['customeruser.reisnt.a']}?" />
+																<p:selectOneRadio id="ques2A"
+																	value="#{reinStatementAction.reinStatementsDTO.quesTwoAFirst}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+																<p:selectOneRadio id="ques2ASecond"
+																	disabled="#{reinStatementAction.secondMember == null}"
+																	value="#{reinStatementAction.reinStatementsDTO.quesTwoASecond}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+
+																<p:outputLabel value="#{msg['customeruser.reisnt.b']}?" />
+																<p:selectOneRadio id="ques2B"
+																	value="#{reinStatementAction.reinStatementsDTO.quesTwoBFirst}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+																<p:selectOneRadio id="ques2BSecond"
+																	disabled="#{reinStatementAction.secondMember == null}"
+																	value="#{reinStatementAction.reinStatementsDTO.quesTwoBSecond}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+
+																<p:outputLabel value="#{msg['customeruser.reisnt.d']}?" />
+																<p:selectOneRadio id="ques2C"
+																	value="#{reinStatementAction.reinStatementsDTO.quesTwoCFirst}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+																<p:selectOneRadio id="ques2CSecond"
+																	disabled="#{reinStatementAction.secondMember == null}"
+																	value="#{reinStatementAction.reinStatementsDTO.quesTwoCSecond}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+
+																<p:outputLabel value="#{msg['customeruser.reisnt.e']}?" />
+																<p:selectOneRadio id="ques2D"
+																	value="#{reinStatementAction.reinStatementsDTO.quesTwoDFirst}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+																<p:selectOneRadio id="ques2DSecond"
+																	disabled="#{reinStatementAction.secondMember == null}"
+																	value="#{reinStatementAction.reinStatementsDTO.quesTwoDSecond}">
+																	<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+																	<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+																</p:selectOneRadio>
+															</p:panelGrid>
+
+															<br></br> <span><b>#{msg['customeruser.reisnt.mcedter']}.</b></span>
+															<br></br>
+
+															<p:panelGrid columns="4" layout="grid">
+																<p:outputLabel
+																	value="#{msg['customeruser.reisnt.fircovmen']}" />
+																<p:inputTextarea
+																	value="#{reinStatementAction.reinStatementsDTO.firstCoverMedDetails}" />
+																<p:outputLabel
+																	value="#{msg['customeruser.reisnt.seccobmem']}" />
+																<p:inputTextarea
+																	disabled="#{reinStatementAction.secondMember == null}"
+																	value="#{reinStatementAction.reinStatementsDTO.secondCoverMedDetails}" />
+															</p:panelGrid>
+
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div id="j_idt149"
+														class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+														data-widget="widget_j_idt149">
+														<div id="j_idt149_header"
+															class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+															<span class="ui-panel-title">#{msg['customeruser.reisnt.facet5']}</span>
+														</div>
+														<div id="j_idt149_content"
+															class="ui-panel-content ui-widget-content"
+															style="border: none;">
+
+															<p:panelGrid columns="4" layout="grid">
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt.ai']}" />
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt.yr1']}" />
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt.yr2']}" />
+																<p:outputLabel style="font-weight:bold;"
+																	value="#{msg['customeruser.reisnt.yr3']}" />
+
+
+																<p:outputLabel
+																	value="#{msg['customeruser.reisnt.fircovmen']}" />
+																<p:inputText
+																	value="#{reinStatementAction.reinStatementsDTO.firstCoverIncomeLast}">
+																</p:inputText>
+																<p:inputText
+																	value="#{reinStatementAction.reinStatementsDTO.firstCoverIncomeSecondLast}">
+																</p:inputText>
+																<p:inputText
+																	value="#{reinStatementAction.reinStatementsDTO.firstCoveredIncomeThirdLast}">
+																</p:inputText>
+
+																<p:outputLabel
+																	value="#{msg['customeruser.reisnt.seccobmem']}" />
+																<p:inputText
+																	value="#{reinStatementAction.reinStatementsDTO.secondCoverIncomeLast}">
+																</p:inputText>
+																<p:inputText
+																	value="#{reinStatementAction.reinStatementsDTO.secondCoverIncomeSecondLast}">
+																</p:inputText>
+																<p:inputText
+																	value="#{reinStatementAction.reinStatementsDTO.secondCoveredIncomeThirdLast}">
+																</p:inputText>
+
+																<p:outputLabel
+																	value="#{msg['customeruser.reisnt.pholder']}" />
+																<p:inputText
+																	value="#{reinStatementAction.reinStatementsDTO.planHoldIncomeLast}">
+																</p:inputText>
+																<p:inputText
+																	value="#{reinStatementAction.reinStatementsDTO.planHoldIncomeSecondLast}">
+																</p:inputText>
+																<p:inputText
+																	value="#{reinStatementAction.reinStatementsDTO.planHoldIncomeThirdLast}">
+																</p:inputText>
+															</p:panelGrid>
+														</div>
+													</div>
+												</div>
+
+
+												<div id="j_idt149"
+													class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+													data-widget="widget_j_idt149">
+													<div id="j_idt149_header"
+														class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+														<span class="ui-panel-title">#{msg['customeruser.reisnt.facet6']}</span>
+													</div>
+													<div id="j_idt149_content"
+														class="ui-panel-content ui-widget-content"
+														style="border: none;">
+
+														<p:panelGrid columns="4" layout="grid">
+															<p:outputLabel style="font-weight:bold;" value="Assets" />
+															<p:outputLabel style="font-weight:bold;"
+																value="#{msg['customeruser.reisnt.fircovmen']}" />
+															<p:outputLabel style="font-weight:bold;"
+																value="#{msg['customeruser.reisnt.seccobmem']}" />
+															<p:outputLabel style="font-weight:bold;"
+																value="#{msg['customeruser.reisnt.pholder']}" />
+
+															<p:outputLabel value="#{msg['customeruser.reisnt.cash']}" />
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.firstCoverCash}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmountUpdFirst" />
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.secondCoverCash}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmountUpdSec">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.planHoldCash}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmtHold">
+																</p:ajax>
+															</p:inputText>
+
+															<p:outputLabel value="#{msg['customeruser.reisnt.sb']}" />
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.firstCoverShares}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmountUpdFirst">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.secondCoverShares}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmountUpdSec">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.planHoldShares}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmtHold">
+																</p:ajax>
+															</p:inputText>
+
+															<p:outputLabel value="#{msg['customeruser.reisnt.re']}" />
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.firstCoverRealEstate}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmountUpdFirst">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.secondCoverRealEstate}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmountUpdSec">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.planHoldRealEstate}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmtHold">
+																</p:ajax>
+															</p:inputText>
+
+															<p:outputLabel value="#{msg['customeruser.reisnt.oa']}" />
+															<p:inputText styleClass="form-group numbers_only"
+																value="#{reinStatementAction.reinStatementsDTO.firstCoverAssetsOthers}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmountUpdFirst">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.secondCoverAssetsOthers}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmountUpdSec">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.planHoldAssetsOthers}">
+																<p:ajax listener="#{reinStatementAction.assetsTotal}"
+																	event="blur" update="totalAmtHold">
+																</p:ajax>
+															</p:inputText>
+
+															<p:outputLabel
+																value="#{msg['customeruser.reisnt.totassets']}" />
+															<h:outputText id="totalAmountUpdFirst"
+																value="#{reinStatementAction.totalAssetsFirstCover}"></h:outputText>
+															<h:outputText id="totalAmountUpdSec"
+																value="#{reinStatementAction.totalAssetsSecond}"></h:outputText>
+															<h:outputText id="totalAmtHold"
+																value="#{reinStatementAction.totalAssetsPlanHold}"></h:outputText>
+
+															<p:outputLabel style="font-weight:bold;"
+																value="#{msg['customeruser.reisnt.lia']}" />
+															<p:outputLabel style="font-weight:bold;"
+																value="#{msg['customeruser.reisnt.fircovmen']}" />
+															<p:outputLabel style="font-weight:bold;"
+																value="#{msg['customeruser.reisnt.seccobmem']}" />
+															<p:outputLabel style="font-weight:bold;"
+																value="#{msg['customeruser.reisnt.pholder']}" />
+
+
+
+															<p:outputLabel
+																value="#{msg['customeruser.termalter.loan']}" />
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.firstCoverLoan}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabfirst">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.secondCoverLoan}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabSecnd">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.planHoldLoan}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabplan">
+																</p:ajax>
+															</p:inputText>
+
+															<p:outputLabel
+																value="#{msg['customeruser.termalter.ap']}" />
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.firstCoverPayable}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabfirst">
+																</p:ajax>
+															</p:inputText>
+
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.secondCoverPayable}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabSecnd">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.planHoldPayable}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabplan">
+																</p:ajax>
+															</p:inputText>
+
+															<p:outputLabel
+																value="#{msg['customeruser.termalter.mort']}" />
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.firstCoverMortgage}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabfirst">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.secondCoverMortgage}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabSecnd">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.planHoldMortgage}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabplan">
+																</p:ajax>
+															</p:inputText>
+
+															<p:outputLabel
+																value="#{msg['customeruser.termalter.ol']}" />
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.firstCoverOther}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabfirst">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.secondCoverOther}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabSecnd">
+																</p:ajax>
+															</p:inputText>
+															<p:inputText
+																value="#{reinStatementAction.reinStatementsDTO.planHoldOther}">
+																<p:ajax
+																	listener="#{reinStatementAction.liabilitiesTotal}"
+																	event="blur" update="totalliabplan">
+																</p:ajax>
+															</p:inputText>
+
+															<p:outputLabel
+																value="#{msg['customeruser.termalter.totloan']}" />
+															<h:outputText id="totalliabfirst"
+																value="#{reinStatementAction.totalLiabFirstCover}"></h:outputText>
+															<h:outputText id="totalliabSecnd"
+																value="#{reinStatementAction.totalLiabSecond}"></h:outputText>
+															<h:outputText id="totalliabplan"
+																value="#{reinStatementAction.totalLiabPlanHold}"></h:outputText>
+														</p:panelGrid>
+													</div>
+												</div>
+											</h:panelGroup>											
+											<br></br><br></br>
+
+											<div id="j_idt149"
+												class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+												data-widget="widget_j_idt149">
+												<div id="j_idt149_header"
+													class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+													<span class="ui-panel-title">#{msg['termscondheading']}</span>
+												</div>
+												<div id="j_idt149_content"
+													class="ui-panel-content ui-widget-content"
+													style="border: none;">
+														<ui:repeat
+															value="#{reinStatementAction.termsConditionYesNo}"
+															var="details">
+															<span style="color: green;">*</span>
+															<em><p:outputLabel
+																	style="color: green!important; margin-left: 0px;"
+																	value="Info : ">
+																</p:outputLabel></em>
+															<p:outputLabel
+																style="margin-left: 11px; line-height:2; display: contents;"
+																value="#{details.conditionEng}">
+															</p:outputLabel>
+															<br />
+														</ui:repeat>
+														<ui:repeat
+															value="#{reinStatementAction.termsConditionYesYes}"
+															var="details">
+															
+															<p:selectBooleanCheckbox id="cond" style="width: 21px; "
+																>
+																<f:validator validatorId="termsConditionsValidator" />
+															</p:selectBooleanCheckbox>
+															<p:outputLabel
+																style="margin-left: 11px;color: #1a616d!important;font-weight: bold; line-height:2; display: contents;"
+																value="#{details.conditionEng}">
+															</p:outputLabel>
+															<br />
+															<br />
+														</ui:repeat>
+														<p:selectBooleanCheckbox id="terms"
+															value="#{reinStatementAction.termsCondition}"
+															type="checkbox" 
+															style="width:20px;">
+															<f:validator validatorId="termsConditionsValidator" />
+														</p:selectBooleanCheckbox>
+														<span style="color: red;">*</span> <strong>#{msg['termscondmain']}.</strong>
+												</div>
+											</div>
+
+											<div class="row">
+												<p:commandButton id="continueLater"
+													value="#{msg['admin.dwTime']}" styleClass="btn btn-success"
+													rendered="#{reinStatementAction.fatcaFlagpopUp}"
+													actionListener="#{reinStatementAction.btnContinueLater}"
+													update="form" />
+
+												<p:commandButton id="continueLater1"
+													value="#{msg['submit']}"
+													rendered="#{!reinStatementAction.fatcaFlagpopUp}"
+													actionListener="#{reinStatementAction.btnContinueLater}"
+													action="#{otpValidation.btnPrintForm()}"
+													update="form,otpform" style="float:right" />
+											</div>
+
+											<br></br> <br></br>
+
+										</div>
+									</div>
+								</h:panelGroup>
+							</h:panelGroup>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+			<script>
+				function functionotpmsg() {
+					swal(
+							"OTP!",
+							"Successfully sended to your registered email and conatact no!",
+							"success")
+				}
+			</script>
+		</h:form>
+		<h:panelGroup>
+			<p:dialog id="successTab"
+				header="#{reinStatementAction.planname} | #{reinStatementAction.planno} | LAPSE"
+				widgetVar="dlg3" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform">
+					<b><span>#{msg['otp.securityques']}</span></b>
+					<br></br>
+
+					<p:panelGrid columns="1" layout="grid">
+						<p:inputText id="questionn" value="#{otpValidation.securityQues}"
+							style="border:none;" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.answer']}</span></b>
+						<p:inputText value="#{otpValidation.userSecurityAns}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.enter']}</span></b>
+						<p:password id="otp" value="#{otpValidation.userOTP}"
+							disabled="#{otpValidation.enableResendOTP}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span style="color: red;">#{msg['otp.valid']}</span></b>
+						<p:commandLink value="#{msg['otp.resend']}"
+							actionListener="#{otpValidation.smsGenerator}" immediate="true"
+							update="form" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="3" layout="grid">
+						<p:poll interval="#{otpValidation.OTPTimeLimit}"
+							listener="#{otpValidation.checkTime()}" immediate="true"
+							update="form" autoStart="#{otpValidation.renderStartTime}"
+							stop="#{otpValidation.renderStopTime}" />
+						<p:commandButton type="submit" value="#{msg['ok']}"
+							actionListener="#{otpValidation.validateOTP}" update="form"
+							disabled="#{otpValidation.enableResendOTP}" />
+						<p:commandButton value="#{msg['cancel']}"
+							actionListener="#{otpValidation.delete}" update="form" />
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+
+	</ui:define>
+</ui:composition>

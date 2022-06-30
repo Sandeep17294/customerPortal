@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Panels</ui:define>
+	<ui:define name="viewname">
+		<li>Components</li>
+		<li>/</li>
+		<li><p:link outcome="/panel">Panels</p:link></li>
+	</ui:define>
+
+	<ui:define name="head">
+		<style type="text/css">
+.nba-grid {
+	width: 100%;
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+.ui-scrollpanel-content p:first-child {
+	margin: 0;
+}
+
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<div id="layout-right-panel">
+
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<h1>Your Plans</h1>
+							<p:dataTable id="policy1" var="policy"
+								value="#{homeDetailsAction.policyDetailsList}" rows="10">
+								<p:column
+									headerText="#{msg['customeruser.plantabele.policyName']}"
+									sortBy="#{policy.policyName}" styleClass="centeredColumnContent">
+									<h:outputText style="font-weight:600;text-align: center;"
+										value="#{policy.policyName}" />
+								</p:column>
+								<p:column
+									headerText="#{msg['customeruser.plantabele.policyNo']}"
+									sortBy="#{policy.policyNo}" styleClass="centeredColumnContent">
+									<h:outputText style="font-weight:600;text-align: center;"
+										value="#{policy.policyNo}"/>
+								</p:column>
+								
+								<p:column headerText="#{msg['customeruser.plantabele.outprem']}"
+									sortBy="#{policy.outstandingCurrencyCode}" styleClass="centeredColumnContent">
+									<h:outputText style="font-weight:600;"
+										value="#{policy.outstandingCurrencyCode}&#160;&#160;" />
+									<h:outputText value="#{policy.outstandingAmt}"
+										style="font-weight:600; text-align: center;">
+										<f:convertNumber pattern="###,##0.00" />
+									</h:outputText>
+								</p:column>
+								<p:column
+									headerText="Due Date"
+									sortBy="#{policy.premiumDueDate.time}" styleClass="centeredColumnContent">
+									<h:outputText value="#{policy.premiumDueDate.time}"
+										style="font-weight:600; text-align: center;">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+						</div>
+					</div>
+				</div>
+					<div class="submenu-content settings">
+					<div class="ui-g-12">
+					
+						
+							<div class="ui-g-12 ui-md-4">
+								<div class="status-box wireless-status">
+									<p:graphicImage name="images/template/poli1.png"
+										library="cp-layout" />
+									<i class="fa fa-money box-icon"></i> <i
+										class="fa fa-angle-right icon-details"></i> <span
+										class="status-name ">TOTAL POLICIES: <h:outputLabel
+								value="#{summaryAction.cpSummaryDetails.policyCount}"
+								rendered="#{summaryAction.notPolicyCount}" />
+										</span>
+
+								</div>
+							</div>
+						
+						
+							<div class="ui-g-12 ui-md-4">
+								<div class="status-box cooling-systems">
+									<p:graphicImage name="images/template/funds.png"
+										library="cp-layout" />
+									<i class="fa fa-money box-icon"></i> <i
+										class="fa fa-angle-right icon-details"></i> <span
+										class="status-name">FUND VALUE
+										<h:outputLabel value="#{homeDetailsAction.baseCurrencyCodeStr}" /> : <span
+								class="statistics timer count-title count-number" 
+								data-to="#{summaryAction.cpSummaryDetails.fundValue}"
+								data-speed="2000" /></span>
+										</div>
+							</div>
+						
+						
+							<div class="ui-g-12 ui-md-4">
+								<div class="status-box help-desk-load">
+									<p:graphicImage name="images/template/due.png"
+										library="cp-layout" />
+									<i class="fa fa-sort-amount-asc"></i> <i
+										class="fa fa-angle-right icon-details"></i> <span
+										class="status-name">OUTSTANDING <h:outputLabel
+									value="#{homeDetailsAction.baseCurrencyCodeStr}" />: <h:outputLabel
+									value="#{summaryAction.cpSummaryDetails.outStandingAmount}">
+									<f:convertNumber pattern="###,##0.00" /></h:outputLabel></span>
+
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

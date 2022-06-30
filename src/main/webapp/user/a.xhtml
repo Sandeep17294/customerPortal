@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Dashboard</ui:define>
+	<ui:define name="head">
+		<script type="text/javascript">
+			//<![CDATA[
+			function skinChart() {
+				this.cfg.shadow = false;
+				this.cfg.title = '';
+				this.cfg.seriesColors = [ '#007be5', '#20d077' ];
+				this.cfg.grid = {
+					background : '#ffffff',
+					borderColor : '#ffffff',
+					gridLineColor : '#F5F5F5',
+					shadow : false
+				};
+				this.cfg.axesDefaults = {
+					rendererOptions : {
+						textColor : '#666F77'
+					}
+				};
+				this.cfg.seriesDefaults = {
+					shadow : false,
+					lineWidth : 1,
+					markerOptions : {
+						shadow : false,
+						size : 7,
+						style : 'circle'
+					}
+				}
+			}
+			//]]>
+		</script>
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+
+* {
+	box-sizing: border-box
+}
+
+.container {
+	width: 100%;
+	background-color: #ddd;
+}
+
+.skills {
+	text-align: right;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: white;
+}
+
+.html {
+	width: 60%;
+	background-color: #4CAF50;
+}
+
+.css {
+	width: 80%;
+	background-color: #2196F3;
+}
+
+.js {
+	width: 65%;
+	background-color: #f44336;
+}
+
+.php {
+	width: 60%;
+	background-color: #808080;
+}
+</style>
+
+	</ui:define>
+	<ui:define name="content" window.onload = load();>
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card">
+							<h1>
+								<b>Change Password</b>
+							</h1>
+
+							<p>HTML</p>
+							<div class="container">
+								<div class="skills html">90%</div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<script> 
+			function load(){ 
+				  window.location.assign("/user/samplereply.jsf?faces-redirect=true");
+
+			} 
+			</script>	
+
+		</h:form>
+	</ui:define>
+</ui:composition>

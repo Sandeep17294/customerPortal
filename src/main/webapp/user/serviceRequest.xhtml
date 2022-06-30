@@ -1,0 +1,85 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['customeruser.servicetableheading.serviceTransactions']}</b>
+						</h1>
+						<div class="row">
+							<h:panelGroup>
+								<div class="row">
+									<p:dataTable id="requestDetailstable" var="getMyRequestDetails" emptyMessage="#{msg['datatable.empty.msg']}"
+										value="#{homeDetailsAction.serviceRequestMasterDTOList}"
+										reflow="true" paginator="true" rows="5">
+										<f:facet name="header">
+                                              #{msg['customeruser.servicetableheading.facet.serviceTransactions']}
+                                        </f:facet>
+										<p:column
+											headerText="#{msg['customeruser.servicetable.TransactionRefNo']}"
+											sortBy="#{getMyRequestDetails.serviceRequestNo}">
+											<p:commandLink
+												value="#{getMyRequestDetails.serviceRequestNo}"
+												actionListener="#{homeDetailsAction.generateReport(getMyRequestDetails.serviceRequestNo,getMyRequestDetails.serviceRequestType)}"
+												title="#{msg['customeruser.pdf']}" ajax="false"
+												action="#{homeDetailsAction.fileDelete}">
+												<p:fileDownload value="#{homeDetailsAction.file}"></p:fileDownload>
+											</p:commandLink>
+										</p:column>
+										<p:column sortBy="#{getMyRequestDetails.serviceRequestType}"
+											headerText="#{msg['customeruser.servicetable.TransactionType']}">
+											<h:outputText
+												value="#{getMyRequestDetails.serviceRequestType}" />
+										</p:column>
+										<p:column sortBy="#{getMyRequestDetails.policyNo}"
+											headerText="#{msg['customeruser.servicetable.PolicyNo']}">
+											<h:outputText value="#{getMyRequestDetails.policyNo}" />
+										</p:column>
+										<p:column sortBy="#{getMyRequestDetails.requestStatus}"
+											headerText="#{msg['customeruser.servicetable.TransactionStatus']}">
+											<h:outputText value="#{getMyRequestDetails.requestStatus}" />
+										</p:column>
+										<p:column sortBy="#{getMyRequestDetails.requestStatusDesc}"
+											headerText="#{msg['customeruser.servicetable.TransactionStatus.Description']}">
+											<h:outputText
+												value="#{getMyRequestDetails.requestStatusDesc}" />
+										</p:column>
+										<p:column sortBy="#{getMyRequestDetails.requestDate}"
+											headerText="#{msg['customeruser.servicetable.TransactionDate']}">
+											<h:outputText value="#{getMyRequestDetails.requestDate}" />
+										</p:column>
+										<!-- <p:column headerText="Service Transaction Documents Download">
+											<h:commandLink ajax="false">
+												<p:fileDownload
+													value="#{homeDetailsAction.custDownload(getMyRequestDetails)}" />
+												<p:graphicImage name="images/dashboard/download.png"
+													library="cp-layout" />
+											</h:commandLink>
+										</p:column> -->
+									</p:dataTable>
+								</div>
+								<br></br>
+								<h:commandLink id="excelsheet">
+									<p:graphicImage name="images/template/excelo.png"
+										library="cp-layout" class="mobile" />
+									<p:dataExporter type="xls" target="requestDetailstable"
+										fileName="servicerequesttransactions" pageOnly="true" />
+									<p:tooltip id="toolTipFadeDocument" for="excelsheet"
+										value="#{msg['customeruser.plantabele.excel']}"
+										position="right"
+										style="color:green !important; background-color:white !important;font-size:13px !important;" />
+								</h:commandLink>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

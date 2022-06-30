@@ -1,0 +1,402 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Customer User</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>Update Information</h1>
+
+						<div class="row">
+							<h4
+								style="margin-bottom: 0px; height: 50px; overflow: hidden; background: #e5e5e5 !important; margin-top: -7px !important; line-height: 10px; color: #1a616d; font-size: 14px; padding: 20px; width: 100%;">
+								<h:outputText
+									value="#{homeDetailsAction.searchPolicyList.productName}" />
+								|
+								<h:outputText
+									value="#{homeDetailsAction.searchPolicyList.planNumber}" />
+								|
+								<h:outputText
+									value="#{homeDetailsAction.searchPolicyList.premiumPayStatus}" />
+							</h4>
+						</div>
+						<br></br>
+
+						<p:tabView id="tabView">
+							<p:tab title="Personal">
+								<p:accordionPanel multiple="true">
+									<p:tab title="Personal Details">
+										<p:panelGrid id="personaldetails"
+											style="margin-top:10px;width: 50%;">
+											<p:row>
+												<p:column>
+													<h:outputLabel value="Title"></h:outputLabel>
+												</p:column>
+												<p:column>
+													<h:outputText
+														value="#{updateInfoAction.customerInfoNonFinDTOMain.titleCode}"
+														readonly="true" />
+												</p:column>
+											</p:row>
+
+											<p:row>
+												<p:column>
+													<h:outputLabel value="Given Name"></h:outputLabel>
+												</p:column>
+												<p:column>
+													<h:outputText
+														value="#{updateInfoAction.customerInfoNonFinDTOMain.givenName}"
+														readonly="true" />
+												</p:column>
+											</p:row>
+
+											<p:row>
+												<p:column>
+													<h:outputLabel value="Middle Name"></h:outputLabel>
+												</p:column>
+												<p:column>
+													<h:outputText
+														value="#{updateInfoAction.customerInfoNonFinDTOMain.middleName}" />
+												</p:column>
+											</p:row>
+
+											<p:row>
+												<p:column>
+													<h:outputLabel value="Surname Name"></h:outputLabel>
+												</p:column>
+												<p:column>
+													<h:outputText
+														value="#{updateInfoAction.customerInfoNonFinDTOMain.lastName}" />
+												</p:column>
+											</p:row>
+
+											<p:row>
+												<p:column>
+													<h:outputLabel value="Identification Type"></h:outputLabel>
+												</p:column>
+												<p:column>
+													<h:outputText
+														value="#{updateInfoAction.customerInfoNonFinDTOMain.propIdentityDesc}" />
+												</p:column>
+											</p:row>
+
+											<p:row>
+												<p:column>
+													<h:outputLabel value="Identification No"></h:outputLabel>
+												</p:column>
+												<p:column>
+													<h:outputText
+														value="#{updateInfoAction.customerInfoNonFinDTOMain.propIdentityNo}" />
+												</p:column>
+											</p:row>
+
+											<p:row>
+												<p:column>
+													<h:outputLabel value="Expiry Date"></h:outputLabel>
+												</p:column>
+												<p:column>
+													<h:outputText
+														value="#{updateInfoAction.customerInfoNonFinDTOMain.idenExpiryDate}">
+														<f:convertDateTime pattern="dd/MM/yyyy" />
+													</h:outputText>
+												</p:column>
+											</p:row>
+
+										</p:panelGrid>
+									</p:tab>
+								</p:accordionPanel>
+							</p:tab>
+
+
+							<p:tab title="Address Details">
+								<p:accordionPanel multiple="true">
+
+									<p:tab title="Mobile and Email">
+										<div class="row">
+											<p:panelGrid columns="3" layout="grid"
+												rendered="#{updateInfoAction.editmobilepanel}">
+												<p:outputLabel value="Mobile No" />
+												<p:inputText style="border:none;"
+													value="#{updateInfoAction.custNFAddressContactDTO1.contactNumber}"
+													readonly="true" />
+												<p:commandButton value="Edit"
+													actionListener="#{updateInfoAction.editmobile}"
+													update="form" />
+											</p:panelGrid>
+										</div>
+										<div class="row">
+											<p:panelGrid columns="5" layout="grid"
+												rendered="#{updateInfoAction.editmobilepanel1}">
+												<p:outputLabel value="New Mobile No" />
+												<p:selectOneMenu
+													value="#{updateInfoAction.countryCodeSelected}">
+													<f:selectItem itemLabel="+20" itemValue="+20" />
+													<f:selectItems value="#{updateInfoAction.countryDialCode}" />
+													<f:selectItems value="+20 Egypt" />
+
+													<p:ajax listener="#{updateInfoAction.saveMobileNo}"
+														event="change" update="form"></p:ajax>
+												</p:selectOneMenu>
+
+												<p:inputText value="#{updateInfoAction.newMobileNumber}"
+													maxlength="10" />
+												<p:commandButton value="Done"
+													actionListener="#{updateInfoAction.saveDetails}"
+													update="form" />
+												<p:commandButton value="Close"
+													actionListener="#{updateInfoAction.closemobile}"
+													update="form" />
+											</p:panelGrid>
+										</div>
+
+										<div class="row">
+											<p:panelGrid columns="3" layout="grid"
+												rendered="#{updateInfoAction.editemailpanel}">
+												<p:outputLabel value="Email ID" />
+												<p:inputText style="border:none;"
+													value="#{updateInfoAction.custNFAddressContactDTO1.email}"
+													readonly="true" />
+												<p:commandButton value="Edit"
+													actionListener="#{updateInfoAction.editmail}" update="form" />
+											</p:panelGrid>
+										</div>
+										<div class="row">
+											<p:panelGrid columns="2" layout="grid"
+												rendered="#{updateInfoAction.editemailpanel1}">
+												<p:outputLabel value="New Mail ID" />
+												<p:inputText value="#{updateInfoAction.newEmailId}">
+													<p:ajax listener="#{updateInfoAction.emailValidationOnTAb}"
+														event="blur" update="form"></p:ajax>
+												</p:inputText>
+											</p:panelGrid>
+										</div>
+										<div class="row">
+											<p:panelGrid columns="2" layout="grid"
+												rendered="#{updateInfoAction.editemailpanel1}">
+												<p:outputLabel value="Reconfirm ID" />
+												<p:inputText value="#{updateInfoAction.newEmailId2}">
+													<p:ajax listener="#{updateInfoAction.emailValidationOnTAb}"
+														event="blur" update="form"></p:ajax>
+												</p:inputText>
+											</p:panelGrid>
+										</div>
+										<div class="row">
+											<p:panelGrid columns="2" layout="grid"
+												rendered="#{updateInfoAction.editemailpanel1}">
+												<p:commandButton value="Done"
+													actionListener="#{updateInfoAction.saveEmailId}"
+													update="form" />
+												<p:commandButton value="Close"
+													actionListener="#{updateInfoAction.closemail}"
+													update="form" />
+											</p:panelGrid>
+										</div>
+									</p:tab>
+
+
+
+
+									<p:tab title="Correspondence Address">
+										<div class="row">
+											<p:panelGrid columns="3" layout="grid"
+												rendered="#{updateInfoAction.editaddress}">
+												<p:outputLabel value="Correspondance Address" />
+												<p:outputLabel
+													value="#{updateInfoAction.custNFAddressDTO1.address1}" />
+												<p:commandButton value="Edit"
+													actionListener="#{updateInfoAction.editaddress}"
+													update="form" />
+											</p:panelGrid>
+										</div>
+
+										<div class="row">
+											<p:panelGrid columns="2" layout="grid"
+												rendered="#{updateInfoAction.editaddress}">
+												<p:outputLabel value="Address 2" />
+												<p:outputLabel
+													value="#{updateInfoAction.custNFAddressDTO1.address2}" />
+											</p:panelGrid>
+										</div>
+
+										<div class="row">
+											<p:panelGrid columns="2" layout="grid"
+												rendered="#{updateInfoAction.editaddress}">
+												<p:outputLabel value="Address 3" />
+												<p:outputLabel
+													value="#{updateInfoAction.custNFAddressDTO1.address3}" />
+											</p:panelGrid>
+										</div>
+
+
+
+										<div class="row">
+											<p:panelGrid columns="2" layout="grid"
+												rendered="#{updateInfoAction.editaddress1}">
+												<p:outputLabel value="Address 1" />
+												<p:inputText value="#{updateInfoAction.newAdd1}" />
+											</p:panelGrid>
+										</div>
+
+										<div class="row">
+											<p:panelGrid columns="2" layout="grid"
+												rendered="#{updateInfoAction.editaddress1}">
+												<p:outputLabel value="Address 2" />
+												<p:inputText value="#{updateInfoAction.newAdd1}" />
+											</p:panelGrid>
+										</div>
+
+										<div class="row">
+											<p:panelGrid columns="2" layout="grid"
+												rendered="#{updateInfoAction.editaddress1}">
+												<p:outputLabel value="Address 3" />
+												<p:inputText value="#{updateInfoAction.newAdd1}" />
+											</p:panelGrid>
+										</div>
+
+										<div class="row">
+											<p:panelGrid columns="2" layout="grid"
+												rendered="#{updateInfoAction.editaddress1}">
+												<p:commandButton value="Done"
+													actionListener="#{updateInfoAction.saveAddress}"
+													update="form" />
+												<p:commandButton value="Close"
+													actionListener="#{updateInfoAction.closeaddress}"
+													update="form" />
+											</p:panelGrid>
+										</div>
+
+
+										<div class="row">
+											<p:panelGrid columns="3" layout="grid"
+												rendered="#{updateInfoAction.editpostpanel}">
+												<p:outputLabel value="P.O Box" />
+												<h:outputText
+													value="#{updateInfoAction.custNFAddressDTO1.postalCode}">
+												</h:outputText>
+												<p:commandButton value="Edit"
+													actionListener="#{updateInfoAction.editpost}" update="form" />
+											</p:panelGrid>
+										</div>
+										<div class="row">
+											<p:panelGrid columns="3" layout="grid"
+												rendered="#{updateInfoAction.editpostpanel}">
+												<p:outputLabel value="P.O Box Emirate" />
+												<h:outputText
+													value="#{updateInfoAction.custNFAddressDTO1.town}">
+												</h:outputText>
+											</p:panelGrid>
+										</div>
+
+										<div class="row">
+											<p:panelGrid columns="5" layout="grid"
+												rendered="#{updateInfoAction.editpostpanel1}">
+												<p:outputLabel value="New P.O Box" />
+												<p:inputText value="#{updateInfoAction.poBoxNo}">
+												</p:inputText>
+												<p:selectOneMenu value="#{updateInfoAction.poBoxEmirates}">
+													<f:selectItem itemLabel="--Select--" itemValue="" />
+													<f:selectItems value="#{updateInfoAction.stateMap}" />
+													<p:ajax listener="#{updateInfoAction.savePostBoxAzax}"
+														event="change" update="form"></p:ajax>
+												</p:selectOneMenu>
+												<p:commandButton value="Done"
+													actionListener="#{updateInfoAction.savePostBox}"
+													update="form" />
+												<p:commandButton value="close"
+													action="#{updateInfoAction.closepost}" update="form" />
+											</p:panelGrid>
+										</div>
+										<div class="row">
+											<p:panelGrid columns="5" layout="grid">
+												<p:outputLabel value="Country" />:
+												<h:outputText
+													value="#{updateInfoAction.custNFAddressDTO1.countryENG}"
+													disabled="#{addressDTO.enableAllValue}"
+													requiredMessage="#{msg['customer.policydetails.NFAlt.PostBoxreq']}"
+													maxlength="30">
+												</h:outputText>
+											</p:panelGrid>
+										</div>
+									</p:tab>
+
+								</p:accordionPanel>
+
+
+								<br></br>
+								<br></br>
+								<h:panelGroup>
+									<div class="row">
+										<h5>Terms and Conditions</h5>
+										<ui:repeat value="#{updateInfoAction.termsConditionYesNo}"
+											var="details">
+											<span style="color: green;">*</span>
+											<em><p:outputLabel style="color: green!important;"
+													value="Info: " /></em>
+											<p:outputLabel style="margin-left: 5px;"
+												value="#{details.conditionEng}" />
+											<br />
+										</ui:repeat>
+										<ui:repeat value="#{updateInfoAction.termsConditionYesYes}"
+											var="details">
+											<p:message for="cond" />
+											<p:selectBooleanCheckbox id="cond" style="width: 21px; "
+												required="true">
+												<f:validator validatorId="termsConditionsValidator" />
+											</p:selectBooleanCheckbox>
+											<p:outputLabel
+												style="margin-left: 11px;color: #1a616d!important;font-weight: bold;"
+												value="#{details.conditionEng}" />
+											<br />
+										</ui:repeat>
+										<p:message for="terms" />
+										<p:selectBooleanCheckbox id="terms" type="checkbox"
+											required="true"
+											requiredMessage="#{msg['customer.home.checkBox']}"
+											style="width:20px;">
+											<f:validator validatorId="termsConditionsValidator" />
+										</p:selectBooleanCheckbox>
+										<span style="color: red;">*</span> <strong
+											style="font-size: 13px;">#{msg['customer.policydetails.Redirection.conditionCheckBox']}</strong>
+									</div>
+
+									<div class="row">
+										<p:commandButton type="button" value="Submit"
+											style="float:right" />
+									</div>
+									<br></br>
+
+
+
+								</h:panelGroup>
+
+
+
+
+							</p:tab>
+
+
+						</p:tabView>
+
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

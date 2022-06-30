@@ -1,0 +1,488 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="head">
+		<f:facet name="first">
+			<style type="text/css">
+body .ui-steps .ui-steps-item {
+	width: 25%;
+}
+
+body .ui-state-highlight {
+	text-shadow: none !important;
+}
+
+body .ui-steps.custom {
+	margin-bottom: 30px;
+}
+
+body .ui-steps.custom .ui-steps-item .ui-menuitem-link {
+	height: 10px;
+	padding: 0 1em;
+	overflow: visible;
+	border: 1px solid #c8c8c8;
+	display: block;
+	background-color: #FFFFFF;
+}
+
+body .ui-steps.custom .ui-steps-item .ui-menuitem-link .ui-steps-number
+	{
+	background-color: #0081c2;
+	color: #FFFFFF;
+	display: inline-block;
+	width: 30px;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+	position: relative;
+	top: -3px;
+}
+
+body .ui-steps.custom .ui-steps-item .ui-menuitem-link .ui-steps-title {
+	margin-top: -6px;
+}
+
+body .ui-steps.custom .ui-steps-item.ui-state-highlight .ui-menuitem-link .ui-steps-title
+	{
+	color: #555;
+}
+</style>
+		</f:facet>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>Update Information Service Transaction</b>
+						</h1>
+						
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">
+									#{homeDetailsAction.searchPolicyList.productName} |
+									#{homeDetailsAction.searchPolicyList.planNumber} |
+									#{homeDetailsAction.searchPolicyList.premiumPayStatus} </span>
+							</div>
+						</div>
+						<br></br>
+						
+						<p:steps activeIndex="#{updateInfoAction.steps}" readonly="false">
+							<p:menuitem value="Personal Details" />
+							<p:menuitem value="Contact Details" />
+							<p:menuitem value="Address Details" />
+							<p:menuitem value="Confirmation" />
+						</p:steps>
+						<br></br> <br></br>
+						<div class="row">
+							<h:panelGroup id="personaldetails"
+								rendered="#{updateInfoAction.personaldetails}">
+								<p:panelGrid columns="4" layout="grid">
+									<h:outputLabel readonly="true" 
+										value="#{msg['customeruser.updateinformation.NFAlt.Title']}" />
+									<p:inputText
+										value="#{updateInfoAction.customerInfoNonFinDTOMain.titleCode}"
+										readonly="true" />
+
+									<h:outputLabel readonly="true"
+										value="#{msg['customeruser.updateinformation.NFAlt.GName']}" />
+									<p:inputText
+										value="#{updateInfoAction.customerInfoNonFinDTOMain.givenName}"
+										readonly="true" />
+
+									<h:outputLabel readonly="true"
+										value="#{msg['customeruser.updateinformation.NFAlt.MiddleName']}"></h:outputLabel>
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.customerInfoNonFinDTOMain.middleName}" />
+
+									<h:outputLabel readonly="true"
+										value="#{msg['customeruser.updateinformation.NFAlt.SurName']}"></h:outputLabel>
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.customerInfoNonFinDTOMain.lastName}" />
+
+									<h:outputLabel readonly="true"
+										value="#{msg['customeruser.updateinformation.NFAlt.identType']}"></h:outputLabel>
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.customerInfoNonFinDTOMain.propIdentityDesc}" />
+
+									<h:outputLabel readonly="true"
+										value="#{msg['customeruser.updateinformation.NFAlt.idenNo']}"></h:outputLabel>
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.customerInfoNonFinDTOMain.propIdentityNo}" />
+
+									<h:outputLabel readonly="true"
+										value="#{msg['customeruser.updateinformation.NFAlt.idenExpDate']}" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.customerInfoNonFinDTOMain.idenExpiryDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</p:inputText>
+								</p:panelGrid> <br></br>
+								<span style="color: red;"><b>Info: Please be informed
+										that you cannot change the personal details. You can update
+										contact and address details.</b></span>
+								<br></br>
+								<div class="row">
+									<p:commandButton rendered="false" value="Back" update="form"
+										style="float:left" icon="fa fa-backward Fs14 White" />
+									<p:commandButton value="Next" update="form"
+										actionListener="#{updateInfoAction.personalnext}"
+										style="float:right" icon="fa fa-forward Fs14 White" />
+									<br></br> <br></br>
+								</div>
+							</h:panelGroup>
+						</div>
+
+
+						<div class="row">
+							<h:panelGroup id="contactdetails"
+								rendered="#{updateInfoAction.contactdetails}">
+
+								<h:panelGroup id="contactdetails1">
+									<p:panelGrid columns="4" layout="grid"
+										rendered="#{updateInfoAction.oldcontact}">
+										<p:outputLabel
+											value="#{msg['customeruser.updateinformation.NFAlt.mobileno']}" />
+										<p:inputText id="checks"
+											value="#{updateInfoAction.custNFAddressContactDTO1.contactNumber}"
+											readonly="true" />
+										<p:toggleSwitch value="#{updateInfoAction.oldcontactoggle}">
+											<p:ajax listener="#{updateInfoAction.togglecontactedit}"
+												update="form" />
+										</p:toggleSwitch>
+									</p:panelGrid>
+								</h:panelGroup>
+
+								<h:panelGroup id="contactdetails2">
+									<p:panelGrid columns="4" layout="grid"
+										rendered="#{updateInfoAction.newcontact}">
+										<p:outputLabel
+											value="#{msg['customeruser.updateinformation.NFAlt.newmobileno']}" />
+										<p:inputText id="dialCode" readonly="true"
+											value="#{updateInfoAction.countryCodeSelected}" maxlength="10">	
+											<p:ajax event="blur" update="mob" listener="#{updateInfoAction.saveDetails}"/>
+										</p:inputText>
+
+										<p:inputText id="mob" type="text"
+											placeholder="Example :509999999" required="true" requiredMessage="Pleas enter the mobile number"
+											value="#{updateInfoAction.newMobileNumber}" maxlength="10">	
+											<p:message for="mob" />
+											<p:ajax event="blur" update="mob" listener="#{updateInfoAction.saveDetails}"/>
+										</p:inputText>
+										<p:toggleSwitch value="#{updateInfoAction.newcontactoggle}">
+											<p:ajax listener="#{updateInfoAction.togglecontacteditno}"
+												update="form" />
+										</p:toggleSwitch>
+									</p:panelGrid>
+								</h:panelGroup>
+
+								<h:panelGroup id="contactdetails3">
+									<p:panelGrid columns="4" layout="grid"
+										rendered="#{updateInfoAction.oldemail}">
+										<p:outputLabel
+											value="#{msg['customeruser.updateinformation.NFAlt.emailaddress']}" />
+										<p:inputText
+											value="#{updateInfoAction.custNFAddressContactDTO1.email}"
+											readonly="true" />
+										<p:toggleSwitch value="#{updateInfoAction.oldemailtoggle}">
+											<p:ajax listener="#{updateInfoAction.toggleemailedit}"
+												update="form" />
+										</p:toggleSwitch>
+									</p:panelGrid>
+								</h:panelGroup>
+
+								<h:panelGroup id="contactdetails4">
+									<p:panelGrid columns="4" layout="grid"
+										rendered="#{updateInfoAction.newemail}">
+										<p:outputLabel
+											value="#{msg['customeruser.updateinformation.NFAlt.emailaddress1']}" />
+										<p:inputText id="newemail1" value="#{updateInfoAction.newEmailId}"
+											placeholder="#{msg['customeruser.updateinformation.NFAlt.emailplaceholer']}"
+											required="true" requiredMessage="Please enter email id" validatorMessage="Email is not valid">
+                                                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /> 
+											<p:message for="newemail1" />
+											<p:ajax listener="#{updateInfoAction.emailValidationOnTAb}"
+												event="blur" update="newemail1"></p:ajax>
+										</p:inputText>
+										<p:inputText id="newemail2" value="#{updateInfoAction.newEmailId2}"
+											placeholder="#{msg['customeruser.updateinformation.NFAlt.emailplaceholer1']}"
+											required="true" requiredMessage="Please enter email id" validatorMessage="Email is not valid">
+                                                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" /> 
+											<p:message for="newemail2" />
+											<p:ajax 
+												event="blur" update="form"></p:ajax>
+										</p:inputText>
+										<p:toggleSwitch value="#{updateInfoAction.newemailtoggle}">
+											<p:ajax listener="#{updateInfoAction.toggleemaileditno}"
+												update="form" />
+										</p:toggleSwitch>
+									</p:panelGrid>
+								</h:panelGroup>
+
+								<div class="row">
+									<p:commandButton value="Back" update="form"
+										actionListener="#{updateInfoAction.contactback}"
+										style="float:left" icon="fa fa-backward Fs14 White" />
+									<p:commandButton value="Next" update="form"
+										actionListener="#{updateInfoAction.contactnext}"
+										style="float:right" icon="fa fa-forward Fs14 White" />
+									<br></br> <br></br>
+								</div>
+
+							</h:panelGroup>
+						</div>
+
+						<div class="row">
+							<h:panelGroup id="addressdetails"
+								rendered="#{updateInfoAction.addressdetails}">
+
+								<p:panelGrid columns="4" layout="grid"
+									rendered="#{updateInfoAction.oldaddress}">
+									<p:outputLabel value="#{msg['updateinfo.address1']}" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.address1}" />
+									<p:outputLabel value="#{msg['updateinfo.address2']}" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.address2}" />
+									<p:outputLabel value="#{msg['updateinfo.address3']}" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.address3}" />
+									<p:outputLabel value="#{msg['updateinfo.buildno']}" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.buildingno}" />
+									<p:outputLabel value="#{msg['updateinfo.unitno']}" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.unitno}" />
+									<p:outputLabel value="#{msg['updateinfo.addino']}" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.additionalno}" />
+									<p:outputLabel value="Correspondance Address" />
+									<p:selectOneMenu disabled="true" style="width:200px;"
+										value="#{updateInfoAction.custNFAddressDTO1.corresAddress}">
+										<f:selectItem itemLabel="Yes" itemValue="Y" />
+										<f:selectItem itemLabel="No" itemValue="N" />
+									</p:selectOneMenu>
+									<p:outputLabel value="City" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.citys}" />
+									<p:outputLabel value="Postal Code" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.postalCode}" />
+									<p:outputLabel value="P.O.Box" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.poBoxNo}" />
+									<p:outputLabel value="Town/Dist" />
+									<p:inputText readonly="true"
+										value="#{updateInfoAction.custNFAddressDTO1.town}" />
+									<p:toggleSwitch value="#{updateInfoAction.oldaddresstoggle}">
+										<p:ajax listener="#{updateInfoAction.toggleaddressedit}"
+											update="form" />
+									</p:toggleSwitch>
+								</p:panelGrid>
+
+								<p:panelGrid columns="4" layout="grid"
+									rendered="#{updateInfoAction.newaddress}">
+									<p:outputLabel value="#{msg['updateinfo.address1']}" />
+									<p:inputText id="adding1" value="#{updateInfoAction.newAdd1}"  required="true" requiredMessage="Pleas enter the Address 1 field">
+									<p:message for="adding1" />
+									</p:inputText>
+									<p:outputLabel value="#{msg['updateinfo.address2']}" />
+									<p:inputText id="adding2" value="#{updateInfoAction.newAdd2}" required="true" requiredMessage="Pleas enter the Address 2 field">
+									<p:message for="adding2" />
+									</p:inputText>
+									<p:outputLabel value="#{msg['updateinfo.address3']}" />
+									<p:inputText id="adding3" value="#{updateInfoAction.newAdd3}" required="true" requiredMessage="Pleas enter the Address 3 field">
+									<p:message for="adding3" />
+									</p:inputText>
+									<p:outputLabel value="#{msg['updateinfo.buildno']}" />
+									<p:inputText id="adding4" value="#{updateInfoAction.buidlno}" required="true" requiredMessage="Pleas enter the Building No">
+									<p:message for="adding4" />
+									</p:inputText>
+									<p:outputLabel value="#{msg['updateinfo.unitno']}" />
+									<p:inputText id="adding5" value="#{updateInfoAction.unitnol}" required="true" requiredMessage="Pleas enter the Unit No">
+									<p:message for="adding5" />
+									</p:inputText>
+									<p:outputLabel value="#{msg['updateinfo.addino']}" />
+									<p:inputText id="adding6" value="#{updateInfoAction.addino}" required="true" requiredMessage="Pleas enter the Additional No">
+									<p:message for="adding6" />
+									</p:inputText>
+									<p:outputLabel value="Correspondance Address" />
+									<p:selectOneMenu id="coread" style="width:200px;"
+										value="#{updateInfoAction.corredad}">
+										<f:selectItem itemLabel="Yes" itemValue="Y" />
+										<f:selectItem itemLabel="No" itemValue="N" />
+									</p:selectOneMenu>
+									<p:outputLabel value="City" />
+									<p:selectOneMenu id="ciywe" required="true" requiredMessage="Pleas Select the City"
+										value="#{updateInfoAction.poBoxEmirates}">
+									<p:message for="ciywe" />	
+										<f:selectItem itemLabel="--Select--" itemValue="" />
+										<f:selectItems value="#{updateInfoAction.stateMap}" />
+										<p:ajax listener="#{updateInfoAction.savePostBoxAzax}"
+											event="change" update="ciywe"></p:ajax>
+									</p:selectOneMenu>
+									<p:outputLabel value="Postal Code" />
+									<p:selectOneMenu id="psoas"
+										value="#{updateInfoAction.postcode}">
+										<f:selectItem itemLabel="--Select--" itemValue="" />
+										<f:selectItems value="#{updateInfoAction.postcodelist}"
+											var="each" itemLabel="#{each.code}" itemValue="#{each.code}" />
+										<p:ajax listener="#{updateInfoAction.savePostBoxAzax1}"
+											event="change" update="psoas"></p:ajax>
+									</p:selectOneMenu>
+									<p:outputLabel value="P.O.Box" />
+									<p:inputText value="#{updateInfoAction.poBoxNo}" id="poboxas" required="true" requiredMessage="Pleas enter the P.O.BOX No">
+									<p:message for="poboxas" />
+									</p:inputText>
+									<p:outputLabel value="Town/Dist" />
+									<p:inputText id="toown" value="#{updateInfoAction.town}" required="true" requiredMessage="Pleas enter the Town/Dist">
+									<p:message for="toown" />
+									</p:inputText>
+									<p:toggleSwitch value="#{updateInfoAction.newaddresstoggle}">
+										<p:ajax listener="#{updateInfoAction.toggleaddresseditno}"
+											update="form" />
+									</p:toggleSwitch>
+								</p:panelGrid>
+								<br></br>
+								<div class="row">
+									<p:commandButton value="Back" update="form"
+										actionListener="#{updateInfoAction.addressback}"
+										style="float:left" icon="fa fa-backward Fs14 White" />
+									<p:commandButton value="Next" update="form"
+										actionListener="#{updateInfoAction.adderessnext}"
+										style="float:right" icon="fa fa-forward Fs14 White" />
+								</div>
+								<br></br>
+								<br></br>
+							</h:panelGroup>
+						</div>
+
+						<div class="row">
+							<h:panelGroup id="confirmation"
+								rendered="#{updateInfoAction.confirmationdetails}">
+								
+								<h2>#{msg['termscondheading']}</h2>
+								<ui:repeat value="#{updateInfoAction.termsConditionYesNo}"
+									var="details">
+									<span style="color: green;">*</span>
+									<em><p:outputLabel
+											style="color: green!important; margin-left: 0px;"
+											value="Info : ">
+										</p:outputLabel></em>
+									<p:outputLabel
+										style="margin-left: 11px; line-height:2; display: contents;"
+										value="#{details.conditionEng}">
+									</p:outputLabel>
+									<br />
+								</ui:repeat>
+								<ui:repeat value="#{updateInfoAction.termsConditionYesYes}"
+									var="details">
+									<p:selectBooleanCheckbox id="cond" style="width: 21px; ">
+										<f:validator validatorId="termsConditionsValidator" />
+									</p:selectBooleanCheckbox>
+									<p:outputLabel
+										style="margin-left: 11px;color: #1a616d!important;font-weight: bold; line-height:2; display: contents;"
+										value="#{details.conditionEng}">
+									</p:outputLabel>
+									<br />
+								</ui:repeat>
+								<p:selectBooleanCheckbox id="terms"
+									value="#{updateInfoAction.termsCondition}" type="checkbox"
+									style="width:20px;">
+									<f:validator validatorId="termsConditionsValidator" />
+								</p:selectBooleanCheckbox>
+								<span style="color: red;">*</span>
+								<strong>#{msg['termscondmain']}.</strong> <br></br> <br></br>
+								<div class="row">
+									
+									<p:commandButton value="Back" update="form"
+										actionListener="#{updateInfoAction.confirmayionback}"
+										style="float:left" icon="fa fa-backward Fs14 White" />
+									
+								<br></br><br></br>
+								
+									<p:commandButton id="continuelater"
+											rendered="#{updateInfoAction.fatcaFlagpopUp==true}"
+											actionListener="#{updateInfoAction.btnContinueLatertestfatca}"
+											action="#{updateInfoAction.fatcasample()}"
+											value="Fatca Form Submit" update="form" style="float:right" />
+									
+									<p:commandButton
+									    rendered="#{!updateInfoAction.fatcaFlagpopUp==true}"
+										actionListener="#{updateInfoAction.btnContinueLater}"
+										action="#{otpValidation.btnPrintForm()}"
+										value="#{msg['submit']}" update="form,otpform"
+										style="float:right" icon="fa fa-forward Fs14 White" />
+								</div>
+								<br></br>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<h:panelGroup>
+			<p:dialog id="successTab"
+				header="#{homeDetailsAction.searchPolicyList.productName} | #{homeDetailsAction.searchPolicyList.planNumber} | #{homeDetailsAction.searchPolicyList.premiumPayStatus}"
+				widgetVar="dlg3" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform">
+					<b><span>#{msg['otp.securityques']}</span></b>
+					<br></br>
+					<p:panelGrid columns="1" layout="grid">
+						<p:inputText id="questionn" value="#{otpValidation.securityQues}"
+							style="border:none;" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.answer']}</span></b>
+						<p:inputText value="#{otpValidation.userSecurityAns}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.enter']}</span></b>
+						<p:password id="otp" value="#{otpValidation.userOTP}"
+							disabled="#{otpValidation.enableResendOTP}" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" layout="grid">
+						<b><span style="color: red;">#{msg['otp.valid']}</span></b>
+						<p:commandLink value="#{msg['otp.resend']}"
+							actionListener="#{otpValidation.smsGenerator}" immediate="true"
+							update="form" />
+					</p:panelGrid>
+					<p:panelGrid columns="3" layout="grid">
+						<p:poll interval="#{otpValidation.OTPTimeLimit}"
+							listener="#{otpValidation.checkTime()}" immediate="true"
+							update="form" autoStart="#{otpValidation.renderStartTime}"
+							stop="#{otpValidation.renderStopTime}" />
+						<p:commandButton type="submit" value="#{msg['ok']}"
+							actionListener="#{otpValidation.validateOTP}" update="form,otpform12"
+							disabled="#{otpValidation.enableResendOTP}" />
+						<p:commandButton value="#{msg['cancel']}"
+							actionListener="#{otpValidation.delete}" update="form" />
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+		
+		<h:panelGroup>
+			<p:dialog id="successTab156" header="#{msg['top.not']}" modal="true"
+				widgetVar="dlg4" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform12">
+					<b><span>#{otpValidation.popmsg}</span></b>
+					<br></br>
+					<br></br>
+					<p:commandButton value="#{msg['ok']}" style="float:center"
+						action="#{homeDetailsAction.servicelist()}" update="form" />
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+		
+	</ui:define>
+</ui:composition>

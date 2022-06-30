@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Customer User
+	
+	
+	
+	
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+
+					<div class="card card-w-title">
+						<h1>DataList</h1>
+
+						<div class="card card-w-title">
+							<h1>
+								<b>Registration Tracking Sessions</b>
+							</h1>
+
+							<p:dataList id="userListId"
+								value="#{adminHomeAction.userDetailsList}" var="userList"
+								type="unordered" itemType="none" paginator="true" rows="3"
+								styleClass="cars-datalist">
+								<f:facet name="header">
+                                List of Users
+                            </f:facet>
+								<div class="clearfix car-item">
+									<div class="car-details">
+
+										<p>User ID: #{userList.userName}</p>
+										<p>Display Name: #{userList.prefName}</p>
+										<p>Email ID: #{userList.emailId}</p>
+										<p>Contact No: #{userList.contactNo}</p>
+
+										<p:commandButton update="form"
+											oncomplete="PF('carDialog2').show()" title="View Detail"
+											icon="fa fa-search" style="margin:48px 24px 0 0;float:right;">
+											<f:setPropertyActionListener value="#{userList}"
+												target="#{adminHomeAction.selecteduserlist}" />
+										</p:commandButton>
+										
+										
+										
+										<!-- <button id="form:j_idt98:0:j_idt103" name="form:j_idt98:0:j_idt103" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" onclick="PrimeFaces.ab({s:&quot;form:j_idt98:0:j_idt103&quot;,f:&quot;form&quot;,u:&quot;form:carDetail&quot;,onco:function(xhr,status,args){PF('carDialog2').show();}});return false;" style="margin:48px 24px 0 0" title="View Detail" type="submit" role="button" aria-disabled="false">
+										<span class="ui-button-icon-left ui-icon ui-c fa fa-search"></span>
+										<span class="ui-button-text ui-c">View Detail</span></button> -->
+										
+
+									</div>
+								</div>
+							</p:dataList>
+
+						</div>
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

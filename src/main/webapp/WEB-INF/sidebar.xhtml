@@ -1,0 +1,184 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html" 
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ph="http://primefaces.org/harmony">
+
+    <div class="layout-sidebar">	
+        <div class="nano">
+            <div class="nano-content menu-scroll-content">
+                <h:form id="menuform">
+                    <ph:menu widgetVar="me">
+                        <p:menuitem id="omUser_dashboard" value="#{msg['dashboard.customer']}" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}" icon="fa fa-home" outcome="/userDashboard" />
+                        <p:menuitem id="omAdmin_dashboard" value="#{msg['dashboard.customer']}" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}" icon="fa fa-home" outcome="/adminDashboard" />
+                        <p:menuitem id="omBusiness_dashboard" value="#{msg['dashboard.customer']}" rendered="#{ph:ifAnyGranted('FEEDBACK_REPLY_PRIVILEGE')}" icon="fa fa-home" outcome="/businessDashboard" />
+                        <p:submenu id="om_themes" label="#{msg['theme']}" icon="fa fa-fw fa-paint-brush">
+                            <p:submenu id="om_themes_flat" label="#{msg['flat']}" icon="fa fa-fw fa-paint-brush">
+                                <p:submenu id="om_themes_flat_2" label="#{msg['absolution']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_2_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('absolution')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_2_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('absolution-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_2_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('absolution-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_1" label="#{msg['rebirth']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_1_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('rebirth')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_1_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('rebirth-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_1_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('rebirth-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_3" label="#{msg['hope']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_3_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('hope')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_3_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('hope-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_3_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('hope-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_4" label="#{msg['bliss']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_4_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('bliss')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_4_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('bliss-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_4_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('bliss-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_5" label="#{msg['grace']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_5_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('grace')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_5_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('grace-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_5_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('grace-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_6" label="#{msg['dusk']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_6_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('dusk')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_6_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('dusk-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_6_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('dusk-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_7" label="#{msg['navy']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_7_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('navy')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_7_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('navy-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_7_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('navy-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_8" label="#{msg['infinity']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_8_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('infinity')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_8_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('infinity-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_8_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('infinity-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_9" label="#{msg['fate']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_9_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('fate')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_9_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('fate-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_9_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('fate-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_10" label="#{msg['ruby']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_10_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('ruby')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_10_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('ruby-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_10_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('ruby-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_flat_11" label="#{msg['comfort']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_flat_11_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('comfort')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_11_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('comfort-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_flat_11_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('comfort-dark')}" ajax="false" />
+                                </p:submenu>
+                            </p:submenu>
+                            <p:submenu id="om_themes_gradient" label="#{msg['gradient']}" icon="fa fa-fw fa-paint-brush">
+                                <p:submenu id="om_themes_gradient_1" label="#{msg['faith']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_1_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('faith')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_1_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('faith-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_1_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('faith-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_gradient_2" label="#{msg['violet']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_2_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('violet')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_2_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('violet-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_2_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('violet-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_gradient_3" label="#{msg['honor']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_3_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('honor')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_3_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('honor-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_3_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('honor-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_gradient_4" label="#{msg['rebel']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_4_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('rebel')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_4_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('rebel-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_4_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('rebel-dark')}" ajax="false" />
+                                </p:submenu>   
+                                <p:submenu id="om_themes_gradient_5" label="#{msg['vanity']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_5_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('vanity')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_5_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('vanity-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_5_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('vanity-dark')}" ajax="false" />
+                                </p:submenu>   
+                                <p:submenu id="om_themes_gradient_6" label="#{msg['valor']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_6_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('valor')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_6_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('valor-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_6_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('valor-dark')}" ajax="false" />
+                                </p:submenu>  
+                                <p:submenu id="om_themes_gradient_7" label="#{msg['merit']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_7_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('merit')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_7_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('merit-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_7_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('merit-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_gradient_8" label="#{msg['esprit']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_8_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('esprit')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_8_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('esprit-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_8_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('esprit-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_gradient_9" label="#{msg['concord']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_9_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('concord')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_9_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('concord-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_9_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('concord-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_gradient_10" label="#{msg['dulce']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_10_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('dulce')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_10_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('dulce-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_10_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('dulce-dark')}" ajax="false" />
+                                </p:submenu>
+                                <p:submenu id="om_themes_gradient_11" label="#{msg['royal']}" icon="fa fa-fw fa-paint-brush">
+                                    <p:menuitem id="om_themes_gradient_11_1" value="#{msg['colored']}" icon="fa fa-fw fa-square-o" actionListener="#{guestPreferences.setTheme('royal')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_11_2" value="#{msg['light']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('royal-light')}" ajax="false" />
+                                    <p:menuitem id="om_themes_gradient_11_3" value="#{msg['dark']}" icon="fa fa-fw fa-square" actionListener="#{guestPreferences.setTheme('royal-dark')}" ajax="false" />
+                                </p:submenu>
+                            </p:submenu>
+                        </p:submenu>
+						
+                         <p:submenu id="om_estatement" label="#{msg['estatment']}" icon="fa fa-certificate" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}">
+                            <p:menuitem id="om_unit" value="#{msg['estatement.unit']}" icon="fa fa-certificate" outcome="/user/e-statement" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                         </p:submenu>
+                         <p:submenu id="transa" label="#{msg['etransactions.label']}" icon="fa fa-bookmark" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}">
+                            <p:menuitem id="om_test2" value="#{msg['customeruser.initaite.request']}" icon="fa fa-podcast"  outcome="/user/request" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                            <p:menuitem id="om_sth" value="#{msg['customeruser.sthas']}" icon="fa fa-certificate" action="#{homeDetailsAction.servicelist()}" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                         </p:submenu>
+                         <p:submenu id="claims" label="#{msg['customeruser.claimsss']}" icon="fa fa-podcast" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}">
+                            <p:menuitem id="om_Claims" value="#{msg['customeruser.claimsss.status']}" icon="fa fa-podcast" action="#{homeDetailsAction.getMyClaim()}" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                            <p:menuitem id="om_cliint" value="#{msg['customeruser.claimyiabss']}" icon="fa fa-podcast" action="#{claimintimation.clear()}" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                         </p:submenu>
+                         
+                        <p:menuitem id="om_Plans" value="#{msg['customeruser.plan']}" icon="fa fa-bars" outcome="/user/plans" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>         
+                        <p:menuitem id="om_Funds" value="#{msg['customeruser.fund']}" icon="fa fa-money" action="#{homeDetailsAction.getMyFunds()}" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                        <p:menuitem id="om_ch" value="#{msg['customeruser.contribhis']}" icon="fa fa-history" action="#{homeDetailsAction.getMyOutstanding()}" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>                                   
+                        <p:menuitem id="om_ch1" value="#{msg['covid1']}" icon="fa fa-history" action="#{homeDetailsAction.redirectingpremium()}" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                        
+                        <p:submenu id="feedd" label="#{msg['query.complaints']}" icon="fa fa-envelope-open" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}">
+                            <p:menuitem id="om_query" value="#{msg['query.complaints']}" icon="fa fa-envelope-open" outcome="/user/feedback.app" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                            <p:menuitem id="queryStatus" value="#{msg['query.complaints.status']}" icon="fa fa-envelope-open" action="#{feedbackAction.customerfeedback}" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                         </p:submenu>
+                        
+                        <p:menuitem id="om_docs" value="#{msg['products.doc']}" icon="fa fa-file" outcome="/docdwnld.app" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"/>
+                        
+                        
+                                            
+                        <p:menuitem id="om_bcc" value="#{msg['bus.side1']}" icon="fa fa-phone" outcome="/businessuser/customercomplanits" rendered="#{ph:ifAnyGranted('FEEDBACK_REPLY_PRIVILEGE')}"/>   
+                        <p:menuitem id="om_bdu" value="#{msg['bus.side2']}" icon="fa fa-book" outcome="/businessuser/documentsupload" rendered="#{ph:ifAnyGranted('FEEDBACK_REPLY_PRIVILEGE')}"/>   
+                        <p:menuitem id="om_bstsc" value="#{msg['bus.side3']}" icon="fa fa-cubes"  outcome="/businessuser/servicetransaction" rendered="#{ph:ifAnyGranted('FEEDBACK_REPLY_PRIVILEGE')}"/>
+                     
+                        <p:menuitem id="om_down" value="#{msg['adminuser.dwTime']}" icon="fa fa-users" action="#{adminHomeAction.getAllDownTimeList()}" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>
+                        <p:menuitem id="om_ausl" value="#{msg['admin.userlist']}" icon="fa fa-users" action="#{adminHomeAction.getAllUserList()}" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>
+                        <p:menuitem id="om_atttails" value="#{msg['adminuser.login.trails']}" icon="fa fa-street-view" action="#{adminHomeAction.getloginaduit()}" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>
+                        <p:menuitem id="om_atc" value="#{msg['adminuser.termsAndCondition']}" icon="fa fa-info" outcome="/admin/admintermsconditions" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>   
+                        <p:menuitem id="om_aotPassword" value="#{msg['adminuser.passwordRules']}" icon="fa fa-gavel" outcome="/admin/adminpasswordrules" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>  
+					    <p:menuitem id="om_amngacc" value="#{msg['adminuser.manageAccounts']}" icon="fa fa-sitemap" outcome="/admin/adminmanageaccounts" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>  
+                        <p:menuitem id="om_ams" value="#{msg['adminuser.mailServer']}" icon="fa fa-server" outcome="/admin/adminMailServer" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>                         
+                        <p:menuitem id="om_art" value="#{msg['adminuser.regaudit']}" icon="fa fa-registered" action="#{adminHomeAction.registeraudittrail()}" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>
+                        <p:menuitem id="om_aotp" value="#{msg['adminuser.optSetting']}" icon="fa fa-mobile" action="#{adminHomeAction.otptypes()}" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>        
+                        <p:menuitem id="om_asqa" value="#{msg['adminuser.secquestion']}" icon="fa fa-tags" outcome="/admin/adminsecurityquestion" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>
+                        <p:menuitem id="om_astc" value="#{msg['transac.terms']}" icon="fa fa-sliders" action="#{adminHomeAction.servicetypes()}" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>
+                        <p:menuitem id="om_actc" value="#{msg['bus.side1']}" icon="fa fa-phone" outcome="/admin/admincustomercomplaints" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>
+                        <p:menuitem id="om_business_user" value="#{msg['bus.creation']}" icon="fa fa-user-plus" outcome="/admin/businesscreation" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>
+                        <p:menuitem id="om_failure" value="#{msg['failurehead']}" icon="fa fa-user-plus" action="#{adminHomeAction.policyfailurefetch()}" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"/>
+                         
+                    
+                    </ph:menu>
+                </h:form>
+            </div>
+        </div>
+    </div>
+</ui:composition>

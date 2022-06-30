@@ -1,0 +1,160 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>Bussiness Feedback Reply Details</b>
+						</h1>
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">Business Feedback Reply</span>
+							</div>
+							<div id="j_idt149_content"
+								class="ui-panel-content ui-widget-content" style="border: none;">
+								<span class="day-indicator"><b><h:outputText
+											value="Complaint No" /></b>: <h:outputText
+										value="#{feedbackAction.getFeedbackDTO.complaintNo}" />, <b><h:outputText
+											value="Service Type" /></b> : <h:outputText
+										value="#{feedbackAction.getFeedbackDTO.servType}" />, <b><h:outputText
+											value="Plan No" /></b> :<h:outputText
+										value="#{feedbackAction.getFeedbackDTO.policyNo}" />, <b><h:outputText
+											value="Submitted on" /></b> :<h:outputText
+										value="#{feedbackAction.getFeedbackDTO.compDate}" /> <b><h:outputText
+											value="Submitted by" /></b> :<h:outputText
+										value="#{feedbackAction.getFeedbackDTO.userId}" />, <br></br>
+									<b><h:outputText value="Rating" /></b> : <h:outputText
+										value="#{feedbackAction.getFeedbackDTO.feedRate}" />, <b>
+										<h:outputText value="Description" />
+								</b> : <h:outputText
+										value="#{feedbackAction.getFeedbackDTO.feedbackNote}" /> </span> <br></br>
+							</div>
+							<br></br>
+							<br></br>
+
+							<p:commandLink
+								actionListener="#{feedbackAction.enableReplyPanel}"
+								rendered="#{feedbackAction.linkFlag}"
+								value="Insert Reply"
+								style="color:#3500ff !important;" update="form">
+								<f:attribute name="replyId" value="#{feedbackAction.replyId}" />
+							</p:commandLink>
+
+
+							<div id="j_idt149_content"
+								class="ui-panel-content ui-widget-content"
+								style="border: none; background-color: whitesmoke;">
+								<ui:repeat var="feed" value="#{feedbackAction.replyList}">
+									<div class="row">
+										<span> #{feed.lastupdUser}</span> <span>#{feed.userType
+											== 'u' ? ['Customer Service Replied on']:['You Replied on']}
+										</span> <span><h:outputText value="#{feed.replyDate.time}">
+												<f:convertDateTime pattern="dd/MM/yyyy 'at' hh:mm:ss a" />
+											</h:outputText> </span> <br></br>
+									</div>
+									<span style="text-align: center;"><b>Message:
+											#{feed.replyNote} <i class="fa fa-check status" />
+									</b></span>
+									<p:panelGrid columns="1" layout="grid">
+									</p:panelGrid>
+									<p:graphicImage name="images/template/fed-executive.png"
+										library="cp-layout" class="mobile" style="float:right;" />
+									<br></br>
+									<br></br>
+									<br></br>
+									<span> <p:commandLink id="replymsg"
+											actionListener="#{feedbackAction.enableReplyPanel}"
+											update="form">
+											<p:graphicImage name="images/template/reply_icon.png"
+												library="cp-layout" class="mobile" />
+											<f:attribute name="replyId" value="#{feed.replyId}" />
+											<p:tooltip id="toolTipFadeDocument" for="replymsg"
+												value="Insert Reply" position="left"
+												style="color:#fff !important; background-color:#000 !important;font-size:13px !important;" />
+										</p:commandLink>
+									</span>
+									<p style="border-bottom: 2px solid;"></p>
+									<p:dataTable id="replyDocs" rendered="#{feed.fileUpload}"
+										var="replyDocs" value="#{feed.feedbackReplyDocsDTO}"
+										styleClass="alignCenter">
+										<p:column id="idFileNameHeader" headerText="File Name">
+											<h:commandLink target="_blank" immediate="false"
+												value="#{replyDocs.fileName}"
+												action="#{feedbackAction.openFile}" styleClass="alignCenter">
+												<f:param name="fileName" value="#{replyDocs.fileName}" />
+											</h:commandLink>
+										</p:column>
+										<p:column id="idFileDateHeader" headerText="Uploaded Date">
+											<h:outputText id="idFileDateVal"
+												value="#{replyDocs.uploadDate}" />
+										</p:column>
+									</p:dataTable>
+								</ui:repeat>
+								<br></br>
+
+								<h:panelGroup id="successReply"
+									rendered="#{feedbackAction.successReplyFlag}">
+									<ui:repeat var="saveMap" value="#{feedbackAction.replySaveMap}">
+										<div class="row">
+											<p:graphicImage name="images/template/fed-executive.png"
+												library="cp-layout" class="mobile" />
+											<span> #{saveMap.userid} </span> <span>Replied My be </span>
+											<span><h:outputText value="#{feedbackAction.now}">
+													<f:convertDateTime pattern="dd/MM/yyyy 'at' hh:mm:ss a" />
+												</h:outputText> </span> <br></br>
+
+											<h:outputText value="#{saveMap.replyNote}" />
+											<br />
+											<h:outputText value="#{saveMap.replyRate}" style="color:red;" />
+											<br />
+											<h:outputText value="#{saveMap.CloseComp}" />
+										</div>
+									</ui:repeat>
+								</h:panelGroup>
+							</div>
+
+							<h:panelGroup id="replyPanel"
+								rendered="#{feedbackAction.replyVisibleFlag}">
+								<div class="reply-box">
+									<p:graphicImage name="images/template/fed-executive.png"
+										library="cp-layout" class="mobile" />
+
+									<p:inputTextarea id="compNote" placeholder="Enter Details"
+										style="width:80%;" value="#{feedbackAction.replyNote}"
+										required="true"
+										requiredMessage="#{msg['businessuser.reply.providefeednote']}"
+										validatorMessage="#{msg['changePassword.error.noSpecialchar']}" />
+									<p:message for="compNote" closable="true" />
+
+									<h:form enctype="multipart/form-data">
+										<p:panelGrid columns="1" layout="grid">
+											<p:fileUpload
+												fileUploadListener="#{feedbackAction.uploadFileFTP}"
+												allowTypes="/(\.|\/)(pdf|jpe?g|png)$/" style="width:300px;" />
+										</p:panelGrid>
+									</h:form>
+									<Span><p:commandButton value="Cancel"
+											actionListener="#{feedbackAction.closeReplyPanel}"
+											immediate="true" update="form" /></Span> <span><p:commandButton
+											value="Send" update="form"
+											style="background: #449466;width:100px;" title="Send Message"
+											actionListener="#{feedbackAction.btnSaveReplyFeedback}" /></span>
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

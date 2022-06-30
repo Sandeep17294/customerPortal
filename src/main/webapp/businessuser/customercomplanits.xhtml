@@ -1,0 +1,130 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card card-w-title">
+						<h1>
+							<b>#{msg['adminuser.custcomp']}</b>
+						</h1>
+						<p:dataTable id="UserDetails" var="feedback"
+							value="#{feedbackAction.feedBusUserList}" reflow="true"
+							paginator="true" rows="5" paginatorPosition="bottom">
+							<f:facet name="header">
+                                 #{msg['adminuser.custcomp.facet']}   
+							</f:facet>
+							<p:column headerText="#{msg['customeruser.feedlist.feedno']}"  
+								sortBy="#{feedback.complaintNo}">
+								<p:commandLink value="#{feedback.complaintNo}"
+									action="#{feedbackAction.getFeedbackInfo(feedback)}"
+									style="color:blue!important;"
+									oncomplete="PF('carDialog1').show()" update="form">
+								</p:commandLink>
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedback.stype']}" sortBy="#{feedback.servType}">  
+								<h:outputText value="#{feedback.servType}" />
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedback.planno']}" sortBy="#{feedback.policyNo}">  
+								<h:outputText value="#{feedback.policyNo}" />
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.contributiontable.outstatus']}" sortBy="#{feedback.feedStatus}">  
+								<h:outputText value="#{feedback.feedStatus}" />
+							</p:column>
+
+							<p:column headerText="#{msg['adminuser.custcomp.rateing']}" sortBy="#{feedback.feedRate}">  
+								<h:outputText value="#{feedback.feedRate}" />
+							</p:column>
+
+							<p:column headerText="#{msg['adminuser.custcomp.subby']}" sortBy="#{feedback.userId}"> 
+								<h:outputText value="#{feedback.userId}" />
+							</p:column>
+
+							<p:column headerText="#{msg['detailsearch']}">
+								<p:commandButton icon="fa fa-search" update="form"
+									oncomplete="PF('carDialog').show()">
+									<f:setPropertyActionListener value="#{feedback}"
+										target="#{feedbackAction.selectfeedbacklist}" />
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+
+					<p:dialog 
+							header="#{msg['adminuser.custcomp.for']} #{feedbackAction.selectfeedbacklist.complaintNo}"
+							widgetVar="carDialog" modal="true" hideEffect="fade"
+							resizable="false" responsive="true" width="auto"
+							showEffect="explode">
+
+							<p:outputPanel id="selectedCarDetail" style="text-align:center;">
+								<p:panelGrid columns="2" columnClasses="label,value"
+									style="width:100%">
+
+									<h:outputText value="#{msg['customeruser.feedlist.feedno']}" /> 
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.complaintNo}" />
+
+									<h:outputText value="#{msg['adminuser.srq.servicetype']}" />  
+									<h:outputText 
+										value="#{feedbackAction.selectfeedbacklist.servType}" />
+
+									<h:outputText value="#{msg['customeruser.reisnt.plan']}" />  
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.policyNo}" />
+
+									<h:outputText value="#{msg['customeruser.feedlist.status']}" />  
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.feedStatus}" />
+
+									<h:outputText value="#{msg['adminuser.custcomp.rateing']}" />  
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.feedRate}" />
+
+									<h:outputText value="#{msg['adminuser.custcomp.subby']}" /> 
+									<h:outputText  
+										value="#{feedbackAction.selectfeedbacklist.userId}" />
+										
+										<h:outputText value="#{msg['adminuser.custcomp.date']}" /> 
+									<h:outputText  
+										value="#{feedbackAction.selectfeedbacklist.compDate}" />
+
+									<h:outputText value="#{msg['customeruser.feedback.type']}" /> 
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.feedbackType == 'c' ?'Complaint':'Query'}" />
+
+									<h:outputText value="#{msg['customeruser.feedback.desc']}" />  
+									<h:outputText id="feednote"
+										value="#{feedbackAction.selectfeedbacklist.feedbackNote}"/>
+							
+									<h:outputText value="#{msg['customeruser.feedback.calltime']}" />  
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.csdCall == 'y' ?'Yes':'No'}" />
+
+									<h:outputText value="#{msg['adminuser.custcomp.cbs']}" />  
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.callTime}" />
+
+									<h:outputText value="#{msg['adminuser.custcomp.red']}" />  
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.calltimeDay}" />
+
+									<h:outputText value="#{msg['adminuser.custcomp.ream']}"/>  
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.remark}" />
+
+								</p:panelGrid>
+							</p:outputPanel>
+						</p:dialog>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

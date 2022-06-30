@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Admin User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['adminuser.termsAndCondition']}</b>
+						</h1>
+
+						<div class="card">
+							<p:panelGrid columns="1" layout="grid">
+								<b><p:outputLabel value="#{msg['adminuser.termsAndCondition.english']}" for="aEng" /></b>
+								<p:inputTextarea id="aEng" autoResize="false"
+									style="width: -webkit-fill-available; height:100px;"
+									value="#{adminHomeAction.passwordRulesDTO.vTncEng}"
+									required="true"
+									requiredMessage="#{msg['adminuser.termsAndCondition.termsandcondition']}" />
+								<p:message for="aEng" />
+
+
+								<b><p:outputLabel value="#{msg['adminuser.termsAndCondition.arabic']}" for="aArb" /></b>
+								<p:inputTextarea id="aArb" autoResize="false"
+									style="width: -webkit-fill-available; height:100px;"
+									value="#{adminHomeAction.passwordRulesDTO.vTncArb}"
+									required="true"
+									requiredMessage="#{msg['adminuser.termsAndCondition.entTAndConArb']}" />
+								<p:message for="aArb" />
+
+
+								<p:commandButton value="#{msg['submit']}"
+									action="#{adminHomeAction.managetermscondtionsaveupdate}"
+									update="form" style="float:right" />
+
+
+							</p:panelGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

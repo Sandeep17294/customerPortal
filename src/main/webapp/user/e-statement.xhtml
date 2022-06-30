@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+		<p:growl id="growl" showDetail="true" sticky="true"/>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1><b>#{msg['estatment']}</b></h1>
+						<p:dataTable id="MyFunds" var="statement"
+							value="#{statementAction.statementDetailsList}" reflow="true"
+							paginator="true" rows="10">
+
+							<f:facet name="header">
+                                 #{msg['estatment.facet']}
+                            </f:facet>
+
+							<p:column headerText="#{msg['estatment.sn']}">
+								<h:outputText value="Unit Statement" />
+							</p:column>
+							<p:column headerText="#{msg['estatment.pn']}">
+								<h:outputText value="#{statement.policyNo}" />
+							</p:column>
+							<p:column headerText="#{msg['estatment.select']}">
+								<p:selectBooleanCheckbox value="#{statement.selected}">
+								</p:selectBooleanCheckbox>
+							</p:column>
+						</p:dataTable>
+						<br></br> <br></br>
+						<span><h:commandLink id="pdfbutton"
+							actionListener="#{statementAction.downloadPdf}"
+							styleClass="pdf-button" title="Download PDF" ajax="false"
+							 update="form">
+							<p:graphicImage name="images/template/pdfo.png"
+								library="cp-layout" class="mobile" />
+								<p:fileDownload value="#{statementAction.file}"></p:fileDownload>
+							<p:tooltip id="toolTipFade1" for="pdfbutton"
+								value="#{msg['estatment.dpf']}" position="top"/>
+						</h:commandLink></span>
+						
+						<span><h:commandLink id="emailButton" actionListener="#{statementAction.sentEmail}"
+							update="form" ajax="false">
+							<p:graphicImage name="images/template/emaildod.png"
+								library="cp-layout" class="mobile" />
+							<p:tooltip id="toolTipFade" for="emailButton"
+								value="#{msg['estatment.sse']}" position="top"
+								styleClass="tooltip" />
+						</h:commandLink></span>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<title>Salama Customer Portal</title>
+
+	<!-- Global stylesheets -->
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/styles.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/bootstrap_limitless.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/layout.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/components.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/colors.min.css" rel="stylesheet" type="text/css" />
+
+	<!-- /global stylesheets -->
+
+
+	<!-- Core JS files -->
+	<script src="https://code.jquery.com/jquery-3.3.1.js" />
+	<script src="resources/cp-layout/js/custom/bootstrap.bundle.min.js" />
+	
+	<!-- <script src="resources/global_assets/js/plugins/loaders/blockui.min.js" /> -->
+	<!-- /core JS files -->
+
+
+	<!-- Theme JS files -->
+	<script src="resources/cp-layout/js/custom/uniform.min.js" />
+	<script src="resources/cp-layout/js/custom/bootbox.min.js"></script>
+	<script src="resources/cp-layout/js/custom/select2.min.js"></script>
+
+
+	<!-- Theme JS files -->
+
+	<!-- <script src="resources/cp-layout/js/custom/app.js" /> -->
+	<script src="resources/cp-layout/js/custom/login.js" />
+	<!-- <script src="resources/cp-layout/js/custom/login_validation.js" /> -->
+	<script src="resources/cp-layout/js/custom/validate.min.js" />
+	<script type="text/javascript">
+$(document).ready(function () {
+	  $('.group').hide();
+	  $('#ind').change(function () {
+	    $('.group').hide();
+	    $('#'+$(this).val()).show();
+	  })
+	});
+</script>
+	
+	<script type="text/javascript">
+	//<![CDATA[
+	$('#registeredEmailId').keyup(function() {
+		
+    var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.value);
+    if(!re) {
+        $('#error').show();
+    } else {
+        $('#error').hide();
+    }
+})
+//]]>
+</script>
+	<!-- /theme JS files -->
+	<style>
+body, html {
+	background: url(${contextPath}/resources/cp-layout/images/background/Dubai-4-1.jpg)
+		no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: #057398 !important;
+	height: 100%
+}
+</style>
+</h:head>
+
+<body>
+
+	<!-- Page content -->
+	<div class="page-content login-cover">
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Content area -->
+			<div class="content d-flex justify-content-center align-items-center">
+
+				<!-- Login form -->
+
+				<div class="card mb-0">
+					<ul class="nav nav-tabs nav-justified alpha-grey mb-0">
+						<li class="nav-item"><a href="#login-tab1"
+							class="nav-link border-y-0 border-left-0 active"
+							data-toggle="tab">Sign in</a></li>
+						<li class="nav-item"><a href="#login-tab2" class="nav-link border-y-0 border-right-0" data-toggle="tab">Register</a></li>
+					</ul>
+
+					<div class="tab-content card-body">
+						<div class="tab-pane fade show active" id="login-tab1">
+							<h:form class="login-form form-validate wmin-sm-400" prependId="false">
+								<div class="text-center mb-3">
+									<img src="resources/cp-layout/images/background/ART_LOGO.png"
+										alt="" />
+									<!-- <i class="icon-reading icon-2x text-slate-300 border-slate-300 border-3 rounded-round p-3 mb-3 mt-1"></i> -->
+									<h5 class="mb-0">Login to your account</h5>
+									<span class="d-block text-muted">Your credentials</span>
+								</div>
+
+								<div
+									class="form-group form-group-feedback form-group-feedback-left">
+									<input type="text" id="username" name="username"
+										class="form-control" placeholder="Username" required="required"/>
+									<div class="form-control-feedback">
+										<i class="icon-user text-muted"></i>
+									</div>
+								</div>
+
+								<div
+									class="form-group form-group-feedback form-group-feedback-left">
+									<input type="password" id="password" name="password"
+										class="form-control" placeholder="Password" required="required"/>
+									<div class="form-control-feedback">
+										<i class="icon-lock2 text-muted"></i>
+									</div>
+								</div>
+
+								<div class="form-group d-flex align-items-center">
+									<!-- <div class="form-check mb-0">
+										<label class="form-check-label"> <input
+											type="checkbox" name="remember" class="form-input-styled" />
+											Remember
+										</label>
+									</div> -->
+
+									<a href="#{request.contextPath}/pswd/forgot" class="ml-auto">Forgot
+										password?</a>
+								</div> 
+
+								<div class="form-group">
+									<h:commandButton action="/login" class="btn btn-primary btn-block" value="Sign in"></h:commandButton>
+								</div>
+
+
+								<div class="form-group text-center text-muted content-divider">
+									<span class="px-2"></span>
+								</div>
+
+								<span class="form-text text-center text-muted">By
+									continuing, you're confirming that you've read our <a href="#">Terms
+										&amp; Conditions</a> and <a href="#">Cookie Policy</a>
+								</span>
+							</h:form>
+						</div>
+
+						<div class="tab-pane fade" id="login-tab2">
+							<form id="register-form" class="login-form wmin-sm-400" action="#{request.contextPath}/registration/policy" method="POST">
+								<div class="text-center mb-3">
+									<img src="resources/cp-layout/images/background/ART_LOGO.png"
+										alt="" />
+									<!-- <i class="icon-plus3 icon-2x text-success border-success border-3 rounded-round p-3 mb-3 mt-1"></i>-->
+									<h5 class="mb-0">Create account</h5>
+									<span class="d-block text-muted">All fields are required</span>
+								</div>
+
+								<div class="form-group form-group-feedback form-group-feedback-left">
+									<!-- <input type="text" class="form-control" id="policyNo" name="policyNo"
+										placeholder="Your policy number" required="required"> </input> -->
+										
+								<select id="ind" class="form-control select" required="required">
+								    <option value="inde">Identification Type</option>
+									<option value="option1">POLICY NUMBER</option>
+									<option value="option2">INDENTIFICATION TYPE</option>
+								</select>
+									<div class="form-control-feedback">
+										<i class="fa fa-bars text-muted"></i>
+									</div>
+								</div>
+
+                                <div id="option1" class="form-group form-group-feedback form-group-feedback-left group">
+                                <input type="text" class="form-control" id="policyNo" name="policyNo" placeholder="Your policy number" required="required"> </input>
+								</div>
+    							<div id="option2" class="form-group form-group-feedback form-group-feedback-left group">
+    							<select  class="form-control select" required="required">
+								    <option value="inde">Identification Type</option>
+									<option value="option1">TEST</option>
+									<option value="option2">TEST1</option>
+								</select>
+    							</div>
+
+								<div
+									class="form-group form-group-feedback form-group-feedback-left">
+									<input id="registeredMobileNo" class="form-control" name="mobileNo"
+										placeholder="Your mobile number" required="required"/>
+
+									<div class="form-control-feedback">
+										<i class="icon-mobile text-muted"></i>
+									</div>
+								</div>
+
+
+								<div
+									class="form-group form-group-feedback form-group-feedback-left">
+									<input class="form-control" placeholder="Your email" name="email"
+										id="registeredEmailId"/>
+									<div class="form-control-feedback">
+										<i class="icon-mention text-muted"></i>
+									</div>
+								</div>
+                               <span id="error" style="display:none;color:red;">Wrong email</span>
+								<button type="submit" class="btn bg-dark btn-block">Verify</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<!-- /login form -->
+
+			</div>
+			<!-- /content area -->
+
+		</div>
+		<!-- /main content -->
+	</div>
+	<!-- /page content -->
+
+</body>
+</html>

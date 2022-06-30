@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Admin User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['adminuser.optSetting']}</b>
+						</h1>
+						<div class="card">
+							<div id="j_idt59" class="ui-panelgrid ui-widget"
+								style="margin-bottom: 20px">
+								<div id="j_idt59_content"
+									class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive"
+									style="border: none">
+									<div class="ui-g-12">
+										<div class="ui-g-12 ui-md-2">
+											<p:outputLabel value="#{msg['adminuser.optSetting.servType']}" />
+										</div>
+										<div class="ui-g-12 ui-md-2">
+											<p:selectOneMenu id="servicetype"
+												value="#{adminHomeAction.serviceType}"
+												style="margin-bottom:10px;">
+												<f:selectItem itemLabel="#{msg['customeruser.termalter.option']}" itemValue="" />
+												<f:selectItems value="#{adminHomeAction.otpTypes}" />
+												<p:ajax listener="#{adminHomeAction.searchServiceType()}"
+													event="change" update="form" />
+											</p:selectOneMenu>
+										</div>
+									</div>
+
+									<div class="ui-g-12">
+										<div class="ui-g-12 ui-md-2">
+											<p:outputLabel value="#{msg['adminuser.optSetting.mobile']}" />
+										</div>
+										<div class="ui-g-12 ui-md-2">
+											<p:selectBooleanCheckbox id="mobile"
+												value="#{adminHomeAction.mobile}">
+												<p:ajax update="mobile"></p:ajax>
+											</p:selectBooleanCheckbox>
+										</div>
+									</div>
+
+									<div class="ui-g-12">
+										<div class="ui-g-12 ui-md-2">
+											<p:outputLabel value="#{msg['adminuser.optSetting.email']}" />
+										</div>
+										<div class="ui-g-12 ui-md-2">
+											<p:selectBooleanCheckbox id="mail"
+												value="#{adminHomeAction.email}">
+												<p:ajax update="mail"></p:ajax>
+											</p:selectBooleanCheckbox>
+										</div>
+									</div>
+									<div class="ui-g-12">
+										<p:commandButton value="#{msg['submit']}"
+											action="#{adminHomeAction.btnOtpSubmit}" update="form"
+											style="margin-bottom:10px;float:left" />
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

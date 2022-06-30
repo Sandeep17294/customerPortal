@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['customeruser.servicetableheading.serviceTransactions']}</b>
+						</h1>
+						<div class="row">
+
+							<p:dataTable id="userListId" var="userList" reflow="true"
+								value="#{documentAction.serviceRequestMasterDTOList}"
+								widgetVar="usersTable" styleClass="data-table" paginator="true"
+								rows="10" paginatorPosition="bottom"
+								filteredValue="#{documentAction.filteredList}">
+
+								<f:facet name="header">
+							#{msg['customeruser.servicetableheading.facet.serviceTransactions']} <br></br>
+									<p:outputPanel>
+										<span> <h:outputText
+												value="#{msg['businessuser.servicetrs.all']}" />
+										</span>
+										<span> <p:inputText id="globalFilter"
+												onkeyup="PF('usersTable').filter()" style="width:150px"
+												placeholder="#{msg['businessuser.servicetrs.srch']}" />
+										</span>
+									</p:outputPanel>
+								</f:facet>
+
+								<p:column filterBy="#{userList.serviceRequestNo}"
+									headerText="#{msg['businessuser.servicetrs.sno']}"
+									onchange="PF('usersTable').filter()" filterMatchMode="contains">
+									<h:outputText value="#{userList.serviceRequestNo}" />
+								</p:column>
+								<p:column filterBy="#{userList.serviceRequestType}"
+									headerText="#{msg['customeruser.servicetable.TransactionType']}"
+									styleClass="table_column_center"
+									onchange="PF('usersTable').filter()" filterMatchMode="contains">
+									<h:outputText value="#{userList.serviceRequestType}">
+									</h:outputText>
+								</p:column>
+								<p:column filterBy="#{userList.policyNo}"
+									headerText="#{msg['adminuser.regaudit.pno']}"
+									styleClass="table_column_center"
+									onchange="PF('usersTable').filter()" filterMatchMode="contains">
+									<h:outputText value="#{userList.policyNo}">
+									</h:outputText>
+								</p:column>
+								<p:column filterBy="#{userList.userId}"
+									headerText="#{msg['customeruser.servicetable.userid']}"
+									styleClass="table_column_center"
+									onchange="PF('usersTable').filter()" filterMatchMode="contains">
+									<h:outputText value="#{userList.userId}">
+									</h:outputText>
+								</p:column>
+								<p:column filterBy="#{userList.requestStatus}"
+									headerText="#{msg['customeruser.servicetable.TransactionStatus']}"
+									styleClass="table_column_center"
+									onchange="PF('usersTable').filter()" filterMatchMode="contains">
+									<h:outputText value="#{userList.requestStatus}">
+									</h:outputText>
+								</p:column>
+								<p:column filterBy="#{userList.serviceRequestDate}"
+									headerText="#{msg['customeruser.servicetable.reqdate']}"
+									styleClass="table_column_center"
+									onchange="PF('usersTable').filter()" filterMatchMode="contains">
+									<h:outputText value="#{userList.serviceRequestDate}">
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+							<br></br>
+							<h:commandLink id="excelsheet">
+								<p:graphicImage name="images/template/excelo.png"
+									library="cp-layout" class="mobile" />
+								<p:dataExporter type="xls" target="userListId"
+									fileName="userList" pageOnly="true" />
+								<p:tooltip id="toolTipFadeDocument" for="excelsheet"
+									value="#{msg['customeruser.plantabele.excel']}"
+									position="right"
+									style="color:green !important; background-color:white !important;font-size:13px !important;" />
+							</h:commandLink>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

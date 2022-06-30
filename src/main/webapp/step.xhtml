@@ -1,0 +1,673 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<style></style>
+	<ui:define name="title">search policy</ui:define>
+	<ui:define name="viewname">
+	</ui:define>
+	<ui:define name="head">
+	 <script type="text/javascript">
+        function skinChart() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#ed3c76', '#3e9018', '#599597'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#dce2e7',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinBar() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                renderer: $.jqplot.BarRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinArea() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#dce2e7',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinBubble() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                renderer: $.jqplot.BubbleRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinZoom() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinPie() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#ed3c76', '#3e9018', '#ffb200'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#dce2e7',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560',
+                }
+            };
+            this.cfg.seriesDefaults = {
+                renderer: $.jqplot.PieRenderer,
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinDonut() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#ed3c76', '#3e9018', '#ffb200'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560',
+                }
+            };
+            this.cfg.seriesDefaults = {
+                renderer: $.jqplot.DonutRenderer,
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinBarAndLine() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 5,
+                renderer: $.jqplot.BarRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinMeterGauge() {
+            this.cfg.title = '';
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 5,
+                renderer: $.jqplot.MeterGaugeRenderer,
+                rendererOptions: {
+                    shadow: false,
+                    min: 100,
+                    max: 800,
+                    intervals: [200, 300, 400, 500, 600, 700, 800],
+                    intervalColors: ['#147df0', '#ed3c76', '#3e9018', '#da2f31', '#ffb200', '#ffb200', '633ea5']
+                }
+            }
+        }
+
+        function skinMultiAxis() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#3984b8', '#f6ac2b'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'bdc3c9',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth:1,
+                renderer: $.jqplot.BarRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+        </script>
+		<style type="text/css">
+.back {
+	text-align: center;
+}
+
+.pro {
+	background: url(resources/cp-layout/images/dashboard/bg-cover.png)
+		no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	width: 100%;
+	height: 230px;
+	background-size: cover;
+	position: relative;
+	font-size: 17px;
+}
+.jqplot-xaxis-label, .jqplot-yaxis-label, .jqplot-y2axis-label, .jqplot-x2axis-label {
+                color: #757575; 
+            }
+            
+            table.jqplot-table-legend {
+                background-color: #ffffff;
+                color: #434560;
+                border-color: #d8dae2;
+            }
+            
+ .underline {
+    border-bottom-width: 1px;
+  border-bottom-style: solid;
+      width: 100%;
+}
+.line {
+    border-bottom-width: 1px;
+  border-bottom-style: solid;
+      width: 25%;
+}
+.statusline input{
+    border: none;
+    border-bottom: 1px solid grey;
+    width: 100%;
+}
+.form-control-plaintext{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+</style>
+	</ui:define>
+	<ui:define name="content">
+		<h:outputStylesheet name="css/custom/styles.css" library="cp-layout" />
+		<h:outputStylesheet name="css/custom/bootstrap.min.css"
+			library="cp-layout" />
+		<h:outputStylesheet name="css/custom/bootstrap_limitless.min.css"
+			library="cp-layout" />
+		<h:outputStylesheet name="css/custom/layout.min.css"
+			library="cp-layout" />
+		<h:outputStylesheet name="css/custom/components.min.css"
+			library="cp-layout" />
+		<h:outputStylesheet name="css/custom/colors.min.css"
+			library="cp-layout" />
+			<h:outputScript name="js/custom/echarts.min.js" library="cp-layout" />
+			<h:outputScript name="js/custom/pies_donuts.js" library="cp-layout" />
+		<h:form id="form">
+
+			<div class="row">
+				<div class="col-md-3">
+
+					<div class="card">
+					
+						<div class="card-body bg-blue text-center card-img-top">
+
+							<h6 class="font-weight-semibold mb-0"><b>#{homeDetailsAction.searchPolicyList.productName}</b></h6> 
+							<h6 class="font-weight-semibold mb-0"><b>#{homeDetailsAction.searchPolicyList.planNumber}</b></h6> 
+							<span class="font-weight-semibold mb-0"><b>#{homeDetailsAction.searchPolicyList.planCurrency}:#{homeDetailsAction.searchPolicyList.totalRecContract}</b></span>
+
+
+						</div>
+
+						<div class="card-body border-top-0">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Person cover in this policy:</b></div>
+								
+								<div class="form-control-plaintext" >
+								<p:outputLabel value="#{homeDetailsAction.searchPolicyList.firstMember}" styleClass="underline"/>
+								</div>
+								
+								
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Policy Status</b></div>
+								<div class="form-control-plaintext">
+								<p:outputLabel value="#{homeDetailsAction.searchPolicyList.planStatus}" styleClass="underline"/>
+								</div>
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext" ><b>Issuance Date End Date:</b></div>
+								<div class="form-control-plaintext">
+								<p:outputLabel value="#{homeDetailsAction.searchPolicyList.issuanceDate.time}" styleClass="underline">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+								</div>
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Commencement Date</b></div>
+								<div class="form-control-plaintext">
+								<p:outputLabel value="#{homeDetailsAction.searchPolicyList.commencementDate.time}" styleClass="underline">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+								</div>
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Maturity Date</b></div>
+								<div class="form-control-plaintext">
+								<p:outputLabel value="#{homeDetailsAction.searchPolicyList.maturityDate.time}" styleClass="underline">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+								</div>
+							</div>
+					
+					</div>
+				</div>
+				
+			</div>
+			
+		
+		
+		
+			
+			<div class="col-md-9">
+			<div class="card">
+							<div class="card-header header-elements-inline">
+								<h6 class="card-title">Policy Details</h6>
+								
+							</div>
+							
+							<div class="card-body statusline">
+							<div class="row">
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Remaining Term:</b></div>
+								<div class="form-control-plaintext" >
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.remainingTerms}" styleClass="line"/>
+								</div>
+								
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Annual Contribution #{homeDetailsAction.searchPolicyList.planCurrency}:</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.annualContract}" styleClass="line"/>
+								</div>
+							</div>
+							
+							
+                            <div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Contribution Due Date</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.premiumDueDate.time}" styleClass="line">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+								</div>
+							</div>
+							
+							</div>
+							<div class="col-md-4">
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext" ><b>Payment Mode:</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.paymentMode}" styleClass="line"/>
+								</div>
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Last Paid Contribution #{homeDetailsAction.searchPolicyList.planCurrency}:</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.lastPaidContr}" styleClass="line"/>
+								</div>
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Contribution Payment End Date</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.premiumPayEndDate.time}" styleClass="line">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+								</div>
+							</div>
+							
+							
+							
+							</div>
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Total Due #{homeDetailsAction.searchPolicyList.planCurrency}:</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.totalDue}" styleClass="line"/>
+								</div>
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Total Paid Contribution #{homeDetailsAction.searchPolicyList.planCurrency}</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.planValue}" styleClass="line"/>
+								</div>
+							</div>
+							
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Last Paid Date</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.lastPaidDate.time}" styleClass="line">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+								</div>
+							</div>
+							
+							
+							</div>
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Contribution Payment Term</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.premiumPayTerm}&#160;Year(s)" styleClass="line"/>
+								</div>
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Fund Value #{homeDetailsAction.searchPolicyList.planCurrency}</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.fundValue}" styleClass="line"/>
+								</div>
+							</div>
+							</div>
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Contribution Holiday</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.contrHolidays}" styleClass="line"/>
+								</div>
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Payment Method</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.payMethod}" styleClass="line"/>
+								</div>
+							</div>
+							</div>
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Auto Debit Date</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.autoDbDate.time}" styleClass="line">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+								</div>
+							</div>
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Regular Contribution</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.regularContract}" styleClass="line"/>
+								</div>
+							</div> 
+							</div>
+							
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Assignment</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.assignment}" styleClass="line"/>
+								</div>
+							</div>
+							</div>
+							
+							<div class="col-md-4">
+							<div class="d-sm-flex flex-sm-wrap mb-3">
+								<div class="form-control-plaintext"><b>Pending Request Count</b></div>
+								<div class="form-control-plaintext">
+								<p:inputText value="#{homeDetailsAction.searchPolicyList.pendingRegCount}" styleClass="line"/>
+								</div>
+							</div>
+							</div>
+						</div>
+							
+						</div>
+					</div>
+			   </div>
+		  </div>	
+	<div class="row">	
+		<div class="ui-g-12">
+                <div class="card card-w-title">
+                    <h1>Details</h1>
+                   <p:accordionPanel multiple="true">
+					  <p:tab title="Fund Details">
+                        <p:dataTable var="fundDetails"
+								value="#{homeDetailsAction.fundDetailsSearchList}" 
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+							paginator="true" rows="10">
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.fundName']}"
+									sortBy="#{fundDetails.fundName}">
+									<h:outputText value="#{fundDetails.fundName}" />
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.share']}"
+									sortBy="#{fundDetails.sharePercentage}">
+									<h:outputText value="#{fundDetails.sharePercentage}" />
+									<h:outputText value="%" />
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.unitPrice']}"
+									sortBy="#{fundDetails.avaliableUnits}">
+									<h:outputText value="#{fundDetails.avaliableUnits}">
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.avaliableUnits']}"
+									sortBy="#{fundDetails.unitPrice}">
+									<h:outputText value="#{fundDetails.unitPrice}">
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.exchangeRate']}"
+									sortBy="#{fundDetails.exchangeRate}">
+									<h:outputText value="#{fundDetails.exchangeRate}" />
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.fundCurrency']}"
+									sortBy="#{fundDetails.fundValue}">
+									<h:outputText value="#{fundDetails.fundCurrency}&#160;" />
+									<h:outputText value="#{fundDetails.fundValue}">
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.planValue']}"
+									sortBy="#{fundDetails.planValue}">
+									<h:outputText
+										value="#{homeDetailsAction.searchPolicyList.planCurrency}&#160;" />
+									<h:outputText value="#{fundDetails.planValue}">
+									</h:outputText>
+								</p:column>
+								<p:columnGroup type="footer">
+									<p:row>
+										<p:column colspan="6" style="text-align:right"
+											footerText="#{msg['customeruser.searchpolicy.fundtable.totalFunds']}:" />
+										<p:column style="text-align:right"
+											footerText="#{homeDetailsAction.searchPolicyList.planCurrency}
+							  : #{homeDetailsAction.searchPolicyList.fundValue} ">
+										</p:column>
+									</p:row>
+								</p:columnGroup>
+							</p:dataTable>
+                      </p:tab>
+                      <p:tab title="Plan Details">
+                       <p:dataTable var="lifeAssuredDetails"
+							value="#{homeDetailsAction.lifeassuredDetailsList}" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+							paginator="true" rows="10">
+							<p:column headerText="#{msg['customeruser.searchpolicy.planbenefitable.coveredMembersName']}"
+								sortBy="#{lifeAssuredDetails.coverName}">
+								<h:outputText value="#{lifeAssuredDetails.lifeAssuredName}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.planbenefitable.coverType']}"
+								sortBy="#{lifeAssuredDetails.benefitType}">
+								<h:outputText value="#{lifeAssuredDetails.coverName}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.planbenefitable.benefitAmount']}"
+								sortBy="#{lifeAssuredDetails.coverName}">
+								<h:outputText value="#{lifeAssuredDetails.benefitType}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.planbenefitable.planTerm']}"
+								sortBy="#{lifeAssuredDetails.planTerm}">
+								<h:outputText value="#{lifeAssuredDetails.planTerm}" />
+								<h:outputText value="&#160;Year(s)" />
+							</p:column>
+						</p:dataTable>
+                      </p:tab>
+                      <p:tab title="Benficary Details">
+                      <p:dataTable var="NomineeDetails"
+							value="#{homeDetailsAction.nomineeDetailsList}" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+							paginator="true" rows="10">
+							<p:column headerText="#{msg['customeruser.searchpolicy.beneficiarytable.nomineeName']}"
+								sortBy="#{lifeAssuredDetails.coverName}">
+								<h:outputText value="#{NomineeDetails.nomineeDetails}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.beneficiarytable.percentage']}"
+								sortBy="#{lifeAssuredDetails.benefitType}">
+								<h:outputText value="#{NomineeDetails.sharePercentage}" />
+								<h:outputText value="%" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.beneficiarytable.coveredMember']}"
+								sortBy="#{lifeAssuredDetails.coverName}">
+								<h:outputText value="#{NomineeDetails.relationship}" />
+							</p:column>
+						</p:dataTable>
+                      </p:tab>
+                    </p:accordionPanel>    
+                </div>
+            </div>	
+		</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

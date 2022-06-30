@@ -1,0 +1,27 @@
+<!------- Created By Arul ------->
+<!------- DATE : 23/7/2020 ------>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+	<h2>VISA MASTER AMEX</h2>
+	<h:body>
+		<script type="text/javascript" src="#{homeDetailsAction.checkOutId}"></script>
+		<h:form action="#{homeDetailsAction.getPaymentStatus}" class="paymentWidgets">VISA MASTER AMEX
+			<h:commandButton type="submit" value="Pay now" />
+		</h:form>
+		
+		<h:outputScript>
+			var wpwlOptions = {
+			  	onAfterSubmit: function() {
+			    	location.href = "/ALRAJHI_CUSTOMERPORTAL/confirmPayment.app";
+				}
+			}
+		</h:outputScript>
+		
+	</h:body>
+	</ui:define>
+</ui:composition>

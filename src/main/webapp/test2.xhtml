@@ -1,0 +1,665 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<style></style>
+	<ui:define name="title">search policy</ui:define>
+	<ui:define name="viewname">
+	</ui:define>
+	<ui:define name="head">
+	 <script type="text/javascript">
+        function skinChart() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#ed3c76', '#3e9018', '#599597'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#dce2e7',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinBar() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                renderer: $.jqplot.BarRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinArea() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#dce2e7',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinBubble() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                renderer: $.jqplot.BubbleRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinZoom() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinPie() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#ed3c76', '#3e9018', '#ffb200'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#dce2e7',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560',
+                }
+            };
+            this.cfg.seriesDefaults = {
+                renderer: $.jqplot.PieRenderer,
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinDonut() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#ed3c76', '#3e9018', '#ffb200'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                rendererOptions: {
+                    textColor: '#434560',
+                }
+            };
+            this.cfg.seriesDefaults = {
+                renderer: $.jqplot.DonutRenderer,
+                shadow: false,
+                lineWidth: 1,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinBarAndLine() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#147df0', '#3e9018'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'd8dae2',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 5,
+                renderer: $.jqplot.BarRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+
+        function skinMeterGauge() {
+            this.cfg.title = '';
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth: 5,
+                renderer: $.jqplot.MeterGaugeRenderer,
+                rendererOptions: {
+                    shadow: false,
+                    min: 100,
+                    max: 800,
+                    intervals: [200, 300, 400, 500, 600, 700, 800],
+                    intervalColors: ['#147df0', '#ed3c76', '#3e9018', '#da2f31', '#ffb200', '#ffb200', '633ea5']
+                }
+            }
+        }
+
+        function skinMultiAxis() {
+            this.cfg.shadow = false;
+            this.cfg.title = '';
+            this.cfg.seriesColors = ['#3984b8', '#f6ac2b'];
+            this.cfg.grid = {
+                background: '#ffffff',
+                borderColor: '#ffffff',
+                gridLineColor: '#d8dae2',
+                shadow: false
+            };
+            this.cfg.axesDefaults = {
+                borderWidth: 0.1,
+                borderColor: 'bdc3c9',
+                rendererOptions: {
+                    textColor: '#434560'
+                }
+            };
+            this.cfg.seriesDefaults = {
+                shadow: false,
+                lineWidth:1,
+                renderer: $.jqplot.BarRenderer,
+                markerOptions: {
+                    shadow: false,
+                    size: 7,
+                    style: 'circle'
+                }
+            }
+        }
+        </script>
+		<style type="text/css">
+.back {
+	text-align: center;
+}
+
+.pro {
+	background: url(resources/cp-layout/images/dashboard/bg-cover.png)
+		no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	width: 100%;
+	height: 230px;
+	background-size: cover;
+	position: relative;
+	font-size: 17px;
+}
+.jqplot-xaxis-label, .jqplot-yaxis-label, .jqplot-y2axis-label, .jqplot-x2axis-label {
+                color: #757575; 
+            }
+            
+            table.jqplot-table-legend {
+                background-color: #ffffff;
+                color: #434560;
+                border-color: #d8dae2;
+            }
+</style>
+	</ui:define>
+	<ui:define name="content">
+		
+<link href="#{request.contextPath}/resources/cp-layout/css/custom/styles.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="#{request.contextPath}/resources/cp-layout/css/custom/#{guestPreferences.orientationRTL ? 'arabic' : 'english'}/bootstrap.min.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="#{request.contextPath}/resources/cp-layout/css/custom/#{guestPreferences.orientationRTL ? 'arabic' : 'english'}/bootstrap_limitless.min.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="#{request.contextPath}/resources/cp-layout/css/custom/#{guestPreferences.orientationRTL ? 'arabic' : 'english'}/layout.min.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="#{request.contextPath}/resources/cp-layout/css/custom/#{guestPreferences.orientationRTL ? 'arabic' : 'english'}/components.min.css"
+	rel="stylesheet" type="text/css" />
+<link
+	href="#{request.contextPath}/resources/cp-layout/css/custom/#{guestPreferences.orientationRTL ? 'arabic' : 'english'}/colors.min.css"
+	rel="stylesheet" type="text/css" />
+		
+		<script src="https://code.jquery.com/jquery-3.3.1.js" />
+		<script src="#{request.contextPath}/resources/cp-layout/js/custom/bootstrap.bundle.min.js" />
+		<script src="#{request.contextPath}/resources/cp-layout/js/custom/blockui.min.js" />
+		
+	
+		 <script src="#{request.contextPath}/resources/cp-layout/js/custom/steps.min.js" />
+		 <script src="#{request.contextPath}/resources/cp-layout/js/custom/select2.min.js" />
+		
+	    <script src="#{request.contextPath}/resources/cp-layout/js/custom/uniform.min.js"  />
+		<script src="#{request.contextPath}/resources/cp-layout/js/custom/validate.min.js" />
+		<script src="#{request.contextPath}/resources/cp-layout/js/custom/cookie.js"  />
+		<script src="#{request.contextPath}/resources/cp-layout/js/custom/#{guestPreferences.orientationRTL ? 'form_wizard_rtl.js' : 'form_wizard.js'}" />
+		
+
+			 <div class="card">
+					<div class="card-header bg-white header-elements-inline">
+						<h6 class="card-title">Update Information</h6>
+						<div class="header-elements">
+					
+	                	</div>
+					</div>
+
+                	<form class="wizard-form steps-validation" action="#" >
+						<h6>Mobile &amp; Email</h6>
+						<fieldset>
+							<div class="row">
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>Select location: <span class="text-danger">*</span></label>
+										<select name="location" data-placeholder="Select position" class="form-control form-control-select2 required" >
+											<option></option>
+											<optgroup label="North America">
+												<option value="1">United States</option>
+												<option value="2">Canada</option>
+											</optgroup>
+
+											<optgroup label="Latin America">
+												<option value="3">Chile</option>
+												<option value="4">Argentina</option>
+												<option value="5">Colombia</option>
+												<option value="6">Peru</option>
+											</optgroup>
+
+											<optgroup label="Europe">
+												<option value="8">Croatia</option>
+												<option value="9">Hungary</option>
+												<option value="10">Ukraine</option>
+												<option value="11">Greece</option>
+											</optgroup>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Phone #:</label>
+										<input type="text" name="tel" class="form-control" placeholder="+99-99-9999-9999" data-mask="+99-99-9999-9999"/>
+									</div>
+								</div>
+								
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Email address: <span class="text-danger">*</span></label>
+										<input type="email" name="email" class="form-control required" placeholder="your@email.com"/>
+									</div>
+								</div>
+
+								
+							</div>
+
+							
+						</fieldset>
+
+						<h6>Address</h6>
+						<fieldset>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>University: <span class="text-danger">*</span></label>
+		                                <input type="text" name="university" placeholder="University name" class="form-control required"/>
+	                                </div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Country:</label>
+	                                    <select name="university-country" data-placeholder="Choose a Country..." class="form-control form-control-select2" >
+	                                        <option></option> 
+	                                        <option value="1">United States</option> 
+	                                        <option value="2">France</option> 
+	                                        <option value="3">Germany</option> 
+	                                        <option value="4">Spain</option> 
+	                                    </select>
+                                    </div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Degree level: <span class="text-danger">*</span></label>
+		                                <input type="text" name="degree-level" placeholder="Bachelor, Master etc." class="form-control required"/>
+	                                </div>
+
+									<div class="form-group">
+										<label>Specialization:</label>
+		                                <input type="text" name="specialization" placeholder="Design, Development etc." class="form-control"/>
+	                                </div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="row">
+										<div class="col-md-6">
+											<label>From:</label>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+					                                    <select name="education-from-month" data-placeholder="Month" class="form-control form-control-select2" >
+					                                    	<option></option>
+					                                        <option value="January">January</option> 
+					                                        <option value="...">...</option> 
+					                                        <option value="December">December</option> 
+					                                    </select>
+				                                    </div>
+												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+					                                    <select name="education-from-year" data-placeholder="Year" class="form-control form-control-select2" >
+					                                        <option></option> 
+					                                        <option value="1995">1995</option> 
+					                                        <option value="...">...</option> 
+					                                        <option value="1980">1980</option> 
+					                                    </select>
+				                                    </div>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<label>To:</label>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+					                                    <select name="education-to-month" data-placeholder="Month" class="form-control form-control-select2" >
+					                                    	<option></option>
+					                                        <option value="January">January</option> 
+					                                        <option value="...">...</option> 
+					                                        <option value="December">December</option> 
+					                                    </select>
+				                                    </div>
+												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+					                                    <select name="education-to-year" data-placeholder="Year" class="form-control form-control-select2" >
+					                                        <option></option> 
+					                                        <option value="1995">1995</option> 
+					                                        <option value="...">...</option> 
+					                                        <option value="1980">1980</option> 
+					                                    </select>
+				                                    </div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label>Language of education:</label>
+		                                <input type="text" name="education-language" placeholder="English, German etc." class="form-control"/>
+	                                </div>
+								</div>
+							</div>
+						</fieldset>
+
+						<h6>Verification</h6>
+						<fieldset>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Company: <span class="text-danger">*</span></label>
+		                                <input type="text" name="experience-company" placeholder="Company name" class="form-control required"/>
+	                                </div>
+
+									<div class="form-group">
+										<label>Position: <span class="text-danger">*</span></label>
+		                                <input type="text" name="experience-position" placeholder="Company name" class="form-control required"/>
+	                                </div>
+
+									<div class="row">
+										<div class="col-md-6">
+											<label>From:</label>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+					                                    <select name="education-from-month" data-placeholder="Month" class="form-control form-control-select2" >
+					                                    	<option></option>
+					                                        <option value="January">January</option> 
+					                                        <option value="...">...</option> 
+					                                        <option value="December">December</option> 
+					                                    </select>
+				                                    </div>
+												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+					                                    <select name="education-from-year" data-placeholder="Year" class="form-control form-control-select2">
+					                                        <option></option> 
+					                                        <option value="1995">1995</option> 
+					                                        <option value="...">...</option> 
+					                                        <option value="1980">1980</option> 
+					                                    </select>
+				                                    </div>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<label>To:</label>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+					                                    <select name="education-to-month" data-placeholder="Month" class="form-control form-control-select2">
+					                                    	<option></option>
+					                                        <option value="January">January</option> 
+					                                        <option value="...">...</option> 
+					                                        <option value="December">December</option> 
+					                                    </select>
+				                                    </div>
+												</div>
+
+												<div class="col-md-6">
+													<div class="form-group">
+					                                    <select name="education-to-year" data-placeholder="Year" class="form-control form-control-select2">
+					                                        <option></option> 
+					                                        <option value="1995">1995</option> 
+					                                        <option value="...">...</option> 
+					                                        <option value="1980">1980</option> 
+					                                    </select>
+				                                    </div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+	                                <div class="form-group">
+										<label>Brief description:</label>
+	                                    <textarea name="experience-description" rows="4" cols="4" placeholder="Tasks and responsibilities" class="form-control"></textarea>
+	                                </div>
+
+									<div class="form-group">
+										<label class="d-block">Recommendations:</label>
+	                                    <input name="recommendations" type="file" class="form-input-styled" />
+	                                    <span class="form-text text-muted">Accepted formats: pdf, doc. Max file size 2Mb</span>
+	                                </div>
+								</div>
+							</div>
+						</fieldset>
+
+						<h6>Terms &amp; Conditions</h6>
+						<fieldset>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="d-block">Applicant resume:</label>
+	                                    <input type="file" name="resume" class="form-input-styled" />
+	                                    <span class="form-text text-muted">Accepted formats: pdf, doc. Max file size 2Mb</span>
+                                    </div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Where did you find us? <span class="text-danger">*</span></label>
+	                                    <select name="source" data-placeholder="Choose an option..." class="form-control form-control-select2 required" >
+	                                        <option></option> 
+	                                        <option value="monster">Monster.com</option> 
+	                                        <option value="linkedin">LinkedIn</option> 
+	                                        <option value="google">Google</option> 
+	                                        <option value="adwords">Google AdWords</option> 
+	                                        <option value="other">Other source</option>
+	                                    </select>
+                                    </div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Availability: <span class="text-danger">*</span></label>
+										<div class="form-check">
+											<label class="form-check-label">
+												<input type="radio" name="availability" class="form-input-styled required"/>
+												Immediately
+											</label>
+										</div>
+
+										<div class="form-check">
+											<label class="form-check-label">
+												<input type="radio" name="availability" class="form-input-styled" />
+												1 - 2 weeks
+											</label>
+										</div>
+
+										<div class="form-check">
+											<label class="form-check-label">
+												<input type="radio" name="availability" class="form-input-styled" />
+												3 - 4 weeks
+											</label>
+										</div>
+
+										<div class="form-check">
+											<label class="form-check-label">
+												<input type="radio" name="availability" class="form-input-styled" />
+												More than 1 month
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Additional information:</label>
+	                                    <textarea name="additional-info" rows="5" cols="5" placeholder="If you want to add any info, do it here." class="form-control"></textarea>
+                                    </div>
+								</div>
+							</div>
+						</fieldset>
+					</form>
+	            </div>
+		
+			
+		
+	</ui:define>
+</ui:composition>

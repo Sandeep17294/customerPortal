@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" lang="en">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" />
+	</f:facet>
+	<title><ui:insert name="title">SALAMA CUSTOMER PORTAL EASY-LIFE</ui:insert></title>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+
+	
+	<h:outputScript name="js/nanoscroller.js" library="cp-layout" />
+	<h:outputScript name="js/layout.js" library="cp-layout" />
+	<ui:insert name="head" />
+	<style>
+.clock {
+	border-radius: 0px !important;
+}
+.centeredColumnContent{
+    text-align: center;
+}
+
+</style>
+</h:head>
+<h:body>
+	<div
+		class="layout-wrapper #{guestPreferences.menuMode} #{guestPreferences.orientationRTL ? 'layout-rtl' : null}">
+		<f:view locale="#{guestPreferences.lang}">
+			<ui:include src="./topbar.xhtml" />
+
+			<ui:include src="./sidebar.xhtml" />
+
+			<div class="layout-main">
+				<div class="route-bar">
+					<!-- <div class="route-bar-breadcrumb">
+					<i class="fa fa-home"></i> <span></span>
+					<ui:insert name="viewname" />
+				</div> -->
+					<ui:include src="./routebar-menu.xhtml" />
+				</div>
+
+				<div class="layout-content">
+
+					<ui:insert name="content"></ui:insert>
+
+					<p:ajaxStatus
+						style="width:50px;height:50px;position:fixed;right:50px;bottom:50px">
+						<f:facet name="start">
+							<i class="fa fa-2x fas fa-spinner fa-spin ajax-status-icon"
+								aria-hidden="true"></i>
+						</f:facet>
+
+						<f:facet name="complete">
+							<h:outputText value="" />
+						</f:facet>
+					</p:ajaxStatus>
+					<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+             
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    <p:graphicImage name="images/background/806.gif"  library="cp-layout"/>
+</p:dialog>
+				</div>
+
+				<ui:include src="./footer.xhtml" />
+
+				<div class="layout-mask"></div>
+			</div>
+		</f:view>
+	</div>
+
+
+
+	<h:outputStylesheet name="css/nanoscroller.css" library="cp-layout" />
+	<h:outputStylesheet name="css/layout-#{guestPreferences.layout}.css"
+		library="cp-layout" />
+</h:body>
+
+</html>

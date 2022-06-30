@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card card-w-title">
+						<h1>
+							<b>Login Audit Trails</b>
+						</h1>
+						<p:dataTable id="audittrails" var="Lists"
+							value="#{adminHomeAction.cpLoginAuditTrailslist}" reflow="true"
+							paginator="true" rows="5" paginatorPosition="bottom">
+							<f:facet name="header">
+                                Session Tracking Lists
+                            </f:facet>
+                            
+                             <p:column headerText="User Id" sortBy="#{Lists.vuserName}">
+                                <h:outputText value="#{Lists.username}" />
+                            </p:column>
+                            
+                            </p:dataTable>
+                            
+						
+						<p:inputText value="#{adminHomeAction.username}" />
+						
+					
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

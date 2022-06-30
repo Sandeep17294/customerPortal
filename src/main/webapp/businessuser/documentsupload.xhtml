@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['dwnld']}</b>
+						</h1>
+						 <p:dataTable id="documentTable" var="document" value="#{documentAction.documentList}" reflow="true"
+							paginator="true" rows="10">
+							<f:facet name="header">
+                                          #{msg['bus.doc.afcet']}
+                                   </f:facet>
+
+							<p:column headerText="#{msg['bus.doc.name']}" sortBy="#{document.docName}">
+								<h:outputText value="#{document.docName}"
+									rendered="#{document.docId ne 0}" />
+								<p:inputText id="docName" value="#{document.docName}"
+									required="true" style="width:100px;"
+									requiredMessage="#{msg['bus.doc.req1']}"
+									rendered="#{document.docId eq 0}" />
+								<p:message for="docName" />
+							</p:column>
+
+							<p:column headerText="#{msg['bus.doc.desc']}" sortBy="#{document.docDesc}">
+								<h:outputText value="#{document.docDesc}"
+									rendered="#{document.docId ne 0}" />
+								<p:inputText value="#{document.docDesc}"
+									rendered="#{document.docId eq 0}" style="width:130px;"/>
+							</p:column>
+
+							<p:column headerText="#{msg['bus.doc.upon']}"
+								sortBy="#{document.uploadDate}">
+								<h:outputText value="#{document.uploadDate}"
+									rendered="#{document.docId ne 0}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+								<p:calendar value="#{document.uploadDate}" pattern="dd/MM/yyyy"
+									rendered="#{document.docId eq 0}" style="width:100px;"/>
+							</p:column>
+
+							<p:column headerText="#{msg['bus.doc.upby']}"
+								sortBy="#{document.uploadUser}">
+								<h:outputText value="#{document.uploadUser}"
+									rendered="#{document.docId ne 0}" />
+								<p:inputText rendered="#{document.docId eq 0}"
+									value="#{document.uploadUser}" disabled="true" />
+							</p:column>
+
+							<p:column headerText="#{msg['bus.doc.pth']}">
+								<h:panelGroup id="file">
+									<h:commandLink id="uploadFile" style="color:blue!important;"
+										styleClass="doc-input" value="#{document.docFilepath}"
+										rendered="#{document.docFilepath != null}"
+										title="#{msg['bus.doc.req2']}">
+										<p:fileDownload
+											value="#{documentAction.custDownload(document)}" />
+									</h:commandLink>
+									<p:fileUpload id="fileupload"
+										fileUploadListener="#{documentAction.btnUploadFile}"
+										dragDropSupport="false" label="..."
+										value="#{document.docFilepath}" sizeLimit="5242880"
+										auto="true" fileLimit="3"
+										allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx|xls|xlsx)$/"
+										invalidFileMessage="#{msg['bus.doc.re3']}"
+										rendered="#{document.docFilepath == null}"
+										fileLimitMessage="#{msg['bus.doc.req4']}">
+										<f:attribute name="documentDTO" value="#{document}" />
+									</p:fileUpload>
+									<p:message for="fileupload" />
+								</h:panelGroup>
+							</p:column>
+
+							<p:column headerText="#{msg['adminuser.srq.an']}">
+								<p:commandButton 
+									actionListener="#{documentAction.linkDelRow(document)}"
+									update="documentTable" immediate="true" icon="fa fa-trash" />
+							</p:column>
+
+						</p:dataTable><br></br><br></br>
+						
+						<p:messages id="messages" showDetail="true" closable="true">
+									<p:autoUpdate />
+						</p:messages>
+						
+						
+						
+						<p:commandButton value="#{msg['submit']}"
+								update="form"
+								actionListener="#{documentAction.btnSaveDocumentList}" style="float:left"/>
+							<p:commandButton value="#{msg['adminuser.srq.add']}" immediate="true"
+								update="documentTable,form" id="plusbtn"
+								actionListener="#{documentAction.btnAddRow}"
+								style="float:right"/>
+								
+					<br></br><br></br>			
+ 
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

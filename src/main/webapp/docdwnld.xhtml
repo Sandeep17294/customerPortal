@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer Documents</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['dwnld']}</b>
+						</h1>
+						<p:dataTable id="documentTable" var="document"
+							value="#{documentAction.documentList}" reflow="true"
+							paginator="true" rows="10">
+							<f:facet name="header">
+                                          #{msg['doc.lsi']}
+                                   </f:facet>
+
+							<p:column headerText="#{msg['bus.doc.name']}"
+								sortBy="#{document.docName}">
+								<h:outputText value="#{document.docName}" />
+								<h:commandLink ajax="false"
+									style="float:right;">
+									<p:fileDownload
+										value="#{documentAction.custDownload(document)}" />
+									<p:graphicImage name="images/dashboard/download.png" library="cp-layout"/>
+								</h:commandLink>
+							</p:column>
+
+							<p:column headerText="#{msg['bus.doc.desc']}"
+								sortBy="#{document.docDesc}">
+								<h:outputText value="#{document.docDesc}"/>
+							</p:column>
+
+							<p:column headerText="#{msg['bus.doc.upon']}"
+								sortBy="#{document.uploadDate}">
+								<h:outputText value="#{document.uploadDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

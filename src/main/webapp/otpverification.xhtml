@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+	<title>Salama Customer Portal</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css" />
+	<link href="resources/global_assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/english/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/english/bootstrap_limitless.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/english/layout.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/english/components.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/cp-layout/css/custom/english/colors.min.css" rel="stylesheet" type="text/css" />
+	<!-- /global stylesheets -->
+
+	
+   <!-- Core JS files -->
+    <script src="resources/cp-layout/js/custom/jquery.min.js" />
+	<script src="resources/cp-layout/js/custom/bootstrap.bundle.min.js" />
+	<script src="resources/cp-layout/js/custom/blockui.min.js"/>
+	<!-- /core JS files -->
+
+    <script src="resources/cp-layout/js/custom/uniform.min.js" />
+	<!-- Theme JS files -->
+	<!-- <script src="resources/global_assets/js/plugins/forms/styling/uniform.min.js" /> -->
+	
+	<!-- Theme JS files -->
+	<script src="resources/cp-layout/js/custom/login.js" />
+	<script src="resources/cp-layout/js/custom/app.js" />
+	<!-- <script src="resources/global_assets/js/demo_pages/login.js"  /> -->
+	<!-- /theme JS files -->
+	<script src="resources/cp-layout/js/custom/bootbox.min.js"></script>
+	<script src="resources/cp-layout/js/custom/select2.min.js"></script>
+	<!-- <script src="resources/global_assets/js/plugins/notifications/bootbox.min.js"></script>
+	<script src="resources/global_assets/js/plugins/forms/selects/select2.min.js"></script> -->
+	<!-- <script src="resources/global_assets/js/demo_pages/components_modals.js"></script> -->
+	
+<style>
+body, html {
+	background: url(resources/cp-layout/images/background/Dubai-4-1.jpg) no-repeat center
+		center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: #057398 !important;
+	height: 100%
+}
+</style>
+<script>
+$("#policyId").keyup(function() {
+    $.ajax({
+    	type:'GET'
+        url: '/register/test'
+    }).then(function(data) {
+       $('#maskedMobileNo').append(data);
+       
+    });
+});
+</script>
+</h:head>
+
+<body>
+
+	<!-- Page content -->
+	<div class="page-content login-cover">
+
+		<!-- Main content -->
+		<div class="content-wrapper">
+
+			<!-- Content area -->
+			<div class="content d-flex justify-content-center align-items-center">
+
+				<!-- Login form -->
+				
+					<div class="card">
+						
+
+						<div class="card-body">
+							
+						     <h:form id="otp-form" class="login-form wmin-sm-400" prependId="false">
+								<div class="text-center mb-3">
+								     <img src="resources/cp-layout/images/background/salamalogo.jpg" alt=""/><br></br><br></br>
+									<h5 class="mb-0">Verify email address</h5>
+									<span class="d-block text-muted">To verify your email, we've sent One Time Password(OTP)</span>
+									<p:outputLabel id="maskedEmailId" value="#{oTPValidationController.email}"></p:outputLabel>
+								
+								</div>
+ 
+                                
+								<p:messages id="messages" showDetail="true" closable="true">
+                                   <p:autoUpdate />
+                                 </p:messages>
+								
+								<div class="form-group form-group-feedback form-group-feedback-left">
+								<p:outputLabel value="Enter OTP"></p:outputLabel>
+								
+								<div class="ui-inputgroup">
+									<span class="ui-inputgroup-addon"><i class="fa fa-mobile text-muted"></i></span>
+									<p:inputText styleClass="form-control" type="password" value="#{oTPValidationController.otpnumber}"  placeholder="Please provide valid OTP"/>
+							    </div>
+									
+								</div>
+
+								<div class="form-group d-flex align-items-center">
+									<h:outputText value="OTP is vallid for #{oTPValidationController.otpTimelimit} Minutes"  />
+									<h:commandLink value="Resend OTP" class="ml-auto" action="#{oTPValidationController.resendOtp}" />
+								</div>
+
+								<div class="form-group">
+									<h:commandButton   styleClass="btn btn-primary btn-block" value="Verify" action="#{oTPValidationController.validateOtp}" />
+									<h:commandButton  styleClass="btn btn-primary btn-block" action="#{oTPValidationController.cancelOTPValidation}" value="Cancel"/>
+								</div>
+								
+
+                                <p:poll interval="#{oTPValidationController.otpTimeInterval}" listener="#{oTPValidationController.checkTime()}" immediate="true" update="otp-form"  />
+								<div class="form-group text-center text-muted content-divider">
+									<span class="px-2"></span>
+								</div>
+
+								<span class="form-text text-center text-muted">By continuing, you're confirming that you've read our <a href="#">Terms &amp; Conditions</a> and <a href="#">Cookie Policy</a></span>
+							</h:form>
+						</div>
+					</div>
+				
+				<!-- /login form -->
+
+			</div>
+			<!-- /content area -->
+
+		</div>
+		<!-- /main content -->
+
+	</div>
+	<!-- /page content -->
+
+</body>
+</html>

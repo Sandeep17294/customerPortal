@@ -1,0 +1,639 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.aetins</groupId>
+	<artifactId>customerportal</artifactId>
+	<version>1.0</version>
+	<packaging>war</packaging>
+
+
+	<name>customerportal</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<spring.version>4.3.18.RELEASE</spring.version>
+		<spring-security.version>4.2.3.RELEASE</spring-security.version>
+		<aspectj-version>1.6.12</aspectj-version>
+		<salama.war.filename>salama_lf_customerportal_app</salama.war.filename>
+		<axis2.version>1.7.1</axis2.version>
+		<java.version>1.8</java.version>
+		<webflow.version>2.3.3.RELEASE</webflow.version>
+		<hibernate.version>4.3.1.Final</hibernate.version>
+		<jackson.version>2.9.8</jackson.version>
+		<thymeleaf.version>3.0.8.RELEASE</thymeleaf.version>
+		<java.mail.api.version>1.5.5</java.mail.api.version>
+
+		<!-- *************************** -->
+		<!-- DB Properties -->
+		<!-- *************************** -->
+		<db.driver.name>com.mysql.jdbc.Driver</db.driver.name>
+		<db.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</db.dialect>
+	</properties>
+
+
+	<dependencies>
+		<!-- *************************** -->
+		<!-- Spring Dependencies -->
+		<!-- *************************** -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			<exclusions>
+				<!-- Exclude Commons Logging in favor of SLF4j -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- Spring webflow -->
+		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-faces</artifactId>
+			<version>${webflow.version}</version>
+		</dependency>
+		<!-- Jackson JSON Processor -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<!-- Joda Time Library -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj-version}</version>
+		</dependency>
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		<!-- Required by Spring for proxying controllers for JSF if annotated by 
+			@ManagedBean -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<!-- ******************************************** -->
+		<!-- SPRING JAX-WS WEBSERIVCES DEPENDENCIES -->
+		<!-- ******************************************** -->
+		<!-- <dependency> <groupId>com.sun.xml.ws</groupId> <artifactId>jaxws-tools</artifactId> 
+			<version>2.2.6-2</version> <exclusions> <exclusion> <groupId>javax.xml.stream</groupId> 
+			<artifactId>javax.xml.stream</artifactId> </exclusion> </exclusions> </dependency> -->
+		<!-- ************************************ -->
+		<!-- Spring Security Dependencies -->
+		<!-- ************************************ -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-acl</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<!-- *************************** -->
+		<!-- JSF 2 Dependency, Primefaces Dependencies -->
+		<!-- *************************** -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.faces</artifactId>
+			<version>2.2.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>el-impl</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>el-api</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+		<!-- jsf-api,jsf-impl exclude these dependencies for weblogic -->
+		<!-- <dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.1.7</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>2.1.7</version>
+			<scope>provided</scope>
+		</dependency> -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- *************************** -->
+		<!-- Servlet Dependency -->
+		<!-- *************************** -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- *************************** -->
+		<!-- Hibernate Dependencies -->
+		<!-- *************************** -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!-- Hibernate c3p0 connection pool -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<!-- *************************** -->
+		<!-- External Dependencies -->
+		<!-- *************************** -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<type>jar</type>
+			<exclusions>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.5.10</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.10</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+		<!-- *************************** -->
+		<!-- axis Dependencies -->
+		<!-- *************************** -->
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2</artifactId>
+			<version>${axis2.version}</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-transport-http</artifactId>
+			<version>${axis2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-kernel</artifactId>
+			<version>${axis2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-codegen</artifactId>
+			<version>${axis2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-transport-local</artifactId>
+			<version>${axis2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-adb</artifactId>
+			<version>${axis2.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.ws.commons.axiom</groupId>
+					<artifactId>axiom-dom</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>woodstox-core-asl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>stax2-api</artifactId>
+				</exclusion>
+			</exclusions>
+
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-adb-codegen</artifactId>
+			<version>${axis2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-json</artifactId>
+			<version>${axis2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-clustering</artifactId>
+			<version>${axis2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-jaxws</artifactId>
+			<version>${axis2.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.sun.xml.bind</groupId>
+					<artifactId>jaxb-impl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.xml.bind</groupId>
+					<artifactId>jaxb-xjc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>woodstox-core-asl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>stax2-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-spring</artifactId>
+			<version>${axis2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis-saaj</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ws.commons.schema</groupId>
+			<artifactId>XmlSchema</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ws.commons.axiom</groupId>
+			<artifactId>axiom-api</artifactId>
+			<version>1.2.18</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-stax-api_1.0_spec</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ws.commons.axiom</groupId>
+			<artifactId>axiom-impl</artifactId>
+			<version>1.2.18</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>woodstox-core-asl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>stax2-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<!-- <dependency> <groupId>javax.xml</groupId> <artifactId>jaxrpc</artifactId> 
+			<version>1.1</version> </dependency> -->
+		<!-- *************************************** -->
+		<!-- DB DRIVERS -->
+		<!-- *************************************** -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.39</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
+		<!-- <dependency> <groupId>javax.mail</groupId> <artifactId>javax.mail-api</artifactId> 
+			<version>${java.mail.api.version}</version> </dependency> -->
+		<!-- *********************** -->
+		<!-- ORACLE Dependency -->
+		<!-- Need to inject in maven repository manually -->
+		<!-- ********************** -->
+		
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>12.2.0.1</version>
+		</dependency>
+		
+		<!-- <dependency> <groupId>custom.com.oracle</groupId> <artifactId>ojdbc7</artifactId> 
+			<version>7.0</version> </dependency> <dependency> <groupId>custom.com.oracle</groupId> 
+			<artifactId>xdb</artifactId> <version>9.0.2</version> </dependency> -->
+	</dependencies>
+
+	<build>
+		<finalName>${salama.war.filename}</finalName>
+
+		<plugins>
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>jaxws-maven-plugin</artifactId> 
+				<version>2.4.1</version> <executions> <execution> <id>wsdltoJava</id> <goals> 
+				<goal>wsimport</goal> </goals> </execution> </executions> <configuration> 
+				<wsdlUrls>http://10.18.18.181:7001/Alhilal-CustomerPortal-context-root/PhaseOneServicePort?WSDL</wsdlUrls> 
+				<vmArgs> <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg> </vmArgs> <keep>true</keep> 
+				<packageName>com.aetins.customerportal.alhilal</packageName> <sourceDestDir>${basedir}/src/main/java</sourceDestDir> 
+				<verbose>true</verbose> </configuration> </plugin> -->
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>axistools-maven-plugin</artifactId> 
+				<version>1.4</version> <executions> <execution> <goals> <goal>wsdl2java</goal> 
+				</goals> </execution> </executions> <configuration> The list of WSDL files: 
+				<urls> <url>http://10.18.18.181:7001/Alhilal-CustomerPortal-context-root/PhaseOneServicePort?WSDL</url> 
+				</urls> <allElements>true</allElements> Where you want the generated files: 
+				<packageToNamespace></packageToNamespace> <outputDirectory>${basedir}/src/main/java</outputDirectory> 
+				<subPackageByFileName>true</subPackageByFileName> <useEmitter>false</useEmitter> 
+				<verbose>true</verbose> </configuration> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+
+	</build>
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<alhilal.db.driver>${db.driver.name}</alhilal.db.driver>
+				<alhilal.db.dialect>${db.dialect}</alhilal.db.dialect>
+				<alhilal.db.url>jdbc:mysql://localhost:3306/alhilalcustomerportal?autoReconnect=true</alhilal.db.url>
+				<alhilal.db.username>root</alhilal.db.username>
+				<alhilal.db.password>password</alhilal.db.password>
+				<log.path>${user.home}/logs/</log.path>
+				<db.connection.timeout>30000</db.connection.timeout>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<alhilal.db.driver>${db.driver.name}</alhilal.db.driver>
+				<alhilal.db.dialect>${db.dialect}</alhilal.db.dialect>
+				<alhilal.db.url>jdbc:mysql://10.18.18.181:3306/alhilalcustomerPortal?autoReconnect=true</alhilal.db.url>
+				<alhilal.db.username>devroot</alhilal.db.username>
+				<alhilal.db.password>R00t@123</alhilal.db.password>
+				<log.path>D:/Oracle/Middleware/Oracle_Home/user_projects/domains/base_domain/servers/AdminServer/logs/AlHilal_CustomerPortal/Portal</log.path>
+				<db.connection.timeout>30000</db.connection.timeout>
+			</properties>
+		</profile>
+		<profile>
+			<id>qa</id>
+			<properties>
+				<alhilal.db.driver>${db.driver.name}</alhilal.db.driver>
+				<alhilal.db.dialect>${db.dialect}</alhilal.db.dialect>
+				<!-- Need to update qa details -->
+				<alhilal.db.url>jdbc:mysql://${env.acp_db_ip}:${env.acp_db_port}/${env.acp_db}</alhilal.db.url>
+				<alhilal.db.username>${env.acp_user}</alhilal.db.username>
+				<alhilal.db.password>${env.acp_password}</alhilal.db.password>
+				<log.path>${env.acp_app_log}</log.path>
+				<db.connection.timeout>30000</db.connection.timeout>
+			</properties>
+		</profile>
+		<profile>
+			<id>uat</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<alhilal.db.driver>${db.driver.name}</alhilal.db.driver>
+				<alhilal.db.dialect>${db.dialect}</alhilal.db.dialect>
+				<!-- Need to update uat details -->
+				<alhilal.db.url></alhilal.db.url>
+				<alhilal.db.username>${env.acp_user}</alhilal.db.username>
+				<alhilal.db.password>${env.acp_password}</alhilal.db.password>
+				<log.path></log.path>
+				<db.connection.timeout>30000</db.connection.timeout>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<properties>
+				<alhilal.db.driver>${db.driver.name}</alhilal.db.driver>
+				<alhilal.db.dialect>${db.dialect}</alhilal.db.dialect>
+				<!-- Need to update production details -->
+				<alhilal.db.url></alhilal.db.url>
+				<alhilal.db.username></alhilal.db.username>
+				<alhilal.db.password></alhilal.db.password>
+				<log.path></log.path>
+				<db.connection.timeout>30000</db.connection.timeout>
+			</properties>
+		</profile>
+	</profiles>
+</project>

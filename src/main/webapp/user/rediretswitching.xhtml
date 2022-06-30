@@ -1,0 +1,754 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['redirectionswitching']}</b>
+						</h1>
+
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">
+									#{homeDetailsAction.searchPolicyList.productName} |
+									#{homeDetailsAction.searchPolicyList.planNumber} |
+									#{homeDetailsAction.searchPolicyList.premiumPayStatus} </span>
+							</div>
+						</div>
+						<br></br> <br></br>
+
+						<p:dataTable var="fundDetails"
+							value="#{homeDetailsAction.fundDetailsSearchList}" reflow="true"
+							paginator="true" rows="10">
+							<f:facet name="header">
+                                                #{msg['customeruser.reidrectswitching.switchredirecttabfect']}
+                                        </f:facet>
+
+							<p:column
+								headerText="#{msg['customeruser.reidrectswitching.fundtable.fundName']}"
+								sortBy="#{fundDetails.fundName}">
+								<h:outputText value="#{fundDetails.fundName}" />
+							</p:column>
+							<p:column
+								headerText="#{msg['customeruser.reidrectswitching.fundtable.share']}"
+								sortBy="#{fundDetails.sharePercentage}">
+								<h:outputText value="#{fundDetails.sharePercentage}" />
+								<h:outputText value="%" />
+							</p:column>
+							<p:column
+								headerText="#{msg['customeruser.reidrectswitching.fundtable.unitPrice']}"
+								sortBy="#{fundDetails.avaliableUnits}">
+								<h:outputText value="#{fundDetails.avaliableUnits}">
+									<f:convertNumber pattern="###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column
+								headerText="#{msg['customeruser.reidrectswitching.fundtable.avaliableUnits']}"
+								sortBy="#{fundDetails.unitPrice}">
+								<h:outputText value="#{fundDetails.unitPrice}">
+								</h:outputText>
+							</p:column>
+							<p:column
+								headerText="#{msg['customeruser.reidrectswitching.fundtable.exchangeRate']}"
+								sortBy="#{fundDetails.exchangeRate}">
+								<h:outputText value="#{fundDetails.exchangeRate}" />
+							</p:column>
+							<p:column
+								headerText="#{msg['customeruser.reidrectswitching.fundtable.fundCurrency']}"
+								sortBy="#{fundDetails.fundValue}">
+								<h:outputText value="#{fundDetails.fundCurrency}&#160;" />
+								<h:outputText value="#{fundDetails.fundValue}">
+									<f:convertNumber pattern="###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column
+								headerText="#{msg['customeruser.reidrectswitching.fundtable.planValue']}"
+								sortBy="#{fundDetails.planValue}">
+								<h:outputText
+									value="#{homeDetailsAction.searchPolicyList.planCurrency}&#160;" />
+								<h:outputText value="#{fundDetails.planValue}">
+									<f:convertNumber pattern="###,##0.00" />
+								</h:outputText>
+							</p:column>
+
+							<p:columnGroup type="footer">
+								<p:row>
+									<p:column colspan="6" style="text-align:right"
+										footerText="#{msg['customeruser.reidrectswitching.fundtable.totalFunds']}" />
+									<p:column style="text-align:right"
+										footerText="#{homeDetailsAction.searchPolicyList.planCurrency}
+							  : #{homeDetailsAction.searchPolicyList.fundValue} ">
+									</p:column>
+								</p:row>
+							</p:columnGroup>
+						</p:dataTable>
+
+						<br></br> <br></br>
+
+						<div class="row">
+							<h4 class="cn-he ifArbBt" id="page-content-wrapper"
+								style="margin-bottom: 0px; height: 30px; overflow: hidden; background: #e5e5e5 !important; margin-top: -7px !important; line-height: 10px; color: #1a616d; font-size: 14px; font-weight: bold; padding: 20px; width: 100%;">
+								<h:outputText
+									value="#{msg['customeruser.reidrectswitching.option']}" />
+							</h4>
+						</div>
+						<br></br>
+						<div class="row">
+							<p:selectOneRadio id="coun"
+								value="#{redirectionSwitchingAction.selectedOperation}">
+								<f:selectItem
+									itemLabel="#{msg['customeruser.reidrectswitching.option1']}"
+									itemValue="R" />
+								<f:selectItem
+									itemLabel="#{msg['customeruser.reidrectswitching.option2']}"
+									itemValue="S" />
+								<f:selectItem
+									itemLabel="#{msg['customeruser.reidrectswitching.option3']}"
+									itemValue="RS" />
+								<p:ajax
+									listener="#{redirectionSwitchingAction.displaySelectedPanel}"
+									event="valueChange" update="redirect,form,termscond" />
+							</p:selectOneRadio>
+						</div>
+						<br></br> <br></br>
+
+
+						<!-- Redirection started -->
+
+						<h:panelGroup id="redirect"
+							rendered="#{redirectionSwitchingAction.enableRedirection}">
+
+							<p:dataTable id="reirecttable" var="list" rowIndexVar="list1"
+								value="#{redirectionAction.redirectionList}" reflow="true"
+								paginator="true" rows="10">
+								<f:facet name="header">
+                                               #{msg['customeruser.reidrectswitching.redirectionfacet']}
+                                        </f:facet>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.redirection.fund']}"
+									sortBy="#{list.fundName}">
+									<h:outputText value="#{list.fundName}"
+										rendered="#{!list.newRecord and repeatFund}" />
+									<h:outputText id="repeatFund" value="#{list.fundName}"
+										rendered="#{!empty list.fundCode}" />
+									<p:selectOneMenu id="fundError" value="#{list.fundCode}"
+										rendered="#{list.newRecord and  empty list.fundCode}"
+										required="true"
+										requiredMessage="#{msg['customeruser.reidrectswitching.redirection.fund.required']}">
+										<f:selectItem itemLabel="SelectOne" itemValue="" />
+										<f:selectItems value="#{redirectionAction.listOfFundNames}"
+											var="each" itemLabel="#{each.description}"
+											itemValue="#{each.code}" />
+										<p:ajax
+											listener="#{redirectionAction.getFundDetails(list,list1)}"
+											event="change" update="reirecttable" />
+									</p:selectOneMenu>
+									<p:message for="fundError" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.redirection.fund.currency']}"
+									sortBy="#{list.fundCurrency}">
+									<h:outputText value="#{list.fundCurrency}" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.redirection.fund.existing']}"
+									sortBy="#{list.criteria}">
+									<h:outputText value="#{list.criteria}%" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.redirection.fund.newallocation']}"
+									sortBy="#{list.value}">
+									<p:inputText style="border:none;" id="percentage"
+										required="true" maxlength="3"
+										requiredMessage="#{msg['customeruser.reidrectswitching.redirection.fund.newallo.req']}"
+										value="#{list.value}">
+										<p:ajax event="blur"
+											update="percentage">
+										</p:ajax>
+									</p:inputText>%
+									<p:commandLink disabled="#{list.criteria != null}"
+										action="#{redirectionAction.btnDeleteStratergy(list)}"
+										immediate="true" update="reirecttable">
+										<p:graphicImage name="images/template/delete_icon.png"
+											library="cp-layout" class="mobile" />
+									</p:commandLink>
+									<p:message for="percentage" />
+								</p:column>
+
+								<p:columnGroup type="footer">
+									<p:row>
+										<p:column colspan="3" style="text-align:right"
+											footerText="#{msg['customeruser.reidrectswitching.redirection.fund.totalalloc']}">
+											<p:commandButton value="Calculate Percentage" style="float:right"
+									            action="#{redirectionAction.addStretgy}" update="reirecttable" />
+									</p:column>
+										<p:column style="text-align:right"
+											footerText="#{redirectionAction.newTotal}"> %
+									</p:column>
+									</p:row>
+								</p:columnGroup>
+
+							</p:dataTable>
+
+							<br></br>
+
+							<div class="row">
+								<p:commandButton value="#{msg['addfund']}" style="float:right"
+									action="#{redirectionAction.addStretgy}" update="reirecttable" />
+							</div>
+						</h:panelGroup>
+						<!-- Redirection ended -->
+
+						<!-- Swtching started -->
+						<h:panelGroup
+							rendered="#{redirectionSwitchingAction.enableSwitching}">
+
+							<p:dataTable id="switchtable" rowIndexVar="list1" var="list"
+								value="#{switchingAction.sellingFundsList}" reflow="true"
+								paginator="true" rows="10">
+								<f:facet name="header">
+                                               #{msg['customeruser.reidrectswitching.sellingfacet']}
+                                        </f:facet>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.selling.fund']}">
+									<h:outputText value="#{list.fundName}" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.selling.fund.currency']}"
+									sortBy="#{list.fundCurrency}">
+									<h:outputText value="#{list.fundCurrency}">
+									</h:outputText>
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.selling.fund.existing']}"
+									sortBy="#{list.fundPlanCurr}">
+									<h:outputText value="#{list.criteria}%">
+									</h:outputText>
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.selling.fund.newallocation']}">
+									<p:inputText required="true"
+										requiredMessage="#{msg['customeruser.reidrectswitching.selling.fund.newallo.req']}"
+										id="switchSellingPercentage" style="border:none;"
+										value="#{list.value}">
+										<p:ajax event="blur" process="@this"
+											listener="#{switchingAction.onChangeShare(list1)}"
+											update="switchtable" />
+									</p:inputText> %
+									<p:commandLink
+										action="#{switchingAction.btnDeleteStratergy(list)}"
+										immediate="true" update="switchtable">
+										<p:graphicImage name="images/template/delete_icon.png"
+											library="cp-layout" class="mobile" />
+									</p:commandLink>
+									<p:message for="switchSellingPercentage" />
+								</p:column>
+
+							</p:dataTable>
+							<br></br>
+							<br></br>
+
+							<p:dataTable id="switchtablebying" rowIndexVar="list1" var="list"
+								value="#{switchingAction.buyingFundsList}" reflow="true"
+								paginator="true" rows="10">
+								<f:facet name="header">
+                                                #{msg['customeruser.reidrectswitching.buyingfacet']}
+                                 </f:facet>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.buying.fund']}"
+									sortBy="#{list.fundName}">
+									<h:outputText value="#{list.fundName}" />
+									<h:outputText id="repeatFund" value="#{list.fundName}"
+										rendered="#{!empty list.fundCode}" />
+									<p:selectOneMenu id="fundError" styleClass="form-control"
+										value="#{list.fundCode}"
+										rendered="#{list.newRecord and  empty list.fundCode}"
+										required="true"
+										requiredMessage="#{msg['customeruser.reidrectswitching.buying.fund.required']}">
+										<f:selectItem itemLabel="selectOne" itemValue="" />
+										<f:selectItems value="#{switchingAction.listItems}" var="each"
+											itemLabel="#{each.description}" itemValue="#{each.code}" />
+										<p:ajax
+											listener="#{switchingAction.getFundDetails(list,list1)}"
+											event="change" update="switchtablebying" />
+									</p:selectOneMenu>
+									<p:message for="fundError" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.buying.fund.currency']}"
+									sortBy="#{list.fundCurrency}">
+									<h:outputText value="#{list.fundCurrency}" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.buying.fund.price']}"
+									sortBy="#{list.fundSelling}">
+									<h:outputText value="#{list.fundSelling}" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.buying.fund.percenatage']}"
+									sortBy="#{list.value}">
+									<p:inputText required="true"
+										requiredMessage="#{msg['customeruser.reidrectswitching.buying.fund.percenatage.req']}"
+										id="switchbuyPercentage" value="#{list.value}"
+										style="text-align: right;border:none;">
+										<p:ajax event="blur"
+											listener="#{switchingAction.onBuyingChangeShare(list,list1)}"
+											update="switchtablebying,switchbuyPercentage" />
+									</p:inputText> % 
+									<p:commandLink
+										action="#{switchingAction.btnDeleteStratergy1(list)}"
+										immediate="true" update="switchtablebying">
+										<p:graphicImage name="images/template/delete_icon.png"
+											library="cp-layout" class="mobile" />
+									</p:commandLink>
+									<p:message for="switchbuyPercentage" />
+								</p:column>
+
+								<p:columnGroup type="footer">
+									<p:row>
+										<p:column colspan="3" style="text-align:right"
+											footerText="#{msg['customeruser.reidrectswitching.buying.fund.totalalloc']}" />
+										<p:column style="text-align:right"
+											footerText="#{switchingAction.newTotal1}"> %
+									</p:column>
+									</p:row>
+								</p:columnGroup>
+							</p:dataTable>
+
+							<br></br>
+							<div class="row">
+								<p:commandButton value="#{msg['addfund']}"
+									actionListener="#{switchingAction.addStretgy2}"
+									update="switchtablebying" style="float:right" />
+							</div>
+							<br></br>
+							<br></br>
+						</h:panelGroup>
+						<!-- Switching ended -->
+
+
+
+						<!-- Redirection and Switching started -->
+						<h:panelGroup
+							rendered="#{redirectionSwitchingAction.enableRedirctSwitch}">
+
+							<p:dataTable id="redirectredirec" rowIndexVar="list1" var="list"
+								value="#{redirectionSwitchingAction.redirectionList}"
+								reflow="true" paginator="true" rows="10">
+								<f:facet name="header">
+                                               #{msg['customeruser.reidrectswitching.redirectionfacet']}
+                                 </f:facet>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.redirection.fund']}"
+									sortBy="#{list.fundName}">
+									<h:outputText value="#{list.fundName}"
+										rendered="#{!list.newRecord and repeatFund}" />
+									<h:outputText id="repeatFund1" value="#{list.fundName}"
+										rendered="#{!empty list.fundCode}" />
+									<p:selectOneMenu styleClass="form-control" id="fundNames"
+										value="#{list.fundCode}"
+										rendered="#{list.newRecord and  empty list.fundCode}"
+										required="true"
+										requiredMessage="#{msg['customeruser.reidrectswitching.redirection.fund.required']}">
+										<f:selectItem itemLabel="please select one" itemValue="" />
+										<f:selectItems
+											value="#{redirectionSwitchingAction.listOfRedirectFundNames}"
+											var="each" itemLabel="#{each.description}"
+											itemValue="#{each.code}" />
+										<p:ajax
+											listener="#{redirectionSwitchingAction.getRedirectFundDetails(list,list1)}"
+											event="change" update="redirectredirec">
+										</p:ajax>
+									</p:selectOneMenu>
+									<p:message for="fundNames" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.redirection.fund.currency']}"
+									sortBy="#{list.fundCurrency}">
+									<h:outputText value="#{list.fundCurrency}"
+										rendered="#{!list.newRecord}" />
+									<h:outputText value="#{list.fundCurrency}"
+										rendered="#{list.newRecord}" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.redirection.fund.existing']}"
+									sortBy="#{list.criteria}">
+									<h:outputText value="#{list.criteria}%"
+										rendered="#{!list.newRecord}" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.redirection.fund.newallocation']}"
+									sortBy="#{list.value}">
+									<p:inputText id="redPercentage" required="true"
+										requiredMessage="#{msg['customeruser.reidrectswitching.redirection.fund.newallo.req']}"
+										style="text-align: right;border:none;" value="#{list.value}">
+										<p:ajax event="blur"
+											listener="#{redirectionSwitchingAction.onChangeShare(list,list1)}"
+											update="redirectredirec,redPercentage" />
+									</p:inputText> % 
+									<p:commandLink
+										action="#{redirectionSwitchingAction.btnRedirectDeleteStratergy(list)}"
+										immediate="true" update="redirectredirec">
+										<p:graphicImage name="images/template/delete_icon.png"
+											library="cp-layout" class="mobile" />
+									</p:commandLink>
+									<p:message for="redPercentage" />
+								</p:column>
+
+								<p:columnGroup type="footer">
+									<p:row>
+										<p:column colspan="3" style="text-align:right"
+											footerText="#{msg['customeruser.reidrectswitching.redirection.fund.totalalloc']}" />
+										<p:column style="text-align:right"
+											footerText="#{redirectionSwitchingAction.newRedirectTotal}"> %
+									</p:column>
+									</p:row>
+								</p:columnGroup>
+
+							</p:dataTable>
+							<br></br>
+
+							<div class="row">
+								<p:commandButton value="#{msg['addfund']}"
+									actionListener="#{redirectionSwitchingAction.addRedirectStretgy}"
+									update="redirectredirec" style="float:right" />
+							</div>
+							<br></br>
+							<br></br>
+							<br></br>
+
+						</h:panelGroup>
+
+						<h:panelGroup
+							rendered="#{redirectionSwitchingAction.enableRedirctSwitch}">
+
+							<p:dataTable id="redirectredisell" rowIndexVar="list1" var="list"
+								value="#{redirectionSwitchingAction.sellingFundsList}"
+								reflow="true" paginator="true" rows="10">
+								<f:facet name="header">
+                                                #{msg['customeruser.reidrectswitching.sellingfacet']}
+                                 </f:facet>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.selling.fund']}"
+									sortBy="#{list.fundName}">
+									<h:outputText value="#{list.fundName}" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.selling.fund.currency']}"
+									sortBy="#{list.fundCurrency}">
+									<h:outputText value="#{list.fundCurrency}" />
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.selling.fund.existing']}"
+									sortBy="#{list.fundPlanCurr}">
+									<h:outputText value="#{list.criteria}%">
+									</h:outputText>
+								</p:column>
+
+								<p:column
+									headerText="#{msg['customeruser.reidrectswitching.selling.fund.newallocation']}"
+									sortBy="#{car.color}">
+									<p:inputText required="true"
+										requiredMessage="#{msg['customeruser.reidrectswitching.selling.fund.newallo.req']}"
+										id="gghg" value="#{list.value}"
+										style="text-align: right;border:none;"
+										styleClass="numbers_only">
+										<p:ajax event="blur" process="@this"
+											listener="#{redirectionSwitchingAction.onChangeShare(list1)}"
+											update="redirectredisell" />
+									</p:inputText> %
+									<p:commandLink
+										action="#{redirectionSwitchingAction.btnDeleteStratergy(list)}"
+										immediate="true" update="redirectredisell">
+										<p:graphicImage name="images/template/delete_icon.png"
+											library="cp-layout" class="mobile" />
+									</p:commandLink>
+									<p:message for="gghg" />
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGroup>
+						<br></br> <br></br>
+
+
+						<div class="row">
+							<h:panelGroup
+								rendered="#{redirectionSwitchingAction.enableRedirctSwitch}">
+
+								<p:dataTable id="redirectredibuying" rowIndexVar="list1"
+									var="list"
+									value="#{redirectionSwitchingAction.buyingFundsList}"
+									reflow="true" paginator="true" rows="10">
+									<f:facet name="header">
+                                                #{msg['customeruser.reidrectswitching.buyingfacet']}
+                                 </f:facet>
+
+									<p:column
+										headerText="#{msg['customeruser.reidrectswitching.buying.fund']}"
+										sortBy="#{list.fundName}">
+										<h:outputText value="#{list.fundName}"
+											rendered="#{!list.newRecord and repeatFund}" />
+										<h:outputText id="repeatFund" value="#{list.fundName}"
+											rendered="#{!empty list.fundCode}" />
+										<p:selectOneMenu id="fundError" value="#{list.fundCode}"
+											rendered="#{list.newRecord and  empty list.fundCode}"
+											required="true"
+											requiredMessage="#{msg['customeruser.reidrectswitching.buying.fund.required']}">
+											<f:selectItem itemLabel="SelectOne" itemValue="" />
+											<f:selectItems
+												value="#{redirectionSwitchingAction.listItems}" var="each"
+												itemLabel="#{each.description}" itemValue="#{each.code}" />
+											<p:ajax
+												listener="#{redirectionSwitchingAction.getFundDetails(list,list1)}"
+												event="change" update="redirectredibuying" />
+										</p:selectOneMenu>
+										<p:message for="fundError" />
+									</p:column>
+
+									<p:column
+										headerText="#{msg['customeruser.reidrectswitching.buying.fund.currency']}"
+										sortBy="#{list.fundCurrency}">
+										<h:outputText value="#{list.fundCurrency}" />
+									</p:column>
+
+									<p:column
+										headerText="#{msg['customeruser.reidrectswitching.buying.fund.price']}"
+										sortBy="#{list.fundSelling}">
+										<h:outputText value="#{list.fundSelling}" />
+									</p:column>
+
+									<p:column
+										headerText="#{msg['customeruser.reidrectswitching.buying.fund.percenatage']}"
+										sortBy="#{list.value}">
+										<p:inputText id="buyPercentage" required="true"
+											requiredMessage="#{msg['customeruser.reidrectswitching.buying.fund.percenatage.req']}"
+											style="border:none;" value="#{list.value}">
+											<p:ajax event="blur"
+												listener="#{redirectionSwitchingAction.onChangeShare1(list,list1)}"
+												update="redirectredibuying,buyPercentage" />
+										</p:inputText> %
+									<p:commandLink
+											action="#{redirectionSwitchingAction.btnDeleteStratergy1(list)}"
+											immediate="true" update="redirectredibuying">
+											<p:graphicImage name="images/template/delete_icon.png"
+												library="cp-layout" class="mobile" />
+										</p:commandLink>
+										<p:message for="buyPercentage" />
+									</p:column>
+
+									<p:columnGroup type="footer">
+										<p:row>
+											<p:column colspan="3" style="text-align:right"
+												footerText="#{msg['customeruser.reidrectswitching.buying.fund.totalalloc']}" />
+											<p:column style="text-align:right"
+												footerText="#{redirectionSwitchingAction.buyNewTotal}"> %
+									</p:column>
+										</p:row>
+									</p:columnGroup>
+
+								</p:dataTable>
+
+								<br></br>
+
+								<div class="row">
+									<p:commandButton value="#{msg['addfund']}"
+										actionListener="#{redirectionSwitchingAction.addStretgy2}"
+										update="redirectredibuying" style="float:right" />
+								</div>
+								<br></br>
+							</h:panelGroup>
+						</div>
+						<br></br> <br></br>
+						<!-- Redirection and Switching ended -->
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+		<h:form id="termscond">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h:panelGroup
+							rendered="#{redirectionSwitchingAction.termsandcondition}">
+							<h1>
+								<b>#{msg['termscondheading']}</b>
+							</h1>
+							<ui:repeat
+								value="#{redirectionSwitchingAction.termsConditionYesNo}"
+								var="details">
+								<span style="color: green;">*</span>
+								<em><p:outputLabel style="color: green!important;"
+										value="Info: " /></em>
+								<p:outputLabel style="margin-left: 5px;"
+									value="#{details.conditionEng}" />
+								<br />
+							</ui:repeat>
+							<ui:repeat
+								value="#{redirectionSwitchingAction.termsConditionYesYes}"
+								var="details">
+								<p:selectBooleanCheckbox id="cond" style="width: 21px; ">
+									<f:validator validatorId="termsConditionsValidator" />
+								</p:selectBooleanCheckbox>
+								<p:outputLabel
+									style="margin-left: 11px;color: #1a616d!important;font-weight: bold;"
+									value="#{details.conditionEng}" />
+								<br />
+							</ui:repeat>
+							<p:selectBooleanCheckbox id="terms"
+								value="#{redirectionSwitchingAction.termsCondition}"
+								type="checkbox" style="width:20px;">
+								<f:validator validatorId="termsConditionsValidator" />
+							</p:selectBooleanCheckbox>
+							<span style="color: red;">*</span>
+							<strong style="font-size: 13px;">#{msg['termscondmain']}.</strong>
+							<br></br>
+							<div class="row">
+							
+							<h:panelGroup id="rs" rendered="#{redirectionSwitchingAction.rs}">
+							<p:commandButton
+									rendered="#{!redirectionSwitchingAction.fatcaFlagpopUp==true}"
+									actionListener="#{redirectionSwitchingAction.btnContinueLater}"
+									action="#{otpValidation.btnPrintForm()}"
+									value="#{msg['submit']}" update="form,otpform"
+									style="float:right;" />
+							<p:commandButton rendered="#{redirectionSwitchingAction.fatcaFlagpopUp==true}"
+									actionListener="#{redirectionSwitchingAction.btnContinueLaterfatca}"
+									action="#{redirectionSwitchingAction.fatcasample()}"
+									value="Fatca Form Submit" update="form" style="float:right;" />
+							</h:panelGroup>
+							
+							<h:panelGroup id="red" rendered="#{redirectionSwitchingAction.red}">
+							<p:commandButton
+									rendered="#{!redirectionAction.fatcaFlagpopUp==true}"
+									actionListener="#{redirectionAction.btnContinueLatertest}"
+									action="#{otpValidation.btnPrintForm()}"
+									value="#{msg['submit']}" update="form,otpform"
+									style="float:right;" />	
+							<p:commandButton
+									rendered="#{redirectionAction.fatcaFlagpopUp==true}"
+									actionListener="#{redirectionAction.btnContinueLatertestfatca}"
+									action="#{redirectionAction.fatcasample()}"
+									value="Fatca Form Submit" update="form" style="float:right;" />		
+							</h:panelGroup>
+							
+							<h:panelGroup id="swic" rendered="#{redirectionSwitchingAction.swic}">
+							<p:commandButton
+									rendered="#{!switchingAction.fatcaFlagpopUp==true}"
+									actionListener="#{switchingAction.btnContinueLater}"
+									action="#{otpValidation.btnPrintForm()}"
+									value="#{msg['submit']}" update="form,otpform"
+									style="float:right;" />
+							<p:commandButton
+							        rendered="#{switchingAction.fatcaFlagpopUp==true}"
+									actionListener="#{switchingAction.btnContinueLaterfatca}"
+									action="#{switchingAction.fatcasample()}"
+									value="Fatca Form Submit" update="form" style="float:right;" />		
+							</h:panelGroup>
+							</div>
+							<br></br>
+						</h:panelGroup>
+					</div>
+				</div>
+			</div>
+			<script>
+				function functionotpmsg() {
+					swal(
+							"OTP!",
+							"Successfully sended to your registered email and conatact no!",
+							"success")
+				}
+			</script>
+		</h:form>
+
+
+		<h:panelGroup>
+			<p:dialog id="successTab"
+				header="#{homeDetailsAction.searchPolicyList.productName} | #{homeDetailsAction.searchPolicyList.planNumber} | #{homeDetailsAction.searchPolicyList.premiumPayStatus}"
+				widgetVar="dlg3" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform">
+					<b><span>#{msg['otp.securityques']}</span></b>
+					<br></br>
+
+					<p:panelGrid columns="1" layout="grid">
+						<p:inputText id="questionn" value="#{otpValidation.securityQues}"
+							style="border:none;" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.answer']}</span></b>
+						<p:inputText value="#{otpValidation.userSecurityAns}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.enter']}</span></b>
+						<p:password id="otp" value="#{otpValidation.userOTP}"
+							disabled="#{otpValidation.enableResendOTP}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span style="color: red;">#{msg['otp.valid']}</span></b>
+						<p:commandLink value="#{msg['otp.resend']}"
+							actionListener="#{otpValidation.smsGenerator}" immediate="true"
+							update="form" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="3" layout="grid">
+						<p:poll interval="#{otpValidation.OTPTimeLimit}"
+							listener="#{otpValidation.checkTime()}" immediate="true"
+							update="form" autoStart="#{otpValidation.renderStartTime}"
+							stop="#{otpValidation.renderStopTime}" />
+						<p:commandButton type="submit" value="#{msg['ok']}"
+							actionListener="#{otpValidation.validateOTP}" update="form,otpform12"
+							disabled="#{otpValidation.enableResendOTP}" />
+						<p:commandButton value="#{msg['cancel']}"
+							actionListener="#{otpValidation.delete}" update="form" />
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+		
+		<h:panelGroup>
+			<p:dialog id="successTab156" header="#{msg['top.not']}" modal="true"
+				widgetVar="dlg4" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform12">
+					<b><span>#{otpValidation.popmsg}</span></b>
+					<br></br>
+					<br></br>
+					<p:commandButton value="#{msg['ok']}" style="float:center"
+						action="#{homeDetailsAction.servicelist()}" update="form" />
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+
+	</ui:define>
+</ui:composition>

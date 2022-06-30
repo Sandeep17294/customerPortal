@@ -1,0 +1,237 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>Contribution History</h1>
+
+						<div class="row">
+							<h4
+								style="margin-bottom: 0px; height: 50px; overflow: hidden; background: #e5e5e5 !important; margin-top: -7px !important; line-height: 10px; color: #1a616d; font-size: 14px; font-weight: bold; padding: 20px; width: 100%;">
+								<h:outputText value="#{homeDetailsAction.searchPolicyList.productName}" />
+								|
+								<h:outputText value="#{homeDetailsAction.searchPolicyList.planNumber}" />
+								|
+								<h:outputText value="#{homeDetailsAction.searchPolicyList.premiumPayStatus}" />
+							</h4>
+						</div>
+						<br></br>
+
+						<div class="row">
+							<h4
+								style="margin-bottom: 0px; height: 50px; overflow: hidden; background: #e5e5e5 !important; margin-top: -7px !important; line-height: 10px; color: #1a616d; font-size: 14px; font-weight: bold; padding: 20px; width: 60%;">
+								<h:outputText value="Plan Details" />
+							</h4>
+						</div>
+
+						<div class="row">
+							<p:panelGrid id="assetsAndLiabilites"
+								style="margin-top:10px;width: 60%;">
+								<p:row>
+									<p:column>
+										<h:outputLabel value="Commencement Date"></h:outputLabel>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contributionHolidayAction.commencementDate}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+								</p:row>
+
+								<p:row>
+									<p:column>
+										<h:outputLabel value="Contribution Date "></h:outputLabel>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contributionHolidayAction.contriDueDate}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+								</p:row>
+
+								<p:row>
+									<p:column>
+										<h:outputLabel value="Payment Frequency"></h:outputLabel>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contributionHolidayAction.paymentFrequency}" />
+									</p:column>
+								</p:row>
+
+								<p:row>
+									<p:column>
+										<h:outputLabel value="Plan Currency"></h:outputLabel>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{homeDetailsAction.searchPolicyList.planCurrency}" />
+									</p:column>
+								</p:row>
+
+								<p:row>
+									<p:column>
+										<h:outputLabel value="Contribution Amount"></h:outputLabel>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contributionHolidayAction.contribution}" />
+									</p:column>
+								</p:row>
+
+								<p:row>
+									<p:column>
+										<h:outputLabel value="Outstanding Due"></h:outputLabel>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contributionHolidayAction.totalDue}" />
+									</p:column>
+								</p:row>
+
+								<p:row>
+									<p:column>
+										<h:outputLabel value="Number of paid contributions"></h:outputLabel>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contributionHolidayAction.numberPaidContribution}" />
+									</p:column>
+								</p:row>
+
+								<p:row>
+									<p:column>
+										<h:outputLabel value="Plan contract year"></h:outputLabel>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contributionHolidayAction.planContractYear}" />
+									</p:column>
+								</p:row>
+
+								<p:row>
+									<p:column>
+										<h:outputLabel value="Total Received Amount "></h:outputLabel>
+									</p:column>
+									<p:column>
+										<h:outputText value="#{contributionHolidayAction.totReceivedContr}" />
+									</p:column>
+								</p:row>
+
+							</p:panelGrid>
+
+						</div>
+						<br></br>
+
+						<div class="row">
+							<h:panelGroup id="toDate">
+								<strong>Contribution will be waived for following
+									duration</strong>
+								<br />
+								<br />
+								<strong>From : </strong>
+								<h:outputText id="from" value="#{contributionHolidayAction.holidayFrom}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+								<p:message for="from" />
+
+								<strong>To:</strong>
+								<h:outputText id="to" value="#{contributionHolidayAction.holidayTo}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+								<p:message for="to" />
+							</h:panelGroup>
+						</div>
+
+						<div class="row">
+							<h5>Terms and Conditions</h5>
+							<ui:repeat value="#{contributionHolidayAction.termsConditionYesNo}"
+								var="details">
+								<span style="color: red;">*</span>
+								<em><p:outputLabel style="color: green!important;"
+										value="Info: " /></em>
+								<p:outputLabel style="margin-left: 5px;" value="#{details.conditionEng}" />
+								<br />
+							</ui:repeat>
+							<ui:repeat value="#{contributionHolidayAction.termsConditionYesYes}" var="details">
+								<p:message for="cond" />
+								<h:selectBooleanCheckbox id="cond" style="width: 21px; "
+									required="true">
+									<f:validator validatorId="termsConditionsValidator" />
+								</h:selectBooleanCheckbox>
+								<p:outputLabel
+									style="margin-left: 11px;color: #1a616d!important;font-weight: bold;"
+									value="#{details.conditionEng}" />
+								<br />
+							</ui:repeat>
+						</div>
+
+						<div class="clearfix"></div>
+						<div class="row">
+							<div class="pull-right">
+								<p:commandButton id="continueLater" value="Submit"
+									rendered="#{contributionHolidayAction.fatcaFlagpopUp}"
+									actionListener="#{contributionHolidayAction.btnContinueLater}" />
+
+								<p:commandButton id="continueLater1" value="Submit"
+									rendered="#{!contributionHolidayAction.fatcaFlagpopUp}"
+								actionListener="#{contributionHolidayAction.sample}" update="form,modalPanel"/>
+
+							</div>
+						</div>
+						<br></br>
+
+
+					</div>
+				</div>
+				
+
+			</div>			
+
+<div class="row">
+	<h:panelGroup id="modalPanel">
+			<div id="OTP-popup" class="modal fade" tabindex="-1" role="dialog"
+			 data-keyboard="false">
+				<div class="modal-dialog param">
+
+					<div class="modal-content" style="height: 320px; width: 610px;">
+						<div class="modal-header">
+							<p:commandButton styleClass="close" value="X"
+								actionListener="#{otpValidation.closeModal}"
+								  immediate="true" />
+							<h4 class="modal-title">
+								<h:outputLabel value="PLan Name" />
+								<h:outputLabel value="Policy Ni" />
+								<h:outputLabel value="Premium Status"/>
+							</h4>
+						</div>
+
+
+						<br /> <br /> <br />
+					</div>
+				</div>
+			</div>
+		</h:panelGroup>
+</div>
+
+
+<Script>
+function popOpen() {
+	$('#OTP-popup').modal('show');
+}
+
+function popClose() {
+	$('#OTP-popup').modal('hide');
+}
+
+
+</Script>
+
+		</h:form>
+ 
+	</ui:define>
+
+</ui:composition>

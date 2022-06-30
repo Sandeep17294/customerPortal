@@ -1,0 +1,162 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['adminuser.serviceterms']}</b>
+						</h1>
+						<div class="card">
+							<h:panelGroup id="eService">
+								<p:panelGrid columns="2"
+									columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-1" layout="grid"
+									styleClass="ui-panelgrid-blank form-group form-elements"
+									style="border:0px none; background-color:transparent;">
+
+									<p:outputLabel value="#{msg['adminuser.serviceterms.servType']}"
+										style="font-weight:bold;" />
+									<p:selectOneMenu value="#{adminHomeAction.serviceType}">
+										<f:selectItem itemLabel="#{msg['selecttype']}" itemValue="Select One"
+											noSelectionOption="true" />
+										<f:selectItems value="#{adminHomeAction.otpTypes}" />
+										<p:ajax listener="#{adminHomeAction.fetchTermsCondition()}"
+											event="change" update="form" />
+									</p:selectOneMenu>
+								</p:panelGrid>
+
+
+
+								<h:panelGroup id="eService1">
+									<ui:repeat var="ftTerms"
+										value="#{adminHomeAction.termsAndCondition}">
+
+										<p:panelGrid columns="2"
+											columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid">
+											<p:outputLabel value="#{msg['adminuser.serviceterms.priorityNo']}" />
+											<p:inputText value="#{ftTerms.order}"
+												style="width: -webkit-fill-available;border:none;border-bottom:1px solid; border-color:green" />
+										</p:panelGrid>
+
+										<p:panelGrid columns="2"
+											columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid">
+											<p:outputLabel value="#{msg['adminuser.serviceterms.serName']}" />
+											<p:inputText value="#{ftTerms.page_name}"
+												style="width: -webkit-fill-available;border:none;border-bottom:1px solid; border-color:green" />
+										</p:panelGrid>
+
+										<p:panelGrid columns="2"
+											columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid">
+											<p:outputLabel value="#{msg['adminuser.serviceterms.eng']}" />
+											<p:inputTextarea id="termsEng"
+												value="#{ftTerms.conditionEng}"
+												style="width: -webkit-fill-available;border:none;border-bottom:1px solid; border-color:green" />
+										</p:panelGrid>
+										<div class="row">
+											<p:panelGrid columns="4"
+												columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-1,ui-g-12 ui-md-2,ui-g-12 ui-md-4"
+												layout="grid">
+												<p:outputLabel value="#{msg['adminuser.serviceterms.mandatory']}" />
+												<p:selectBooleanCheckbox value="#{ftTerms.mandatory}"
+													style="width: auto;" />
+												<p:outputLabel value="#{msg['adminuser.serviceterms.req']}" />
+												<p:selectBooleanCheckbox value="#{ftTerms.required }"
+													style="width: auto;" />
+											</p:panelGrid>
+										</div>
+
+										<!-- <p:panelGrid columns="2" columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid">
+										<p:outputLabel value="Required" />
+										<p:selectBooleanCheckbox value="#{ftTerms.required }"
+											style="width: auto;" />
+									</p:panelGrid> -->
+
+										<p:panelGrid columns="1" layout="grid">
+											<p:commandLink
+												action="#{adminHomeAction.btnDeleteTermsCondition(ftTerms)}"
+												immediate="true" update="form">
+												<p:graphicImage name="images/template/delete_icon.png"
+													library="cp-layout" styleClass="mobile" />
+											</p:commandLink>
+										</p:panelGrid>
+										<p style="border-bottom: 2px solid;"></p>
+									</ui:repeat>
+								</h:panelGroup>
+								<br></br>
+
+								<h:panelGroup id="termspanel"
+									rendered="#{adminHomeAction.addTermsCondition}">
+									<p:panelGrid columns="2"
+										columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid">
+										<p:outputLabel value="#{msg['adminuser.serviceterms.priorityNo']}" />
+										<p:inputText value="#{adminHomeAction.newTerms.order}"
+											style="width: -webkit-fill-available;border:none;border-bottom:1px solid; border-color:green" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2"
+										columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid">
+										<p:outputLabel value="#{msg['adminuser.serviceterms.servType']}" />
+										<p:inputText value="#{adminHomeAction.newTerms.page_name}"
+											style="width: -webkit-fill-available;border:none;border-bottom:1px solid; border-color:green" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="2"
+										columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-4" layout="grid">
+										<p:outputLabel value="#{msg['adminuser.serviceterms.eng']}" />
+										<p:inputTextarea id="termsEng1"
+											value="#{adminHomeAction.newTerms.conditionEng}"
+											autoResize="false"
+											style="width: -webkit-fill-available;border:none;border-bottom:1px solid; border-color:green" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="4"
+										columnClasses="ui-g-12 ui-md-2,ui-g-12 ui-md-1,ui-g-12 ui-md-2,ui-g-12 ui-md-4"
+										layout="grid">
+										<p:outputLabel value="#{msg['adminuser.serviceterms.mandatory']}" />
+										<p:selectBooleanCheckbox value="#{adminHomeAction.mandatory}"
+											style="width: auto;" />
+										<p:outputLabel value="#{msg['adminuser.serviceterms.req']}" />
+										<p:selectBooleanCheckbox value="#{adminHomeAction.required}"
+											style="width: auto;" />
+									</p:panelGrid>
+
+									<!-- <p:panelGrid columns="2" layout="grid">
+										<p:outputLabel value="Required" />
+										<p:selectBooleanCheckbox value="#{adminHomeAction.required}"
+											style="width: auto;" />
+									</p:panelGrid> -->
+									<br></br>
+
+									<p:panelGrid columns="2" layout="grid">
+									<p:commandButton action="#{adminHomeAction.btnSaveTerms}"
+											value="#{msg['save']}" update="termspanel,form" style="float:right" />
+										<p:commandButton value="#{msg['close']}"
+											action="#{adminHomeAction.btnClearTerms}"
+											update="termspanel,form" style="float:right" />
+									</p:panelGrid>
+								</h:panelGroup>
+								
+								<p:panelGrid columns="3"
+									columnClasses="ui-g-12 ui-md-1,ui-g-12 ui-md-2" layout="grid">
+									<p:commandButton action="#{adminHomeAction.btnTermsUpdate}"
+										value="#{msg['update']}" update="form" style="float:right" />
+									<p:commandButton value="#{msg['addterm']}"
+										actionListener="#{adminHomeAction.clearTermsCondition()}"
+										action="#{adminHomeAction.addTermsCondition()}"
+										update="eService,form" style="float:right" />
+								</p:panelGrid>
+
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

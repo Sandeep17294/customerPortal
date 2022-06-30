@@ -1,0 +1,437 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['contributionalteration']}</b>
+						</h1>
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">
+									#{homeDetailsAction.searchPolicyList.productName} |
+									#{homeDetailsAction.searchPolicyList.planNumber} |
+									#{homeDetailsAction.searchPolicyList.premiumPayStatus} </span>
+							</div>
+						</div>
+						<br></br>
+
+						<div class="row">
+							<h4>
+								<b>#{msg['customeruser.termalter.option']}</b>
+							</h4>
+						</div>
+						<div class="row">
+							<p:selectOneRadio columns="2" id="alter"
+								value="#{contributionAlterationAction.contributionAterationDetails.alterationType}"
+								required="true" requiredMessage="Please select the alteration">
+								<f:selectItem
+									itemLabel="#{msg['customeruser.termalter.option1']}"
+									itemValue="I" />
+								<f:selectItem
+									itemLabel="#{msg['customeruser.termalter.option2']}"
+									itemValue="D" />
+								<p:ajax listener="#{contributionAlterationAction.displayPanel}"
+									event="change" update="form" />
+							</p:selectOneRadio>
+						</div>
+						<br></br>
+
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">#{msg['customeruser.termalter.facet1']}</span>
+							</div>
+							<div id="j_idt149_content"
+								class="ui-panel-content ui-widget-content" style="border: none;">
+
+								<p:panelGrid columns="4" layout="grid">
+									<span><b>#{msg['customeruser.termalter.currency']} :</b></span>
+									<p:inputText
+										value="#{homeDetailsAction.searchPolicyList.planCurrency}">
+									</p:inputText>
+									<span><b>#{msg['customeruser.termalter.existing']} :</b></span>
+									<p:inputText
+										value="#{contributionAlterationAction.contributionAterationDetails.currentContribution}">
+										<f:convertNumber pattern="###,##0.00" />
+									</p:inputText>
+									<span><b>#{msg['customeruser.termalter.new']} :</b></span>
+									<p:inputText id="revCont" for="checkboxId"
+										disabled="#{contributionAlterationAction.enableCheckBox1 == 'false'}"
+										value="#{contributionAlterationAction.contributionAterationDetails.newContribution}"
+										required="true"
+										requiredMessage="#{msg['customeruser.termalter.newreq']}">
+										<p:ajax event="blur"
+											listener="#{contributionAlterationAction.displayPanel}"
+											update="form" />
+										<f:convertNumber pattern="###,##0.00" />
+									</p:inputText>
+									<span><b>#{msg['customeruser.termalter.cumma']} :</b></span>
+									<p:inputText disabled="true"
+										value="#{contributionAlterationAction.regularContibution}">
+										<f:convertNumber pattern="###,##0.00" />
+									</p:inputText>
+									<span><b>#{msg['customeruser.termalter.edit']} :</b></span>
+									<p:selectBooleanCheckbox id="checkboxId"
+										value="#{contributionAlterationAction.enableCheckBox1}"
+										binding="#{enableCheckBox1}">
+										<p:ajax event="change" update="form" />
+									</p:selectBooleanCheckbox>
+								</p:panelGrid>
+							</div>
+						</div>
+
+						<br></br>
+						<h:panelGroup id="bankValidation">
+							<span> <span style="color: red !important">*</span>
+								Cumulative : Value is the sum of existing Contribution Amount of
+								all your active plans <br /> Please complete the below section
+								in case Regular Contribution is increased to annualized AED <span
+								style="color: red !important"> 25,000.00</span> or USD <span
+								style="color: red !important"> 6,800.00 </span> or higher asper
+								the guidelines of Anti Money Laundering issued by the Insurance
+								Authority.
+							</span>
+							<br></br>
+							<br></br>
+
+							<div class="row">
+								<p:panelGrid columns="3" layout="grid">
+
+									<h:outputLabel style="font-size: medium;font-weight: bold;"
+										value="Bank Details" />
+									<h:outputLabel style="font-size: medium;font-weight: bold;"
+										value="Covered Member" />
+									<h:outputLabel style="font-size: medium;font-weight: bold;"
+										value="Plan Holder" />
+
+									<h:outputLabel value="Name of Bank(s) dealing with" />
+									<p:inputText id="bank1"
+										value="#{contributionAlterationAction.contributionAterationDetails.coveredBankName}"
+										required="true" requiredMessage="Bank Name is Required">
+										<p:message for="bank1" />
+									</p:inputText>
+
+									<p:inputText id="bank2"
+										value="#{contributionAlterationAction.contributionAterationDetails.planHolderBankName}"
+										required="true" requiredMessage="Bank Name is Required">
+										<p:message for="bank2" />
+									</p:inputText>
+
+                                    <h:outputLabel value="IBAN" />
+									<p:inputText id="iban1"
+										value="#{contributionAlterationAction.contributionAterationDetails.coveredIBAN}"
+										required="true" requiredMessage="IBAN is Required">
+										<p:message for="iban1" />
+									</p:inputText>
+
+									<p:inputText id="iban2"
+										value="#{contributionAlterationAction.contributionAterationDetails.planHolderIBAN}"
+										required="true" requiredMessage="IBAN is Required">
+										<p:message for="iban2" />
+									</p:inputText>
+
+                                    <h:outputLabel value="Source of Funds to be paid as Contribution" />
+									<p:inputText id="sourceFund"
+										value="#{contributionAlterationAction.contributionAterationDetails.coveredSourceFund}"
+										required="true" requiredMessage="Source of fund is Required">
+										<p:message for="sourceFund" />
+									</p:inputText>
+
+									<p:inputText id="sourceFund1"
+										value="#{contributionAlterationAction.contributionAterationDetails.planHolderSourceFund}"
+										required="true" requiredMessage="Source of fund is Required">
+										<p:message for="sourceFund1" />
+									</p:inputText>
+									
+								</p:panelGrid>
+							</div> <br></br>
+
+							<div id="j_idt149"
+								class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+								data-widget="widget_j_idt149">
+								<div id="j_idt149_header"
+									class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+									<span class="ui-panel-title">Details of the Plan Holder</span>
+								</div>
+								<div id="j_idt149_content"
+									class="ui-panel-content ui-widget-content"
+									style="border: none;">
+
+									<p:panelGrid columns="4" layout="grid">
+										<span>#{msg['customeruser.termalter.year1']}</span>
+										<p:inputText id="valid"
+											value="#{contributionAlterationAction.contributionAterationDetails.incomeYearOne}">
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+										<span>#{msg['customeruser.termalter.year2']}</span>
+										<p:inputText id="valid1"
+											value="#{contributionAlterationAction.contributionAterationDetails.incomeYearTwo}">
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+										<span>#{msg['customeruser.termalter.year3']}</span>
+										<p:inputText id="valid2"
+											value="#{contributionAlterationAction.contributionAterationDetails.incomeYearThree}">
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+									</p:panelGrid>
+								</div>
+							</div>
+							<br></br>
+
+							<div id="j_idt149"
+								class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+								data-widget="widget_j_idt149">
+								<div id="j_idt149_header"
+									class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+									<span class="ui-panel-title">Details of Assets and
+										Liabilities</span>
+								</div>
+								<div id="j_idt149_content"
+									class="ui-panel-content ui-widget-content"
+									style="border: none;">
+
+									<p:panelGrid columns="4" layout="grid">
+										<span>#{msg['customeruser.termalter.cash']}</span>
+										<p:inputText id="assCash"
+											value="#{contributionAlterationAction.contributionAterationDetails.assetsCash}">
+											<p:ajax
+												listener="#{contributionAlterationAction.assetsTotal}"
+												event="blur" update="totalAmountUpd">
+											</p:ajax>
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+
+										<span>#{msg['customeruser.termalter.loan']}</span>
+										<p:inputText id="liaLoans"
+											value="#{contributionAlterationAction.contributionAterationDetails.liabilitiesLoan}">
+											<p:ajax
+												listener="#{contributionAlterationAction.liabilitiesTotal}"
+												event="blur" update="totalLiabUpd">
+											</p:ajax>
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+
+										<span>#{msg['customeruser.termalter.sb']}</span>
+										<p:inputText id="assShare"
+											value="#{contributionAlterationAction.contributionAterationDetails.assetsShares}">
+											<p:ajax
+												listener="#{contributionAlterationAction.assetsTotal}"
+												event="blur" update="totalAmountUpd">
+											</p:ajax>
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+
+										<span>#{msg['customeruser.termalter.ap']}</span>
+										<p:inputText id="liaAcc"
+											value="#{contributionAlterationAction.contributionAterationDetails.liabilitiesPayable}">
+											<p:ajax
+												listener="#{contributionAlterationAction.liabilitiesTotal}"
+												event="blur" update="totalLiabUpd">
+											</p:ajax>
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+
+										<span>#{msg['customeruser.termalter.re']}</span>
+										<p:inputText id="assReal" styleClass="form-group numbers_only"
+											value="#{contributionAlterationAction.contributionAterationDetails.assetsRealEstate}">
+											<p:ajax
+												listener="#{contributionAlterationAction.assetsTotal}"
+												event="blur" update="totalAmountUpd">
+											</p:ajax>
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+
+										<span>#{msg['customeruser.termalter.mort']}</span>
+										<p:inputText id="liaMort"
+											value="#{contributionAlterationAction.contributionAterationDetails.liabilitiesMortgage}">
+											<p:ajax
+												listener="#{contributionAlterationAction.liabilitiesTotal}"
+												event="blur" update="totalLiabUpd">
+											</p:ajax>
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+
+										<span>#{msg['customeruser.termalter.oa']}</span>
+										<p:inputText id="assOther"
+											value="#{contributionAlterationAction.contributionAterationDetails.assetsOthers}">
+											<p:ajax
+												listener="#{contributionAlterationAction.assetsTotal}"
+												event="blur" update="totalAmountUpd">
+											</p:ajax>
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+
+										<span>#{msg['customeruser.termalter.ol']}</span>
+										<p:inputText id="liaOther"
+											value="#{contributionAlterationAction.contributionAterationDetails.liabilitiesOther}">
+											<p:ajax
+												listener="#{contributionAlterationAction.liabilitiesTotal}"
+												event="blur" update="totalLiabUpd">
+											</p:ajax>
+											<f:convertNumber pattern="###,##0.00" />
+										</p:inputText>
+
+										<span>#{msg['customeruser.termalter.totassets']}</span>
+										<h:outputText id="totalAmountUpd"
+											value="#{contributionAlterationAction.assetsTotal}">
+											<f:convertNumber pattern="###,##0.00" />
+										</h:outputText>
+
+										<span>#{msg['customeruser.termalter.totloan']}</span>
+										<h:outputText id="totalLiabUpd"
+											value="#{contributionAlterationAction.liabilitiesTotal}">
+											<f:convertNumber pattern="###,##0.00" />
+										</h:outputText>
+									</p:panelGrid>
+								</div>
+							</div>
+						</h:panelGroup>
+						<br></br> <br></br>
+
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">#{msg['termscondheading']}</span>
+							</div>
+							<div id="j_idt149_content"
+								class="ui-panel-content ui-widget-content" style="border: none;">
+								<ui:repeat
+									value="#{contributionAlterationAction.termsConditionYesNo}"
+									var="details">
+									<span style="color: green;">*</span>
+									<em><p:outputLabel
+											style="color: green!important; margin-left: 0px;"
+											value="Info : ">
+										</p:outputLabel></em>
+									<p:outputLabel
+										style="margin-left: 11px; line-height:2; display: contents;"
+										value="#{details.conditionEng}">
+									</p:outputLabel>
+									<br />
+								</ui:repeat>
+								<ui:repeat
+									value="#{contributionAlterationAction.termsConditionYesYes}"
+									var="details">
+									<p:selectBooleanCheckbox id="cond" style="width: 21px; ">
+										<f:validator validatorId="termsConditionsValidator" />
+									</p:selectBooleanCheckbox>
+									<p:outputLabel
+										style="margin-left: 11px;color: #1a616d!important;font-weight: bold; line-height:2; display: contents;"
+										value="#{details.conditionEng}">
+									</p:outputLabel>
+									<br />
+									<br />
+								</ui:repeat>
+								<p:selectBooleanCheckbox id="terms"
+									value="#{contributionAlterationAction.termsCondition}"
+									type="checkbox" style="width:20px;">
+									<f:validator validatorId="termsConditionsValidator" />
+								</p:selectBooleanCheckbox>
+								<span style="color: red;">*</span> <strong>#{msg['termscondmain']}.</strong>
+							</div>
+						</div>
+
+						<div class="row">
+							<p:commandButton id="continueLater1" value="#{msg['submit']}"
+								rendered="#{!contributionAlterationAction.fatcaFlagpopUp==true}"
+								actionListener="#{contributionAlterationAction.btnContinueLaterfatca}"
+								action="#{otpValidation.btnPrintForm()}" update="form,otpform"
+								style="float:right" />
+								
+							<p:commandButton id="continueLater"
+								value="Fatca Form Submit" 
+								rendered="#{contributionAlterationAction.fatcaFlagpopUp==true}"
+								actionListener="#{contributionAlterationAction.btnContinueLaterfatca}"
+								action="#{contributionAlterationAction.fatcasample()}"
+								update="form" style="float:right" />	
+						</div>
+
+						<br></br> <br></br>
+
+					</div>
+				</div>
+			</div>
+			<script>
+				function functionotpmsg() {
+					swal(
+							"OTP!",
+							"Successfully sended to your registered email and conatact no!",
+							"success")
+				}
+			</script>
+		</h:form>
+		<h:panelGroup>
+			<p:dialog id="successTab"
+				header="#{homeDetailsAction.searchPolicyList.productName} | #{homeDetailsAction.searchPolicyList.planNumber} | #{homeDetailsAction.searchPolicyList.premiumPayStatus}"
+				widgetVar="dlg3" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform">
+					<b><span>#{msg['otp.securityques']}</span></b>
+					<br></br>
+
+					<p:panelGrid columns="1" layout="grid">
+						<p:inputText id="questionn" value="#{otpValidation.securityQues}"
+							style="border:none;" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.answer']}</span></b>
+						<p:inputText value="#{otpValidation.userSecurityAns}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.enter']}</span></b>
+						<p:password id="otp" value="#{otpValidation.userOTP}"
+							disabled="#{otpValidation.enableResendOTP}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span style="color: red;">#{msg['otp.valid']}</span></b>
+						<p:commandLink value="#{msg['otp.resend']}"
+							actionListener="#{otpValidation.smsGenerator}" immediate="true"
+							update="form" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="3" layout="grid">
+						<p:poll interval="#{otpValidation.OTPTimeLimit}"
+							listener="#{otpValidation.checkTime()}" immediate="true"
+							update="form" autoStart="#{otpValidation.renderStartTime}"
+							stop="#{otpValidation.renderStopTime}" />
+						<p:commandButton type="submit" value="#{msg['ok']}"
+							actionListener="#{otpValidation.validateOTP}" update="form,otpform12"
+							disabled="#{otpValidation.enableResendOTP}" />
+						<p:commandButton value="#{msg['cancel']}"
+							actionListener="#{otpValidation.delete}" update="form" />
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+		
+		<h:panelGroup>
+			<p:dialog id="successTab156" header="#{msg['top.not']}" modal="true"
+				widgetVar="dlg4" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform12">
+					<b><span>#{otpValidation.popmsg}</span></b>
+					<br></br>
+					<br></br>
+					<p:commandButton value="#{msg['ok']}" style="float:center"
+						action="#{homeDetailsAction.servicelist()}" update="form" />
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+		
+	</ui:define>
+</ui:composition>

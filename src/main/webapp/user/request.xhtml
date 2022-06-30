@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="content">
+		<h:form id="form">
+
+			<div id="layout-right-panel">
+				<p:selectOneMenu id="policy" value="#{homeDetailsAction.searchPolicyNo}"
+										style="margin-bottom:10px;">
+	         
+					<f:selectItems value="#{homeDetailsAction.policyListMap}" />
+					<p:ajax event="valueChange" update="form"
+											listener="#{homeDetailsAction.submitNewRequestRendering}" />
+					</p:selectOneMenu>
+				<div class="submenu-content settings">
+					<div class="ui-g-12">
+					<h:commandLink rendered="#{homeDetailsAction.transaction}"
+									action="#{updateInfoAction.fetchingupdateinformationoverall()}">
+						<div class="ui-g-12 ui-md-4">
+							<div class="status-box wireless-status">
+								<p:graphicImage name="images/template/e9.png"
+									library="cp-layout" />
+								    <i class="fa fa-address-card box-icon"></i> 
+								    
+									<span class="status-name">UPDATE INFORMATION</span>
+							</div>
+						</div>
+						</h:commandLink>
+						<h:commandLink rendered="#{homeDetailsAction.transaction}"
+								 action="#{redirectionSwitchingAction.settings()}">
+						<div class="ui-g-12 ui-md-4">
+							<div class="status-box cooling-systems">
+							<p:graphicImage name="images/template/e3.png"
+										library="cp-layout" />
+								<i class="fa fa-area-chart box-icon"></i>  <span
+									class="status-name">REDIRECTION AND SWITCHING</span>
+							</div>
+						</div>
+						</h:commandLink>
+						<h:commandLink rendered="#{homeDetailsAction.transaction}"
+									action="#{contributionAlterationAction.termaltertaionfetch()}">
+						<div class="ui-g-12 ui-md-4">
+							<div class="status-box help-desk-load">
+							<p:graphicImage name="images/template/e4.png"
+										library="cp-layout" />
+								<i class="fa fa-bar-chart box-icon"></i>  <span
+									class="status-name">CONTRIBUTION ALTERATION</span>
+								
+							</div>
+						</div>
+						</h:commandLink>
+						<h:commandLink rendered="#{homeDetailsAction.transaction1}"
+									action="#{reinStatementAction.reinstatmentfetch()}">
+						<div class="ui-g-12 ui-md-4">
+							<div class="status-box meeting-intensity">
+							<p:graphicImage name="images/template/e8.png"
+										library="cp-layout" />
+								<i class="fa fa-calendar box-icon"></i>  <span
+									class="status-name">REINSTATEMENT</span> 
+							</div>
+						</div>
+						</h:commandLink>
+						<h:commandLink rendered="#{homeDetailsAction.transaction}"
+									action="#{protectionBenifitAction.prodtcfetch()}">
+						<div class="ui-g-12 ui-md-4">
+							<div class="status-box energy-backup ">
+							<p:graphicImage name="images/template/e6.png"
+										library="cp-layout" />
+								<i class="fa fa-umbrella box-icon"></i>  <span
+									class="status-name">PROTECTION BENEFIT</span>
+								
+							</div>
+						</div>
+						</h:commandLink>
+						<h:commandLink rendered="#{homeDetailsAction.transaction}"
+						action="#{contributionHolidayAction.fetchHolidayDetails()}">
+						<div class="ui-g-12 ui-md-4">
+							<div class="status-box hq-security">
+							<p:graphicImage name="images/template/e7.png"
+										library="cp-layout" />
+								<i class="fa fa-university box-icon"></i>  <span
+									class="status-name">CONTRIBUTION HOLIDAY</span>
+							</div>
+						</div>
+						</h:commandLink> 
+						
+						<h:commandLink rendered="#{homeDetailsAction.transaction}"
+							action="#{partialWithdrawalAction.partialfetch()}">
+							<div class="ui-g-12 ui-md-4">
+								<div class="status-box hq-security">
+									<p:graphicImage name="images/template/e1.png"
+										library="cp-layout" />
+									<i class="fa fa-flag"></i> <span
+										class="status-name">#{msg['transaction.partial.withdraw']}</span>
+								</div>
+							</div>
+						</h:commandLink>
+						
+					</div>
+				</div>
+			</div>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

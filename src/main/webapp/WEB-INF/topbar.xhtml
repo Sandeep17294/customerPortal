@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony">
+
+	<div class="layout-topbar">
+		<h:link outcome="/userDashboard"
+			rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"
+			styleClass="logo-container">
+			<p:graphicImage name="images/background/sad.png"
+				library="cp-layout" />
+			<!-- <span>#{msg['clientname']}</span> -->
+		</h:link>
+		<h:link outcome="/adminDashboard"
+			rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"
+			styleClass="logo-container">
+			<p:graphicImage name="images/background/salamalogo.jpg"
+				library="cp-layout" />
+			<!-- <img src="resources/cp-layout/images/background/ARTLogonew-EN.png" style="height: 64px; width: calc(100% - 225px)" alt="" /> -->
+			<!-- <span>#{msg['clientname']}</span> -->
+		</h:link>
+		<h:link outcome="/businessDashboard"
+			rendered="#{ph:ifAnyGranted('FEEDBACK_REPLY_PRIVILEGE')}"
+			styleClass="logo-container">
+			<p:graphicImage name="images/background/salamalogo.jpg"
+				library="cp-layout" />
+			<!-- <span>#{msg['clientname']}</span> -->
+		</h:link>
+
+		<div class="topbar-content">
+		            
+			<a href="#" id="topbar-sidebar-button"> <i class="fa fa-bars"></i>
+			
+			</a>  
+			
+           
+			
+			<a id="topbar-profile-menu-button" href="#"> <p:graphicImage
+					name="profile_images/#{summaryAction.username}/#{summaryAction.profileimagePath}" library="cp-layout"
+					styleClass="topbar-profile" /> <p:outputLabel
+					style="color:white;"
+					value="#{summaryAction.applicationdisplayname}"
+					rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"></p:outputLabel>
+				<p:outputLabel style="color:white;"
+					value="#{adminHomeAction.applicationdisplayname}"
+					rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"></p:outputLabel>
+				<p:outputLabel style="color:white;"
+					value="#{feedbackAction.applicationdisplayname}"
+					rendered="#{ph:ifAllGranted('FEEDBACK_REPLY_PRIVILEGE')}"></p:outputLabel>
+			</a>
+
+			<ul id="topbar-profile-menu">
+				<li><a href="#"> <i class="topbar-icon fa fa-fw fa fa-user"></i>
+						<span class="topbar-item-name">#{msg['accountsettings']}</span>
+				</a>
+					<ul>
+						<li role="menuitem"><p:link outcome="/secure/editProfile.app">
+								<i class="fa fa-fw fa-edit"></i>
+								<span>#{msg['editprofile']}</span>
+							</p:link></li>
+						<li role="menuitem"><p:link
+								outcome="/secure/changePassword.app">
+								<i class="fa fa-fw fa-lock"></i>
+								<span>#{msg['changepassword']}</span>
+							</p:link></li>
+
+					</ul></li>
+
+				
+				<li role="menuitem"><p:link outcome="/user/secques.app"
+						rendered="#{ph:ifAllGranted('CHANGE_SECURITY_QUES_PRIVILEGE')}">
+						<i class="fa fa-refresh"></i>
+						<span>#{msg['resetsecanswer']}</span>
+					</p:link></li>
+				
+				<li><h:outputLink value="${request.contextPath}/logout">
+						<i class="topbar-icon fa fa-fw fa-sign-out"></i>
+						<span class="topbar-item-name">#{msg['logout']}</span>
+					</h:outputLink></li>
+			</ul>
+
+		</div>
+	</div>
+
+</ui:composition>

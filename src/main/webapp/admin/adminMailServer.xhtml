@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Admin User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['adminuser.mailServer']}</b>
+						</h1>
+						<h3>
+						<b style="color: orange;">#{msg['adminuser.mailServer.caution']}</b>
+						</h3>
+						<div class="card">
+
+							<p:panelGrid columns="3" layout="grid">
+							
+								<p:outputLabel value="#{msg['adminuser.mailServer.smtpServer']}" />
+								<p:inputText style="text-align:center;width:auto;" id="smtpServer"
+									value="#{adminHomeAction.passwordRulesDTO.vSmtpHost}"
+									required="true" 
+									requiredMessage="#{msg['adminuser.mailSer.Smtp']}"></p:inputText>
+								<p:message for="smtpServer" />
+
+
+								<p:outputLabel value="#{msg['adminuser.mailServer.smtpPort']}" />
+								<p:inputText style="text-align:center;width:auto;" id="smtpPort"
+									value="#{adminHomeAction.passwordRulesDTO.vSmtpPort}"
+									required="true" 
+									requiredMessage="#{msg['adminuser.mailSer.SmtpPort']}" />
+								<p:message for="smtpPort" />
+								
+								<p:outputLabel value="#{msg['adminuser.mailServer.adminEmail']}" />
+								<p:inputText style="text-align:center;width:auto;" id="smtpFromEmail"
+									value="#{adminHomeAction.passwordRulesDTO.vFromEmail}"
+									required="true"
+									requiredMessage="#{msg['adminuser.mailSer.adminEmailId']}" />
+								<p:message for="smtpFromEmail" />
+
+								<p:outputLabel value="#{msg['adminuser.mailServer.csdEmail']}" />
+								<p:inputText style="text-align:center;width:auto;" id="smtpCsdEmail"
+									value="#{adminHomeAction.passwordRulesDTO.vCsdEmail}"
+									required="true"
+									requiredMessage="#{msg['adminuser.mailSer.emailId']}" />
+								<p:message for="smtpCsdEmail" />
+							</p:panelGrid>
+							
+							<div class="row">
+							<p:commandButton value="#{msg['submit']}"
+									action="#{adminHomeAction.mailserversaveupdate}" update="form"
+									style="margin-bottom:10px;float:right" />
+							</div> <br></br><br></br>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

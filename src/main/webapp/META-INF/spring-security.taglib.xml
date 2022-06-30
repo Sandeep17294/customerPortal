@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE facelet-taglib PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+  "http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+
+
+<!--
+   Taglib to combine the Spring-Security Project with Facelets
+   @Author: Avinash 
+-->
+<facelet-taglib>
+    <namespace>http://www.springframework.org/security/facelets/tags</namespace>
+
+    <function>
+        <function-name>ifAnyGranted</function-name>
+        <function-class>com.aetins.customerportal.core.faceletstaglib.SecurityLibrary</function-class>
+        <function-signature>boolean ifAnyGranted(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <function-name>ifAllGranted</function-name>
+        <function-class>com.aetins.customerportal.core.faceletstaglib.SecurityLibrary</function-class>
+        <function-signature>boolean ifAllGranted(java.lang.String)</function-signature>
+    </function>
+
+    <tag>
+        <tag-name>ifAnyGranted</tag-name>
+        <component>
+            <component-type>com.aetins.customerportal.core.faceletstaglib.tags.IfAnyGrantedTag</component-type>
+            <handler-class>com.aetins.customerportal.core.faceletstaglib.tags.IfAnyGrantedTag</handler-class>
+        </component>
+    </tag>
+
+    <tag>
+        <tag-name>ifAllGranted</tag-name>
+        <component>
+            <component-type>com.aetins.customerportal.core.faceletstaglib.tags.IfGrantAllTag</component-type>
+            <handler-class>com.aetins.customerportal.core.faceletstaglib.tags.IfGrantAllTag</handler-class>
+        </component>
+    </tag>
+
+</facelet-taglib>

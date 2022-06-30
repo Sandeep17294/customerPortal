@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony">
+
+<ui:define name="head">
+
+<style type="text/css">
+
+
+
+
+</style>
+
+</ui:define>
+	<div class="layout-footer">
+		<p:link outcome="/userDashboard" 
+			rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}"
+			styleClass="logo-container">
+
+			<span>SALAMA CUSTOMER PORTAL EASY-LIFE</span>
+			<span>بوابة عملاء شركة سلامة</span>
+		</p:link>
+		<p:link outcome="/adminDashboard"
+			rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}"
+			styleClass="logo-container">
+
+			<span>SALAMA CUSTOMER PORTAL EASY-LIFE</span>
+			<span>بوابة عملاء شركة سلامة</span>
+		</p:link>
+		<p:link outcome="/businessDashboard"
+			rendered="#{ph:ifAnyGranted('FEEDBACK_REPLY_PRIVILEGE')}"
+			styleClass="logo-container">
+
+			<span>SALAMA CUSTOMER PORTAL EASY-LIFE</span>
+			<span>بوابة عملاء شركة سلامة</span>
+		</p:link><br></br>
+		
+		
+<h:outputText styleClass="logo-container" value="Copyright © Salama Customer Portal Easy Life 2020. All rights reserved."/>
+		
+
+		<div class="footer-icons">
+			<ul>
+				<li ><a href="https://twitter.com/SALAMATakaful" target="_blank"> <i class="fa fa-twitter" ></i>
+				</a></li>
+				<li ><a href="https://www.facebook.com/SALAMATakaful/" target="_blank"> <i class="fa fa-facebook" ></i>
+				</a></li>
+				<li ><a href="https://in.linkedin.com/company/islamic-arab-insurance-co-salama" target="_blank"> <i class="fa fa-linkedin" ></i>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</ui:composition>

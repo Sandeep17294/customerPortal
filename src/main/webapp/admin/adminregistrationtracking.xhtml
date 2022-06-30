@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card card-w-title">
+						<h1>
+							<b>Registration Tracking</b>
+						</h1>
+						<p:dataTable id="regTracking" var="trackList"
+							value="#{adminHomeAction.registrationTrackList}" reflow="true"
+							paginator="true" rows="5" paginatorPosition="bottom">
+							<f:facet name="header">
+                                 Session Tracking Lists
+                            </f:facet>
+
+							<p:column headerText="Plan No" sortBy="#{trackList.planNo}">
+								<h:outputText value="#{trackList.planNo}" />
+							</p:column>
+
+							<p:column headerText="Email ID" sortBy="#{userList.emailId}"
+								style="width:300px;">
+								<h:outputText value="#{trackList.emailId}" />
+							</p:column>
+
+							<p:column headerText="Status" sortBy="#{userList.status}">
+								<h:outputText value="#{trackList.status}" />
+							</p:column>
+
+							<p:column headerText="Details Search">
+								<p:commandButton icon="fa fa-search" update="form"
+									oncomplete="PF('carDialog').show()">
+									<f:setPropertyActionListener value="#{trackList}"
+										target="#{adminHomeAction.selectregisterlist}" />
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+
+						<p:dialog
+							header="Reason: #{adminHomeAction.selectregisterlist.failReason}"
+							widgetVar="carDialog" modal="true" hideEffect="fade"
+							resizable="false" responsive="true" width="auto"
+							showEffect="explode">
+
+							<p:outputPanel id="selectedCarDetail" style="text-align:center;">
+								<p:panelGrid columns="2" columnClasses="label,value"
+									style="width:100%">
+
+									<h:outputText value="Plan No" />
+									<h:outputText
+										value="#{adminHomeAction.selectregisterlist.planNo}" />
+
+									<h:outputText value="Email ID" />
+									<h:outputText
+										value="#{adminHomeAction.selectregisterlist.emailId}" />
+
+									<h:outputText value="Status" />
+									<h:outputText
+										value="#{adminHomeAction.selectregisterlist.status}" />
+
+									<h:outputText value="Ip Address" />
+									<h:outputText
+										value="#{adminHomeAction.selectregisterlist.ipAddr}" />
+
+									<h:outputText value="Contact No" />
+									<h:outputText
+										value="#{adminHomeAction.selectregisterlist.phoneNo}" />
+
+									<h:outputText value="Reason" />
+									<h:outputText
+										value="#{adminHomeAction.selectregisterlist.failReason}" />
+
+									<h:outputText value="Reg.Date" />
+									<h:outputText
+										value="#{adminHomeAction.selectregisterlist.regdate}" />
+
+								</p:panelGrid>
+							</p:outputPanel>
+						</p:dialog>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

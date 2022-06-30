@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card card-w-title">
+						<h1>
+							<b>#{msg['adminuser.custcomp']}</b>
+						</h1>
+						<p:dataTable id="UserDetails" var="feedback"
+							value="#{feedbackAction.feedBusUserList1}" reflow="true"
+							paginator="true" rows="5" paginatorPosition="bottom">
+							<f:facet name="header">
+                                 #{msg['adminuser.custcomp.facet']}
+                            </f:facet>
+
+							<p:column headerText="#{msg['customeruser.feedlist.feedno']}"
+								sortBy="#{feedback.complaintNo}">
+								<h:outputText value="#{feedback.complaintNo}" />
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedback.stype']}" sortBy="#{feedback.servType}">
+								<h:outputText value="#{feedback.servType}" />
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedback.planno']}" sortBy="#{feedback.policyNo}">
+								<h:outputText value="#{feedback.policyNo}" />
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedlist.status']}" sortBy="#{feedback.feedStatus}">
+								<h:outputText value="#{feedback.feedStatus}" />
+							</p:column>
+
+							<p:column headerText="#{msg['adminuser.custcomp.subby']}" sortBy="#{feedback.userId}">
+								<h:outputText value="#{feedback.userId}" />
+							</p:column>
+
+							<p:column headerText="#{msg['detailsearch']}">
+								<p:commandButton icon="fa fa-search" update="form"
+									oncomplete="PF('carDialog').show()">
+									<f:setPropertyActionListener value="#{feedback}"
+										target="#{feedbackAction.selectfeedbacklist}" />
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+
+						<p:dialog
+							header="#{msg['adminuser.custcomp.for']} #{feedbackAction.selectfeedbacklist.complaintNo}"
+							widgetVar="carDialog" modal="true" hideEffect="fade"
+							resizable="false" responsive="true" width="auto"
+							showEffect="explode">
+
+							<p:outputPanel id="selectedCarDetail" style="text-align:center;">
+								<p:panelGrid columns="2" columnClasses="label,value"
+									style="width:100%">
+
+									<h:outputText value="#{msg['customeruser.feedlist.feedno']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.complaintNo}" />
+
+									<h:outputText value="#{msg['customeruser.feedback.stype']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.servType}" />
+
+									<h:outputText value="#{msg['customeruser.feedback.planno']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.policyNo}" />
+
+									<h:outputText value="#{msg['customeruser.feedlist.status']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.feedStatus}" />
+
+									<h:outputText value="#{msg['adminuser.custcomp.subby']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.userId}" />
+
+									<h:outputText value="#{msg['customeruser.feedback.type']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.feedbackType == 'c' ?'Complaint':'Query'}" />
+
+									<h:outputText value="#{msg['customeruser.feedback.desc']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.feedbackNote}">
+										<p:tooltip for="feednote" value="#{feedback1.feedbackNote}"
+											position="bottom"
+											style="color:#fff !important; background-color:#000 !important;font-size:13px !important;" />
+									</h:outputText>
+
+									<h:outputText value="#{msg['adminuser.custcomp.cbs']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.csdCall == 'y' ?'Yes':'No'}" />
+
+									<h:outputText value="#{msg['adminuser.custcomp.cbts']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.callTime}" />
+
+									<h:outputText value="#{msg['adminuser.custcomp.red']}" />
+									<h:outputText
+										value="#{feedbackAction.selectfeedbacklist.calltimeDay}" />
+
+
+									<h:outputText value="#{msg['close']}" />
+									<p:selectBooleanCheckbox id="chk" value="#{feedbackAction.checking}"
+										style="width:20px; margin-left: 20px;" required="true">
+										<p:ajax
+											listener="#{feedbackAction.selectboxsave(feedbackAction.selectfeedbacklist)}"
+											update="form" />
+									</p:selectBooleanCheckbox>
+
+								</p:panelGrid>
+							</p:outputPanel>
+						</p:dialog>
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

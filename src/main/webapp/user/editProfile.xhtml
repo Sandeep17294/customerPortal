@@ -1,0 +1,165 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+
+	<ui:define name="head">
+		<script type="text/javascript">
+			//<![CDATA[
+			function skinChart() {
+				this.cfg.shadow = false;
+				this.cfg.title = '';
+				this.cfg.seriesColors = [ '#007be5', '#20d077' ];
+				this.cfg.grid = {
+					background : '#ffffff',
+					borderColor : '#ffffff',
+					gridLineColor : '#F5F5F5',
+					shadow : false
+				};
+				this.cfg.axesDefaults = {
+					rendererOptions : {
+						textColor : '#666F77'
+					}
+				};
+				this.cfg.seriesDefaults = {
+					shadow : false,
+					lineWidth : 1,
+					markerOptions : {
+						shadow : false,
+						size : 7,
+						style : 'circle'
+					}
+				}
+			}
+			//]]>
+		</script>
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+</style>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" sticky="true"/>
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card">
+							<h1>
+								<b>#{msg['editprofile']}</b>
+							</h1>
+							<p:panelGrid columns="4"
+								columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+								layout="grid" styleClass="ui-panelgrid-blank"
+								style="border:0px none; background-color:transparent;">
+
+								<p:outputLabel for="userId" value="#{msg['edit.userid']}" />
+								<p:inputText id="userId"
+									value="#{editProfileAction.cpUserInfoDTO.vuserName}"
+									disabled="true" />
+
+								<p:outputLabel value="#{msg['edit.iftype']}" />
+								<p:inputText id="userId1"
+									value="#{editProfileAction.cpCustomerDetailDTO.vidType}"
+									disabled="true" />
+
+								<p:outputLabel value="#{msg['edit.idno']}" />
+								<p:inputText id="userId19"
+									value="#{editProfileAction.cpCustomerDetailDTO.nidNo}"
+									disabled="true" />
+
+
+								<p:outputLabel value="#{msg['edit.fname']}" />
+								<p:inputText id="userId2"
+									value="#{editProfileAction.firestName}" disabled="true" />
+
+								<p:outputLabel value="#{msg['edit.lname']}" />
+								<p:inputText value="#{editProfileAction.lastName}"
+									disabled="true" />
+
+								<p:outputLabel value="#{msg['edit.dob']}" />
+								<p:calendar id="userId4"
+									value="#{editProfileAction.cpCustomerDetailDTO.dDob}"
+									disabled="true" />
+
+								<p:outputLabel value="#{msg['edit.tit']}" />
+								<p:selectOneMenu id="title" disabled="false"
+									value="#{editProfileAction.cpUserInfoDTO.vtitle}">
+									<f:selectItem itemLabel="Title" itemValue=""></f:selectItem>
+									<f:selectItems value="#{editProfileAction.masterList}"
+										var="tilteVar" itemLabel="#{tilteVar.desc1}"
+										itemValue="#{tilteVar.desc1}"></f:selectItems>
+								</p:selectOneMenu>
+
+								<p:outputLabel value="#{msg['edit.mno']}" />
+								<p:inputText id="userId6"
+									value="#{editProfileAction.cpUserInfoDTO.vcontactNo}"
+									disabled="true" />
+
+								<p:outputLabel value="#{msg['edit.eid']}" />
+								<p:inputText id="userId16"
+									value="#{editProfileAction.cpUserInfoDTO.vemail}"/>
+
+								<p:outputLabel value="#{msg['edit.disname']}" />
+								<p:inputText id="displayName"
+									value="#{editProfileAction.cpUserInfoDTO.vprefName}"
+									validatorMessage="#{msg['edit.val']}"
+									required="true" requiredMessage="#{msg['edit.req1']}">
+									<f:validateLength maximum="20" />
+									<f:validateRegex pattern="[A-Z]*[a-z]*[A-Z]*[a-z]*"></f:validateRegex>
+								</p:inputText>
+
+								<h:panelGroup style="width:300px;" id="fileUploadGroup">
+									<p:fileUpload  id="fileUpload" required="true"
+										requiredMessage="Please select profile image"
+										allowTypes="/(\.|\/)(gif|jpe?g|png|bmp)$/"
+										title="Select Profile Picture"
+										value="#{editProfileAction.file}"
+										update="fileUploadGroup dialogForm" sizeLimit="512000"
+										invalidFileMessage="Please select valid file"
+										fileUploadListener="#{editProfileAction.uploadImage}"
+										onstart="PF('dlg1').show();"  >
+									</p:fileUpload><br></br>
+									<h:outputLabel value="#{editProfileAction.eventImageName}" />
+								</h:panelGroup>
+
+								<div class="clearfix"></div>
+								<p:outputLabel />
+								<p:outputLabel />
+								<p:outputLabel />
+								<p:commandButton value="#{msg['submit']}"
+									action="#{editProfileAction.btnSubmit}"
+									icon="fa fa-home Fs14 White"
+									style="max-width:150px; float:right;" update="form" />
+									<p:commandButton value="#{msg['ok']}" rendered="#{editProfileAction.enabling}"
+									action="#{editProfileAction.anotherbutton}"
+									icon="fa fa-home Fs14 White"
+									style="max-width:150px; float:right;" update="form" />
+
+
+							</p:panelGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	
+	<h:panelGroup>	
+		<h:form id="dialogForm">
+			 <p:dialog id="cropDialog" header="Profile" widgetVar="dlg1" minHeight="40" minWidth="40" visible="#{editProfileAction.renderCropPanel}" width="900" height="500" onShow="#{editProfileAction.onShowDialogue(500)}">
+			    <h:panelGrid id="cropImg" columns="2">
+			        <p:imageCropper id="croppedImage"  value="#{editProfileAction.croppedImage}" image="#{editProfileAction.loadImage()}" initialCoords="225,75,100,125" />
+			    </h:panelGrid>    
+			    <p:commandButton value="#{msg['submit']}" action="#{editProfileAction.crop()}" icon="ui-icon-scissors" update="dialogForm"/>
+			    <p:commandButton value="#{msg['cancel']}" action="#{editProfileAction.cancelCroppedImage()}" icon="ui-icon-scissors" update="dialogForm"/>
+			</p:dialog>		
+		</h:form>
+	</h:panelGroup>	
+		
+		
+	</ui:define>
+</ui:composition>

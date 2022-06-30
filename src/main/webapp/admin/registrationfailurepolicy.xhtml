@@ -1,0 +1,91 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card card-w-title">
+						<h1>
+							<b>#{msg['failurehead']}</b>
+						</h1>
+						<p:dataTable id="failure" var="faliurelist"
+							value="#{adminHomeAction.listingfailure}" reflow="true"
+							widgetVar="failuretable" paginator="true" rows="10"
+							paginatorPosition="bottom"
+							filteredValue="#{adminHomeAction.listingfailurefilter}">
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<span> <h:outputText
+											value="#{msg['businessuser.servicetrs.all']}" />
+									</span>
+									<span> <p:inputText id="globalFilter"
+											onkeyup="PF('failuretable').filter()" style="width:150px"
+											placeholder="#{msg['businessuser.servicetrs.srch']}" />
+									</span>
+								</p:outputPanel>
+							</f:facet>
+
+							<p:column filterBy="#{faliurelist.sno}"
+								headerText="#{msg['failurehead1']}" sortBy="#{faliurelist.sno}"
+								onchange="PF('failuretable').filter()"
+								filterMatchMode="contains">
+								<h:outputText value="#{faliurelist.sno}" />
+							</p:column>
+
+							<p:column filterBy="#{faliurelist.idenno}"
+								headerText="#{msg['failurehea2']}"
+								sortBy="#{faliurelist.idenno}"
+								onchange="PF('failuretable').filter()"
+								filterMatchMode="contains">
+								<h:outputText value="#{faliurelist.idenno}" />
+							</p:column>
+
+							<p:column filterBy="#{faliurelist.noofattempts}"
+								headerText="#{msg['failurehead3']}"
+								sortBy="#{faliurelist.noofattempts}"
+								onchange="PF('failuretable').filter()"
+								filterMatchMode="contains">
+								<h:outputText value="#{faliurelist.noofattempts}" />
+							</p:column>
+
+
+
+							<p:column filterBy="#{faliurelist.status}"
+								headerText="#{msg['failurehead4']}"
+								sortBy="#{faliurelist.status}"
+								onchange="PF('failuretable').filter()"
+								filterMatchMode="contains">
+								<p:selectOneMenu value="#{faliurelist.status}"
+									style="margin-bottom:10px;width:150px;">
+									<f:selectItem itemLabel="#{msg['failurehead5']}"
+										itemValue="LOCKED" />
+									<f:selectItem itemLabel="#{msg['failurehead6']}"
+										itemValue="UNLOCKED" />
+									<p:ajax event="valueChange"
+										listener="#{adminHomeAction.updatefailure(faliurelist)}"
+										update="form" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:dataTable>
+
+						<br></br>
+						<h:commandLink id="excelsheet">
+							<p:graphicImage name="images/template/excelo.png"
+								library="cp-layout" class="mobile" />
+							<p:dataExporter type="xls" target="failure" fileName="MyFund"/>
+							<p:tooltip id="toolTipFadeDocument" for="excelsheet"
+								value="#{msg['customeruser.plantabele.excel']}" position="right"
+								style="color:green !important; background-color:white !important;font-size:13px !important;" />
+						</h:commandLink>
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

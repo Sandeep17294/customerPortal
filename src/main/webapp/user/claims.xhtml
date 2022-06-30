@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['customeruser.claimstableheading']}</b>
+						</h1>
+						<div class="row">
+							<h:panelGroup>
+								<div class="row">
+									<p:selectOneMenu value="#{homeDetailsAction.selectMaster}"
+										style="margin-bottom:10px;">
+										<f:selectItems value="#{homeDetailsAction.masterList}"
+											var="each" itemLabel="#{each.desc1}"
+											itemValue="#{each.desc1}" />
+										<p:ajax event="valueChange" update="form"
+											listener="#{homeDetailsAction.getMyClaim}" />
+									</p:selectOneMenu>
+									<br></br>
+									<br></br>
+									<h:outputText value="#{msg['customeruser.claimstableheading.totpend']}:"></h:outputText>
+									<h:outputText value="#{homeDetailsAction.totalPendingClaims}" />
+								</div>
+								<br></br>
+								<div class="row">
+									<p:dataTable id="claim" var="claims"
+										value="#{homeDetailsAction.claimDetailsList}" reflow="true"
+										paginator="true" rows="10">
+										<f:facet name="header">
+                                              #{msg['customeruser.claimstableheading.facet']}
+                                        </f:facet>
+										<p:column headerText="#{msg['customeruser.claimstableheading.claimno']}" sortBy="#{claims.claimNo}">
+											<h:outputText value="#{claims.claimNo}" />
+										</p:column>
+										<p:column headerText="#{msg['customeruser.claimstableheading.subclaimno']}"
+											sortBy="#{claims.subClaimNo}">
+											<h:outputText value="#{claims.subClaimNo}" />
+										</p:column>
+										<p:column headerText="#{msg['customeruser.claimstable.policyNo']}" sortBy="#{claims.policyNo}">
+											<h:outputText id="pol" value="#{claims.policyNo}" />
+										</p:column>
+										<p:column headerText="#{msg['customeruser.claimstableheading.incidate']}"
+											sortBy="#{claims.incidentDate.time}">
+											<h:outputText value="#{claims.incidentDate.time}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.claimstableheading.notdate']}"
+											sortBy="#{claims.notificationDate.time}">
+											<h:outputText value="#{claims.notificationDate.time}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.claimstableheading.settermentdate']}"
+											sortBy="#{claims.settermentDate.time}">
+											<h:outputText value="#{claims.settermentDate.time}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.claimstableheading.bendes']}"
+											sortBy="#{claims.benifitDescription}">
+											<h:outputText value="#{claims.benifitDescription}" />
+										</p:column>
+										<p:column headerText="#{msg['customeruser.claimstableheading.claimamt']}"
+											sortBy="#{claims.dueCurrency}">
+											<h:outputText value="#{claims.dueCurrency}" />
+											<h:outputText value="&#160;" />
+											<h:outputText value="#{claims.claimAmount}">
+												<f:convertNumber pattern="###,##0.00" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msg['customeruser.claimstableheading.claimstatus']}" sortBy="#{claims.claimStatus}">
+											<h:outputText value="#{claims.claimStatus}" />
+										</p:column>
+									</p:dataTable>
+									<br></br>
+									<h:commandLink id="excelsheet">
+										<p:graphicImage name="images/template/excelo.png"
+											library="cp-layout" class="mobile" />
+										<p:dataExporter type="xls" target="claim" fileName="claims"/>
+										<p:tooltip id="toolTipFadeDocument" for="excelsheet"
+											value="#{msg['customeruser.plantabele.excel']}" position="right"
+											style="color:green !important; background-color:white !important;font-size:13px !important;" />
+									</h:commandLink>
+									<br></br>
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

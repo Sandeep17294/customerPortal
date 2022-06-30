@@ -1,0 +1,692 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['productionbenfit']}</b>
+						</h1>
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">
+									#{homeDetailsAction.searchPolicyList.productName} |
+									#{homeDetailsAction.searchPolicyList.planNumber} |
+									#{homeDetailsAction.searchPolicyList.premiumPayStatus} </span>
+							</div>
+						</div>
+						<br></br>
+
+						<div class="row">
+							<h4>
+								<b>#{msg['customeruser.prod.option']}</b>
+							</h4>
+						</div>
+						<div class="row">
+							<p:selectOneRadio columns="2" layout="responsive" id="alter"
+								value="#{protectionBenifitAction.alterationType}">
+								<f:selectItem itemLabel="#{msg['customeruser.prod.option1']}"
+									itemValue="I" />
+								<f:selectItem itemLabel="#{msg['customeruser.prod.option2']}"
+									itemValue="D" />
+								<f:selectItem itemLabel="#{msg['customeruser.prod.option3']}"
+									itemValue="IR" />
+								<f:selectItem itemLabel="#{msg['customeruser.prod.option4']}"
+									itemValue="DR" />
+								<!-- <f:selectItem itemLabel="#{msg['customeruser.prod.option5']}"
+									itemValue="ARB" />
+								<f:selectItem itemLabel="#{msg['customeruser.prod.option6']}"
+									itemValue="DRB" /> -->
+								<p:ajax event="change"
+									listener="#{protectionBenifitAction.loadValues}"
+									resetValues="true" update="form">
+								</p:ajax>
+							</p:selectOneRadio>
+						</div>
+						<br></br>
+
+						<div class="row">
+							<h:panelGroup id="updateDatatable">
+								<ui:repeat var="key" id="repeatCheck" varStatus="loopIndex"
+									value="#{protectionBenifitAction.benfits.entrySet().toArray()}">
+									<p:dataTable rowIndexVar="indexNo" widgetVar="rein" var="list"
+										reflow="true" value="#{key.value}">
+										<f:facet name="header">
+                                                  #{msg['customeruser.prod.facet1']} #{key.value[loopIndex.index].memberName}
+                                            </f:facet>
+
+										<p:column headerText="#{msg['customeruser.prod.prodben']}">
+											<h:outputText value="#{list.benifitRiderName}" />
+										</p:column>
+
+										<p:column headerText="#{msg['customeruser.prod.currenc']}">
+											<h:outputText value="#{list.currency}" />
+										</p:column>
+
+										<p:column headerText="#{msg['customeruser.prod.ev']}">
+											<h:outputText value="#{list.existBenifit}" />
+										</p:column>
+
+										<p:column headerText="#{msg['edit']}">
+											<p:selectBooleanCheckbox id="checkBox"
+												disabled="#{!list.showCheckBox}"
+												value="#{list.enableCheckBox}">
+												<p:ajax
+													listener="#{protectionBenifitAction.debug(key.getKey(),indexNo)}"
+													oncomplete="loading()" update="checkBox,newValue"></p:ajax>
+											</p:selectBooleanCheckbox>
+										</p:column>
+
+
+										<p:column headerText="#{msg['customeruser.prod.nv']}">
+											<p:inputText id="newValue" value="#{list.newvalue}"
+												required="#{list.enableCheckBox == 'true' ? 'true':'false'}"
+												requiredMessage="#{msg['customeruser.prod.req']}"
+												styleClass="#{list.enableCheckBox == 'false'?'nfa-inputtext':'nfa-inputtexts'} cuurencyInput "
+												disabled="#{list.enableCheckBox == 'false' or list.wocParam == 'false' or list.excelGroupId eq 'HB'?'true':'false' or list.premiumWaive eq 'Y'?'true':'false'}">
+												<p:ajax event="blur"
+													listener="#{protectionBenifitAction.benifitValidation}"
+													update="newValue" />
+												<f:convertNumber pattern="###,##0.00" />
+											</p:inputText>
+											<p:message for="newValue" />
+										</p:column>
+
+
+									</p:dataTable>
+									<h:outputScript id="currencyScript">
+							
+													$('.cuurencyInput').on( "input", function( event ) {
+														// 1
+														var $this = $( this );
+														var input = $this.val();
+														
+														// 2
+														var input = input.replace(/[\D\s\._\-]+/g, "");
+														
+														// 3
+														input = input ? parseInt( input, 10 ) : 0;
+														
+														// 4
+														$this.val( function() {
+															return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
+														} );
+						
+													});
+													
+										</h:outputScript>
+								</ui:repeat>
+							</h:panelGroup>
+						</div>
+
+						<br></br> <br></br>
+
+						<h:panelGroup>
+							<div class="row">
+								<div id="j_idt149"
+									class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+									data-widget="widget_j_idt149">
+									<div id="j_idt149_header"
+										class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+										<span class="ui-panel-title">#{msg['customeruser.prod.facet2']}</span>
+									</div>
+									<div id="j_idt149_content"
+										class="ui-panel-content ui-widget-content"
+										style="border: none;">
+
+										<p:panelGrid columns="3" layout="grid">
+											<p:outputLabel style="font-weight:bold;"
+												value="#{msg['customeruser.prod.mlsd']}" />
+											<p:outputLabel style="font-weight:bold;"
+												value="#{msg['customeruser.prod.fcm']}" />
+											<p:outputLabel style="font-weight:bold;"
+												value="#{msg['customeruser.prod.scm']}" />
+
+											<p:outputLabel value="#{msg['customeruser.prod.height']}" />
+											<p:inputText id="height1"
+												value="#{protectionBenifitAction.protectionBenifitDTO.firstCoverHeight}">
+											</p:inputText>
+
+											<p:inputText id="height2"
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.secondCoverHeight}">
+											</p:inputText>
+
+											<p:outputLabel value="#{msg['customeruser.prod.weight']}" />
+											<p:inputText id="weight1"
+												value="#{protectionBenifitAction.protectionBenifitDTO.firstCoverWeight}">
+											</p:inputText>
+											<p:inputText id="weight2"
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.secondCoverWeight}">
+											</p:inputText>
+
+											<p:outputLabel value="Question and Answer" />
+											<p:outputLabel value="Yes / No" />
+											<p:outputLabel value="Yes / NO" />
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionOne']}" />
+											<p:selectOneRadio id="ques1"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesOneFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+												<p:message for="ques1" />
+											</p:selectOneRadio>
+
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesOneSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTwo']}" />
+											<p:outputLabel value="" />
+											<p:outputLabel value="" />
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTwoA']}" />
+											<p:selectOneRadio id="ques2A"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoAFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoASecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTwoB']}" />
+											<p:selectOneRadio id="ques2B"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoBFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoBSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTwoC']}" />
+											<p:selectOneRadio id="ques2C"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoCFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoCSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTwoD']}" />
+											<p:selectOneRadio id="ques2D"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoDFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoDSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTwoE']}" />
+											<p:selectOneRadio id="ques2E"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoEFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoESecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTwoF']}" />
+											<p:selectOneRadio id="ques2F"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoFFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoFSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTwoG']}" />
+											<p:selectOneRadio id="ques2G"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoGFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoGSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTwoH']}" />
+											<p:selectOneRadio id="ques2H"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoHFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTwoHSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionThree']}" />
+											<p:selectOneRadio id="ques3"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesThreeFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesThreeSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionFour']}" />
+											<p:selectOneRadio id="ques4"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesFourFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesFourSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionFive']}" />
+											<p:selectOneRadio id="ques5"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesFiveFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesFiveSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionSix']}" />
+											<p:selectOneRadio id="ques6"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesSixFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesSixSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionSeven']}" />
+											<p:selectOneRadio id="ques7"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesSevenFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesSevenSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionEight']}" />
+											<p:selectOneRadio id="ques8"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesEightFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesEightSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+											<p:outputLabel
+												value="#{msg['home.contributionAlteration.medicalDetails.questionTen']}" />
+											<p:selectOneRadio id="ques10"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTenFirst}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+											<p:selectOneRadio
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.quesTenSecond}">
+												<f:selectItem itemLabel="" itemValue="Y"></f:selectItem>
+												<f:selectItem itemLabel="" itemValue="N"></f:selectItem>
+											</p:selectOneRadio>
+
+
+										</p:panelGrid>
+
+										<br></br> <span><b>#{msg['customeruser.prod.temrs']}.</b></span>
+										<br></br> <br></br>
+
+										<p:panelGrid columns="4" layout="grid">
+											<p:outputLabel value="#{msg['customeruser.prod.fcm']}" />
+											<p:inputTextarea
+												value="#{protectionBenifitAction.protectionBenifitDTO.firstCoverMedDetails}" />
+											<p:outputLabel value="#{msg['customeruser.prod.scm']}" />
+											<p:inputTextarea
+												disabled="#{protectionBenifitAction.secondMember == null}"
+												value="#{protectionBenifitAction.protectionBenifitDTO.secondCoverMedDetails}">
+											</p:inputTextarea>
+										</p:panelGrid>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div id="j_idt149"
+									class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+									data-widget="widget_j_idt149">
+									<div id="j_idt149_header"
+										class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+										<span class="ui-panel-title">Details of the Plan</span>
+									</div>
+									<div id="j_idt149_content"
+										class="ui-panel-content ui-widget-content"
+										style="border: none;">
+
+										<p:panelGrid columns="4" layout="grid">
+											<p:outputLabel value="#{msg['customeruser.prod.yr1']}" />
+											<p:inputText id="valid"
+												value="#{protectionBenifitAction.protectionBenifitDTO.incomeYearOne}">
+											</p:inputText>
+											<p:outputLabel value="#{msg['customeruser.prod.yr2']}" />
+											<p:inputText id="valid1"
+												value="#{protectionBenifitAction.protectionBenifitDTO.incomeYearTwo}" />
+											<p:outputLabel value="#{msg['customeruser.prod.yr3']}" />
+											<p:inputText id="valid2"
+												value="#{protectionBenifitAction.protectionBenifitDTO.incomeYearThree}">
+											</p:inputText>
+										</p:panelGrid>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div id="j_idt149"
+									class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+									data-widget="widget_j_idt149">
+									<div id="j_idt149_header"
+										class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+										<span class="ui-panel-title">Details of the Plan Holder</span>
+									</div>
+									<div id="j_idt149_content"
+										class="ui-panel-content ui-widget-content"
+										style="border: none;">
+
+										<p:panelGrid columns="4" layout="grid">
+											<p:outputLabel style="font-weight:bold;"
+												value="#{msg['customeruser.prod.asst']}" />
+											<p:outputLabel style="font-weight:bold;"
+												value="Values in AED" />
+											<p:outputLabel style="font-weight:bold;"
+												value="#{msg['customeruser.prod.liba']}" />
+											<p:outputLabel style="font-weight:bold;"
+												value="Values in AED" />
+
+											<p:outputLabel value="#{msg['customeruser.prod.cash']}" />
+											<p:inputText id="assCash"
+												value="#{protectionBenifitAction.protectionBenifitDTO.assetsCash}">
+												<p:ajax listener="#{protectionBenifitAction.assetsTotal}"
+													event="blur" update="totalAmountUpd">
+												</p:ajax>
+											</p:inputText>
+											<p:outputLabel value="#{msg['customeruser.prod.loan']}" />
+											<p:inputText id="liaLoans"
+												value="#{protectionBenifitAction.protectionBenifitDTO.liabilitiesLoan}">
+												<p:ajax
+													listener="#{protectionBenifitAction.liabilitiesTotal}"
+													event="blur" update="totalLiabUpd">
+												</p:ajax>
+											</p:inputText>
+
+											<p:outputLabel value="#{msg['customeruser.prod.sb']}" />
+											<p:inputText id="assShare"
+												value="#{protectionBenifitAction.protectionBenifitDTO.assetsShares}">
+												<p:ajax listener="#{protectionBenifitAction.assetsTotal}"
+													event="blur" update="totalAmountUpd">
+												</p:ajax>
+											</p:inputText>
+											<p:outputLabel value="#{msg['customeruser.prod.ap']}" />
+											<p:inputText id="liaAcc"
+												value="#{protectionBenifitAction.protectionBenifitDTO.liabilitiesPayable}">
+												<p:ajax
+													listener="#{protectionBenifitAction.liabilitiesTotal}"
+													event="blur" update="totalLiabUpd">
+												</p:ajax>
+											</p:inputText>
+
+											<p:outputLabel value="#{msg['customeruser.prod.re']}" />
+											<p:inputText id="assReal"
+												value="#{protectionBenifitAction.protectionBenifitDTO.assetsRealEstate}">
+												<p:ajax listener="#{protectionBenifitAction.assetsTotal}"
+													event="blur" update="totalAmountUpd">
+												</p:ajax>
+											</p:inputText>
+											<p:outputLabel value="#{msg['customeruser.prod.mort']}" />
+											<p:inputText id="liaMort"
+												value="#{protectionBenifitAction.protectionBenifitDTO.liabilitiesMortgage}">
+												<p:ajax
+													listener="#{protectionBenifitAction.liabilitiesTotal}"
+													event="blur" update="totalLiabUpd">
+												</p:ajax>
+											</p:inputText>
+
+											<p:outputLabel value="#{msg['customeruser.prod.oa']}" />
+											<p:inputText id="assOther"
+												value="#{protectionBenifitAction.protectionBenifitDTO.assetsOthers}">
+												<p:ajax listener="#{protectionBenifitAction.assetsTotal}"
+													event="blur" update="totalAmountUpd">
+												</p:ajax>
+											</p:inputText>
+											<p:outputLabel value="#{msg['customeruser.prod.ol']}" />
+											<p:inputText id="liaOther"
+												value="#{protectionBenifitAction.protectionBenifitDTO.liabilitiesOther}">
+												<p:ajax
+													listener="#{protectionBenifitAction.liabilitiesTotal}"
+													event="blur" update="totalLiabUpd">
+												</p:ajax>
+											</p:inputText>
+
+											<p:outputLabel style="font-weight:bold;"
+												value="#{msg['customeruser.prod.totassets']}" />
+											<h:outputText id="totalAmountUpd"
+												value="#{protectionBenifitAction.assetsTotal}"></h:outputText>
+											<p:outputLabel style="font-weight:bold;"
+												value="#{msg['customeruser.prod.totloan']}" />
+											<h:outputText id="totalLiabUpd"
+												value="#{protectionBenifitAction.liabilitiesTotal}"></h:outputText>
+										</p:panelGrid>
+									</div>
+								</div>
+							</div>
+						</h:panelGroup>
+						<br></br> <br></br>
+
+						<div id="j_idt149"
+							class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+							data-widget="widget_j_idt149">
+							<div id="j_idt149_header"
+								class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+								<span class="ui-panel-title">#{msg['termscondheading']}</span>
+							</div>
+							<div id="j_idt149_content"
+								class="ui-panel-content ui-widget-content" style="border: none;">
+								<ui:repeat
+									value="#{protectionBenifitAction.termsConditionYesNo}"
+									var="details">
+									<span style="color: green;">*</span>
+									<em><p:outputLabel
+											style="color: green!important; margin-left: 0px;"
+											value="Info : ">
+										</p:outputLabel></em>
+									<p:outputLabel
+										style="margin-left: 11px; line-height:2; display: contents;"
+										value="#{details.conditionEng}">
+									</p:outputLabel>
+									<br />
+								</ui:repeat>
+								<ui:repeat
+									value="#{protectionBenifitAction.termsConditionYesYes}"
+									var="details">
+									<p:selectBooleanCheckbox id="cond" style="width: 21px; ">
+										<f:validator validatorId="termsConditionsValidator" />
+									</p:selectBooleanCheckbox>
+									<p:outputLabel
+										style="margin-left: 11px;color: #1a616d!important;font-weight: bold; line-height:2; display: contents;"
+										value="#{details.conditionEng}">
+									</p:outputLabel>
+									<br />
+									<br />
+								</ui:repeat>
+								<p:selectBooleanCheckbox id="terms"
+									value="#{protectionBenifitAction.termsCondition}"
+									type="checkbox" style="width:20px;">
+									<f:validator validatorId="termsConditionsValidator" />
+								</p:selectBooleanCheckbox>
+								<span style="color: red;">*</span> <strong>#{msg['termscondmain']}.</strong>
+							</div>
+						</div>
+
+						<div class="row">
+							<p:commandButton id="continueLater"
+								value="Fatca Form Submit" 
+								rendered="#{protectionBenifitAction.fatcaFlagpopUp==true}"
+								actionListener="#{protectionBenifitAction.btnContinueLaterfatca}"
+								action="#{protectionBenifitAction.fatcasample()}"
+								update="form" style="float:right" />
+							
+							<p:commandButton id="continueLater1" value="#{msg['submit']}"
+								rendered="#{!protectionBenifitAction.fatcaFlagpopUp==true}"
+								actionListener="#{protectionBenifitAction.btnContinueLater}"
+								action="#{otpValidation.btnPrintForm()}" update="form,otpform"
+								style="float:right" />
+						</div>
+
+						<br></br> <br></br>
+
+					</div>
+				</div>
+			</div>
+			<script>
+				function loading() {
+					location.reload();
+					return false;
+				}
+			</script>
+		</h:form>
+
+		<h:panelGroup>
+			<p:dialog id="successTab"
+				header="#{homeDetailsAction.searchPolicyList.productName} | #{homeDetailsAction.searchPolicyList.planNumber} | #{homeDetailsAction.searchPolicyList.premiumPayStatus}"
+				widgetVar="dlg3" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform">
+					<b><span>#{msg['otp.securityques']}</span></b>
+					<br></br>
+
+					<p:panelGrid columns="1" layout="grid">
+						<p:inputText id="questionn" value="#{otpValidation.securityQues}"
+							style="border:none;" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.answer']}</span></b>
+						<p:inputText value="#{otpValidation.userSecurityAns}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span>#{msg['otp.enter']}</span></b>
+						<p:password id="otp" value="#{otpValidation.userOTP}"
+							disabled="#{otpValidation.enableResendOTP}" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="2" layout="grid">
+						<b><span style="color: red;">#{msg['otp.valid']}</span></b>
+						<p:commandLink value="#{msg['otp.resend']}"
+							actionListener="#{otpValidation.smsGenerator}" immediate="true"
+							update="form" />
+					</p:panelGrid>
+
+					<p:panelGrid columns="3" layout="grid">
+						<p:poll interval="#{otpValidation.OTPTimeLimit}"
+							listener="#{otpValidation.checkTime()}" immediate="true"
+							update="form" autoStart="#{otpValidation.renderStartTime}"
+							stop="#{otpValidation.renderStopTime}" />
+						<p:commandButton type="submit" value="#{msg['submit']}"
+							actionListener="#{otpValidation.validateOTP}" update="form,otpform12"
+							disabled="#{otpValidation.enableResendOTP}" />
+						<p:commandButton value="#{msg['cancel']}"
+							actionListener="#{otpValidation.delete}" oncomplete="loading()"
+							update="form" />
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+		
+		<h:panelGroup>
+			<p:dialog id="successTab156" header="#{msg['top.not']}" modal="true"
+				widgetVar="dlg4" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform12">
+					<b><span>#{otpValidation.popmsg}</span></b>
+					<br></br>
+					<br></br>
+					<p:commandButton value="#{msg['ok']}" style="float:center"
+						action="#{homeDetailsAction.servicelist()}" update="form" />
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+
+	</ui:define>
+</ui:composition>

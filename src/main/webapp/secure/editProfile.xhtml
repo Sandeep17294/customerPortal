@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml"
+	xmlns:ph="http://primefaces.org/harmony">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+	<script>
+function logout() {
+     console.log("Success");
+	 window.location.replace("#{request.contextPath}/login");
+}
+</script>
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['editprofile']}</b>
+						</h1>
+						<p:panelGrid columns="4" layout="grid">
+							<p:outputLabel value="#{msg['edit.userid']}" />
+							<p:inputText value="#{editProfileAction.cpUserInfoDTO.vuserName}"
+								disabled="true" />
+
+							<p:outputLabel value="#{msg['edit.fname']}" />
+							<p:inputText value="#{editProfileAction.firestName}"
+								disabled="true" />
+
+							<p:outputLabel value="#{msg['edit.lname']}" />
+							<p:inputText value="#{editProfileAction.lastName}"
+								disabled="true" />
+
+							<p:outputLabel value="#{msg['edit.dob']}" />
+							<p:calendar value="#{editProfileAction.cpCustomerDetailDTO.dDob}"
+								disabled="true" />
+
+							<p:outputLabel value="#{msg['edit.tit']}" />
+							<p:inputText value="#{editProfileAction.cpUserInfoDTO.vtitle}"
+								disabled="true" />
+
+							<p:outputLabel value="#{msg['edit.mno']}" />
+							<p:inputText
+								value="#{editProfileAction.cpUserInfoDTO.vcontactNo}" />
+
+							<p:outputLabel value="#{msg['edit.eid']}" />
+							<p:inputText id="email"
+								value="#{editProfileAction.cpUserInfoDTO.vemail}"
+								requiredMessage="Please enter your email address."
+								validatorMessage="Invalid email format">
+								<f:validateRegex
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								<p:watermark for="email" value="Email Address *" />
+								<p:message for="email" />
+							</p:inputText>
+							
+							
+							<p:outputLabel value="#{msg['edit.disname']}" />
+							<p:inputText id="displayName" required="true" requiredMessage="Please enter display name."
+								value="#{editProfileAction.cpUserInfoDTO.vprefName}">
+								<p:ajax event="blur" update="displayName"
+									listener="#{editProfileAction.displayvalid}" />
+								<p:messages for="displayName"/>	
+							</p:inputText>
+                               <p:outputLabel styleClass="center-block"
+								value="Profile Image">
+							<em style="color: #1f89ce"> (Info: Supported file format is
+								only jpg)</em></p:outputLabel>
+                              <p:fileUpload id="fileUpload"
+									style="margin-left:-18px; margin-top: -5px;" tabindex="2"
+									required="true" requiredMessage="Please select profile image"
+									title="Select Profile Picture"
+									value="#{editProfileAction.file}"  
+									fileUploadListener="#{editProfileAction.uploadImage}"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|bmp)$/" sizeLimit="512000"
+									invalidSizeMessage="Display Image Size exceeds the limit (500KB), try with less resolution image"
+									invalidFileMessage="Please select valid file">
+								</p:fileUpload>
+								<p:outputLabel styleClass="center-block" style="font-color:green;"
+								value="#{msg['doc.success.label12']}" rendered="#{editProfileAction.showing}" />
+						</p:panelGrid>
+						<br></br>
+						<p:commandButton value="#{msg['submit']}" 
+									action="#{editProfileAction.anotherbutton}"
+									icon="fa fa-home Fs14 White"
+									style="max-width:150px; float:right;" update="form" /> <br></br><br></br>		 	
+						
+					</div>
+				</div>
+				
+				
+			</div>
+			
+			
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		
+		</h:form>
+	<h:panelGroup>
+			<p:dialog id="successTab"
+				header="#{msg['customer.edit.profile.dia.succ']}"
+				widgetVar="profDiag" showEffect="explode" hideEffect="fade" modal="true" width="auto">
+				<h:form id="profileImageFrom">
+					<b><span>#{msg['customer.edit.profile.dia']}</span></b>
+					<br></br>
+
+					<p:panelGrid columns="3" layout="grid">
+						<p:commandButton type="submit" value="#{msg['customer.edit.profile.dia.yes']}" onclick="logout()"/>
+						<p:commandButton value="#{msg['customer.edit.profile.dia.no']}" rendered="#{ph:ifAllGranted('TRANSACTION_PRIVILEGE,CHANGE_SECURITY_QUES_PRIVILEGE,E_STATEMENT_PRIVILEGE')}" action="/userDashboard.app?faces-redirect=true"/>
+						<p:commandButton value="#{msg['customer.edit.profile.dia.no']}" rendered="#{ph:ifAllGranted('USER_STATUS_CHANGE_PRIVILEGE,FEEDBACK_CLOSE_PRIVILEGE,PORTAL_MANAGEMENT_PRIVILEGE')}" action="/adminDashboard.app?faces-redirect=true"/>
+						<p:commandButton value="#{msg['customer.edit.profile.dia.no']}" rendered="#{ph:ifAnyGranted('FEEDBACK_REPLY_PRIVILEGE')}" action="/businessDashboard.app?faces-redirect=true"/>
+					</p:panelGrid>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				</h:form>
+			</p:dialog>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

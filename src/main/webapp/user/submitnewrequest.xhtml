@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['customeruser.requesttableheading.subNewReq']}</b>
+						</h1>
+						
+						<p:dataTable id="policy1" var="policy"
+							value="#{homeDetailsAction.policyDetailsList}" reflow="true"
+							paginator="true" rows="10">
+							<f:facet name="header">
+                                #{msg['customeruser.requesttableheading.facet.subNewReq']}
+                            </f:facet>
+							<p:column headerText="#{msg['customeruser.requesttable.policyName']}" sortBy="#{policy.policyName}">
+								<h:outputText value="#{policy.policyName}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.requesttable.policyNo']}" sortBy="#{policy.policyNo}">
+								<h:commandLink value="#{policy.policyNo}"
+									actionListener="#{homeDetailsAction.getPolicyDetails(policy.policyNo)}"
+									action="serachPolicy?faces-redirect=true" update="form" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.requesttable.policystatus']}"
+								sortBy="#{policy.policyStatus}">
+								<h:outputText value="#{policy.policyStatus}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.requesttable.outprem']}"
+								sortBy="#{policy.outstandingCurrencyCode}">
+								<h:outputText
+									value="#{policy.outstandingCurrencyCode}&#160;&#160;" />
+								<h:outputText value="#{policy.outstandingAmt}">
+									<f:convertNumber pattern="###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msg['customeruser.requesttable.premdate']}"
+								sortBy="#{policy.premiumDueDate.time}">
+								<h:outputText value="#{policy.premiumDueDate.time}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+						
+						</p:dataTable>
+						
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

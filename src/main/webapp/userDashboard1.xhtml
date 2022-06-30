@@ -1,0 +1,135 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Dashboard</ui:define>
+	<ui:define name="head"></ui:define>
+	<ui:define name="viewname">
+		<li><p:link outcome="/dashboard">#{msg['dashboard.customer']}</p:link></li>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g layout-dashboard">
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="stats-box sales">
+						<span class="statistics-header">#{msg['dashboard.customer.plan']}</span>
+						<p:graphicImage name="images/dashboard/48891.svg"
+							library="cp-layout" />
+						<span class="statistics"><h:outputLabel
+								value="#{summaryAction.cpSummaryDetails.policyCount}"
+								rendered="#{summaryAction.notPolicyCount}" /> <h:outputText
+								value="#{msg['dashboard.customer.noplan']}"
+								rendered="#{summaryAction.policyCount}" /> </span>
+						<div class="statistics-info-bg">
+							<span class="statistics-info">#{msg['dashboard.customer.total.plans']}</span>
+						</div>
+					</div>
+				</div>
+				<div onclick="sample()" class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="stats-box views">
+						<span class="statistics-header">#{msg['dashboard.customer.fund']}</span>
+						<i class="fa fa-angle-right"></i>
+						<p:graphicImage name="images/dashboard/icon-views.svg"
+							library="cp-layout" />
+
+						<h:panelGroup rendered="#{summaryAction.fundNull}">
+							<span class="statistics"> <h:outputLabel
+									value="#{msg['dashboard.customer.nofund']}" />
+							</span>
+						</h:panelGroup>
+
+						<h:panelGroup rendered="#{summaryAction.notFundAmtNull}">
+							<span class="statistics"> <h:outputLabel
+									value="#{homeDetailsAction.baseCurrencyCodeStr}" /> : <span
+								class="statistics timer count-title count-number"
+								data-to="#{summaryAction.cpSummaryDetails.fundValue}"
+								data-speed="2000" />
+							</span>
+						</h:panelGroup>
+						<div class="statistics-info-bg">
+							<span class="statistics-info">#{msg['dashboard.customer.funds.total']}</span>
+						</div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="stats-box users">
+						<span class="statistics-header">#{msg['dashboard.customer.outstanding']}</span>
+						<i class="fa fa-angle-right"></i>
+						<p:graphicImage name="images/dashboard/icon-users.svg"
+							library="cp-layout" />
+						<h:panelGroup rendered="#{summaryAction.oustNull}">
+							<span class="statistics"> <h:outputLabel
+									value="#{msg['dashboard.customer.noOutsatanding']}"
+									style="font-size:20px" />
+							</span>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{summaryAction.notOustNull}">
+							<span class="statistics"> <h:outputLabel
+									value="#{homeDetailsAction.baseCurrencyCodeStr}" />: <h:outputLabel
+									value="#{summaryAction.cpSummaryDetails.outStandingAmount}">
+									<f:convertNumber pattern="###,##0.00" />
+								</h:outputLabel>
+							</span>
+						</h:panelGroup>
+
+						<div class="statistics-info-bg">
+							<span class="statistics-info">#{msg['dashboard.customer.outstanding.total']}</span>
+						</div>
+					</div>
+				</div>
+				<div class="ui-g- ui-md-6 ui-lg-3">
+					<div class="stats-box checkins">
+						<span class="statistics-header">#{msg['dashboard.customer.allocatedcontribution']}</span>
+						<i class="fa fa-angle-right"></i>
+						<p:graphicImage name="images/dashboard/icon-checkins.svg"
+							library="cp-layout" />
+						<h:panelGroup rendered="#{summaryAction.fundNull}">
+							<span class="statistics"> <h:outputLabel
+									value="#{msg['dashboard.customer.allocatedcontribution']}" />
+							</span>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{summaryAction.notFundAmtNull}">
+							<span class="statistics"> <h:outputLabel
+									value="#{homeDetailsAction.baseCurrencyCodeStr}" /> <br></br>
+								<h:outputLabel style="font-size:19px"
+									value="#{summaryAction.cpSummaryDetails.fundValue}">
+									<f:convertNumber pattern="###,##0.00" />
+								</h:outputLabel>
+							</span>
+						</h:panelGroup>
+						<div class="statistics-info-bg">
+							<span class="statistics-info">#{msg['dashboard.customer.allocatedcontribution.total']}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br></br>
+<!-- 			<br></br>
+
+<h:panelGroup rendered="#{homeDetailsAction.requestchart}">
+			<div class="row">
+				<div id="j_idt149"
+					class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+					data-widget="widget_j_idt149">
+					<div id="j_idt149_header"
+						class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+						<span class="ui-panel-title">#{msg['dashboard.customer.servicerequestchart']}</span>
+					</div>
+					<div id="j_idt149_content"
+						class="ui-panel-content ui-widget-content" style="border: none;">
+						<p:polarAreaChart model="#{homeDetailsAction.polarAreaModel}"
+							style="width: 100%; height: 300px;" />
+					</div>
+				</div>
+			</div>
+			</h:panelGroup> -->
+			<br></br>
+			<br></br>
+			
+			        
+			
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

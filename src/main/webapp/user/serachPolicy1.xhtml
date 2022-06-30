@@ -1,0 +1,334 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="viewname">
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="card">
+				<h1>
+					<b>#{msg['customeruser.searchpolicyheading']}</b>
+				</h1>
+				<p:panelGrid columns="4" layout="grid">
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.plan']}">
+						<span class="ui-inputgroup-addon"><i
+							class="fa fa-credit-card"></i></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.planStatus}"
+						readonly="true" />
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.remaining']}"></p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.remainingTerms}"
+						readonly="true" />
+						
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.paymode']}"></p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.paymentMode}"
+						readonly="true" />
+					<p:outputLabel
+						value="#{msg['customeruser.searchpolicy.regcontr']} #{homeDetailsAction.searchPolicyList.planCurrency}">
+						<span class="ui-inputgroup-addon"></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.regularContract}"
+						readonly="true">
+						<f:convertNumber pattern="###,##0.00" />
+					</p:inputText>
+					
+					<p:outputLabel
+						value="#{msg['customeruser.searchpolicy.annualcontr']} #{homeDetailsAction.searchPolicyList.planCurrency}">
+						<span class="ui-inputgroup-addon"></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.annualContract}"
+						readonly="true">
+						<f:convertNumber pattern="###,##0.00" />
+					</p:inputText>
+					<p:outputLabel
+						value="#{msg['customeruser.searchpolicy.last']} #{homeDetailsAction.searchPolicyList.recCurrencyCode}">
+						<span class="ui-inputgroup-addon"></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.lastPaidContr}"
+						readonly="true">
+						<f:convertNumber pattern="###,##0.00" />
+					</p:inputText>
+
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.lastpaid']}">
+						<span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.lastPaidDate.time}"
+						readonly="true">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputText>
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.preduedate']}">
+						<span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.premiumDueDate.time}"
+						readonly="true">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputText>
+
+					<p:outputLabel
+						value="#{msg['customeruser.searchpolicy.totaldue']} #{homeDetailsAction.searchPolicyList.planCurrency}">
+						<span class="ui-inputgroup-addon"></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.totalDue}"
+						readonly="true">
+						<f:convertNumber pattern="###,##0.00" />
+					</p:inputText>
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.assignment']}"></p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.assignment}"
+						readonly="true" />
+
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.contrholidays']}"></p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.contrHolidays}"
+						readonly="true" />
+					<p:outputLabel
+						value="#{msg['customeruser.searchpolicy.planvalue']} #{homeDetailsAction.searchPolicyList.planCurrency}">
+						<span class="ui-inputgroup-addon"></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.planValue}"
+						readonly="true">
+						<f:convertNumber pattern="###,##0.00" />
+					</p:inputText>
+
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.prepayend']}">
+						<span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.premiumPayEndDate.time}"
+						readonly="true">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputText>
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.prepayterm']}"></p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.premiumPayTerm}&#160;Year(s)"
+						readonly="true" />
+
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.paymethod']}"></p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.payMethod}"
+						readonly="true" />
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.autodb']}">
+						<span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.autoDbDate.time}"
+						readonly="true">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:inputText>
+
+					<p:outputLabel
+						value="#{msg['customeruser.searchpolicy.fundvalue']} #{homeDetailsAction.searchPolicyList.planCurrency}">
+						<span class="ui-inputgroup-addon"></span>
+					</p:outputLabel>
+					<p:inputText placeholder="Readonly"
+						value="#{homeDetailsAction.searchPolicyList.fundValue}"
+						readonly="true">
+						<f:convertNumber pattern="###,##0.00" />
+					</p:inputText>
+				
+						
+					<p:outputLabel value="#{msg['customeruser.searchpolicy.pwamount']}"></p:outputLabel>
+					<p:inputText 
+						value="#{homeDetailsAction.searchPolicyList.pwamount}"
+						readonly="true" />	
+
+
+
+
+				</p:panelGrid>
+				<br></br>
+				<p:accordionPanel multiple="true">
+					<p:tab title="#{msg['customeruser.searchpolicy.fundtable.fund']}">
+						<div class="row">
+							<p:dataTable var="fundDetails"
+								value="#{homeDetailsAction.fundDetailsSearchList}" reflow="true"
+								paginator="true" rows="10">
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.fundName']}"
+									sortBy="#{fundDetails.fundName}">
+									<h:outputText value="#{fundDetails.fundName}" />
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.share']}"
+									sortBy="#{fundDetails.sharePercentage}">
+									<h:outputText value="#{fundDetails.sharePercentage}" />
+									<h:outputText value="%" />
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.unitPrice']}"
+									sortBy="#{fundDetails.avaliableUnits}">
+									<h:outputText value="#{fundDetails.avaliableUnits}">
+										<f:convertNumber pattern="###,##0.00" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.avaliableUnits']}"
+									sortBy="#{fundDetails.unitPrice}">
+									<h:outputText value="#{fundDetails.unitPrice}">
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.exchangeRate']}"
+									sortBy="#{fundDetails.exchangeRate}">
+									<h:outputText value="#{fundDetails.exchangeRate}" />
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.fundCurrency']}"
+									sortBy="#{fundDetails.fundValue}">
+									<h:outputText value="#{fundDetails.fundCurrency}&#160;" />
+									<h:outputText value="#{fundDetails.fundValue}">
+										<f:convertNumber pattern="###,##0.00" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="#{msg['customeruser.searchpolicy.fundtable.planValue']}"
+									sortBy="#{fundDetails.planValue}">
+									<h:outputText
+										value="#{homeDetailsAction.searchPolicyList.planCurrency}&#160;" />
+									<h:outputText value="#{fundDetails.planValue}">
+										<f:convertNumber pattern="###,##0.00" />
+									</h:outputText>
+								</p:column>
+								<p:columnGroup type="footer">
+									<p:row>
+										<p:column colspan="6" style="text-align:right"
+											footerText="#{msg['customeruser.searchpolicy.fundtable.totalFunds']}:" />
+										<p:column style="text-align:right"
+											footerText="#{homeDetailsAction.searchPolicyList.planCurrency}
+							  : #{homeDetailsAction.searchPolicyList.fundValue} ">
+										</p:column>
+									</p:row>
+								</p:columnGroup>
+							</p:dataTable>
+						</div>
+					</p:tab>
+
+					<p:tab title="#{msg['customeruser.searchpolicy.planbenefitable.lifeAssu']}">
+						<p:dataTable var="lifeAssuredDetails"
+							value="#{homeDetailsAction.lifeassuredDetailsList}" reflow="true"
+							paginator="true" rows="10">
+							<p:column headerText="#{msg['customeruser.searchpolicy.planbenefitable.coveredMembersName']}"
+								sortBy="#{lifeAssuredDetails.coverName}">
+								<h:outputText value="#{lifeAssuredDetails.lifeAssuredName}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.planbenefitable.coverType']}"
+								sortBy="#{lifeAssuredDetails.benefitType}">
+								<h:outputText value="#{lifeAssuredDetails.coverName}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.planbenefitable.benefitAmount']}"
+								sortBy="#{lifeAssuredDetails.coverName}">
+								<h:outputText value="#{lifeAssuredDetails.benefitType}">
+								<f:convertNumber pattern="###,##0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.planbenefitable.planTerm']}"
+								sortBy="#{lifeAssuredDetails.planTerm}">
+								<h:outputText value="#{lifeAssuredDetails.planTerm}" />
+								<h:outputText value="&#160;Year(s)" />
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+
+					<p:tab title="#{msg['customeruser.searchpolicy.beneficiarytable.nominee']}">
+						<p:dataTable var="NomineeDetails"
+							value="#{homeDetailsAction.nomineeDetailsList}" reflow="true"
+							paginator="true" rows="10">
+							<p:column headerText="#{msg['customeruser.searchpolicy.beneficiarytable.nomineeName']}"
+								sortBy="#{lifeAssuredDetails.coverName}">
+								<h:outputText value="#{NomineeDetails.nomineeDetails}" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.beneficiarytable.percentage']}"
+								sortBy="#{lifeAssuredDetails.benefitType}">
+								<h:outputText value="#{NomineeDetails.sharePercentage}" />
+								<h:outputText value="%" />
+							</p:column>
+							<p:column headerText="#{msg['customeruser.searchpolicy.beneficiarytable.coveredMember']}"
+								sortBy="#{lifeAssuredDetails.coverName}">
+								<h:outputText value="#{NomineeDetails.relationship}" />
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+				</p:accordionPanel>
+				<br></br>
+
+				<div class="row">
+					<div id="j_idt149"
+						class="ui-panel ui-widget ui-widget-content ui-corner-all chat"
+						data-widget="widget_j_idt149">
+						<div id="j_idt149_header"
+							class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+							<span class="ui-panel-title">#{msg['servicetransaction']}</span>
+						</div>
+						<div id="j_idt149_content"
+							class="ui-panel-content ui-widget-content" style="border: none;">
+
+							<p:panelGrid columns="5" layout="grid">
+								<h:commandLink id="addresschange"  rendered="#{homeDetailsAction.transaction}"
+									action="#{updateInfoAction.fetchingupdateinformationoverall()}"
+									styleClass="hvr-float" data-tooltip="Click to update contents">
+									<p:graphicImage name="images/template/e9.png"
+										library="cp-layout" />
+									<p:tooltip for="addresschange" position="bottom"
+									value="#{msg['updateinformation']}" />	
+								</h:commandLink>
+								
+								<h:commandLink  rendered="#{homeDetailsAction.transaction}"
+									id="redirection" action="#{redirectionSwitchingAction.settings()}"
+									styleClass="hvr-float" data-tooltip="Click to update contents">
+									<p:graphicImage name="images/template/e3.png"
+										library="cp-layout" />
+									<p:tooltip for="redirection" value="#{msg['redirectionswitching']}"
+									position="bottom" />	
+								</h:commandLink>
+								
+
+								<h:commandLink id="contrAlt" rendered="#{homeDetailsAction.transaction}"
+									action="#{contributionAlterationAction.termaltertaionfetch()}">
+									<p:graphicImage name="images/template/e4.png"
+										library="cp-layout" />
+                                    <p:tooltip for="contrAlt" value="#{msg['contributionalteration']}"
+									position="bottom" />								
+								</h:commandLink>
+								
+								<h:commandLink id="reinstatement"  rendered="#{homeDetailsAction.transaction1}"
+									action="#{reinStatementAction.reinstatmentfetch()}">
+									<p:graphicImage name="images/template/e8.png"
+										library="cp-layout" />
+									<p:tooltip for="reinstatement" value="#{msg['reinstatement']}"
+									position="bottom" />	
+								</h:commandLink>
+								
+
+								<h:commandLink
+									id="protBenifit" rendered="#{homeDetailsAction.transaction}"
+									action="#{protectionBenifitAction.prodtcfetch()}">
+									<p:graphicImage name="images/template/e6.png"
+										library="cp-layout" />
+									<p:tooltip for="protBenifit"
+									value="#{msg['productionbenfit']}" position="bottom" />	
+								</h:commandLink>
+								
+
+								<h:commandLink id="partialWithdrwal" rendered="#{homeDetailsAction.transaction}"
+									action="#{partialWithdrawalAction.partialfetch()}" class="hvr-float">
+									<p:graphicImage name="images/template/e1.png"
+										library="cp-layout" />
+								    <p:tooltip for="partialWithdrwal" value="#{msg['partialwithdraw']}"
+									position="bottom" />
+								</h:commandLink>
+								
+
+							</p:panelGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

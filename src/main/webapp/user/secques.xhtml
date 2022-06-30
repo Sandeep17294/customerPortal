@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+
+	<ui:define name="head">
+		<script type="text/javascript">
+			//<![CDATA[
+			function skinChart() {
+				this.cfg.shadow = false;
+				this.cfg.title = '';
+				this.cfg.seriesColors = [ '#007be5', '#20d077' ];
+				this.cfg.grid = {
+					background : '#ffffff',
+					borderColor : '#ffffff',
+					gridLineColor : '#F5F5F5',
+					shadow : false
+				};
+				this.cfg.axesDefaults = {
+					rendererOptions : {
+						textColor : '#666F77'
+					}
+				};
+				this.cfg.seriesDefaults = {
+					shadow : false,
+					lineWidth : 1,
+					markerOptions : {
+						shadow : false,
+						size : 7,
+						style : 'circle'
+					}
+				}
+			}
+			//]]>
+		</script>
+		<style type="text/css">
+.main-content {
+	padding: 0;
+}
+</style>
+	</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card">
+							<h1>
+								<b>#{msg['resetsecanswer']}</b>
+							</h1>
+
+							<h:panelGroup rendered="#{homeDetailsAction.old}">
+								<ui:repeat var="question" varStatus="each2" 
+									value="#{homeDetailsAction.cpUserSecurityQuestionDTO}">
+									<h:panelGroup>
+										<p:panelGrid columns="2" layout="grid">
+											<span> <b> #{msg['resetsecanswer.ques']}#{each2.index+1} : </b></span>
+										</p:panelGrid>
+										<p:panelGrid columns="4" layout="grid">
+											<h:outputText value="#{question.secques}" />
+											<p:inputText value="#{question.secans}" />
+											<p:commandButton value="#{msg['update']}"
+												actionListener="#{homeDetailsAction.resetsecuirtyupdate}"
+												update="form" />
+											<p:commandButton value="#{msg['delete']}"
+												actionListener="#{homeDetailsAction.resetsecuirtydelete(question)}"
+												update="form" />
+										</p:panelGrid>
+									</h:panelGroup>
+								</ui:repeat>
+							</h:panelGroup>
+							<br></br>
+							
+							<h:panelGroup rendered="#{homeDetailsAction.latest}">
+									<h:panelGroup>
+										<p:panelGrid columns="4" layout="grid">
+										    <h:outputText value="#{msg['resetsecanswer.ques']} : 1" />
+											<h:outputText value="#{homeDetailsAction.cpUserInfoDTOoo.vquestion1}" />
+											<p:inputText value="#{homeDetailsAction.cpUserInfoDTOoo.vanswer1}"/>
+											<p:commandButton value="#{msg['update']}"
+												update="form" actionListener="#{homeDetailsAction.updatesecques}" />
+											<h:outputText value="#{msg['resetsecanswer.ques']} : 2" />	
+											<h:outputText value="#{homeDetailsAction.cpUserInfoDTOoo.vquestion2}" />
+											<p:inputText value="#{homeDetailsAction.cpUserInfoDTOoo.vanswer2}" />
+											<p:commandButton value="#{msg['update']}" actionListener="#{homeDetailsAction.updatesecques}"
+												update="form" />	
+										</p:panelGrid>
+									</h:panelGroup>
+							</h:panelGroup>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

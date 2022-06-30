@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	
+
+	<ui:define name="head">
+	<h:outputScript src="js/custom/app.js" library="cp-layout" />
+	<h:outputScript src="js/custom/countertimer.js" library="cp-layout" />
+		<style type="text/css">
+.nba-grid {
+	width: 100%;
+	table-layout: fixed;
+	word-wrap: break-word;
+}
+
+.ui-scrollpanel-content p:first-child {
+	margin: 0;
+}
+
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<div id="layout-right-panel">
+
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<h1>#{msg['customer.dashboard.your.plans']}</h1>
+							<p:dataTable id="policy1" var="policy"
+								value="#{homeDetailsAction.policyDetailsList}" rows="10">
+								<p:column
+									headerText="#{msg['customeruser.plantabele.policyName']}"
+									 styleClass="centeredColumnContent">
+									<h:outputText style="text-align: center;"
+										value="#{policy.policyName}" />
+								</p:column>
+								<p:column
+									headerText="#{msg['customeruser.plantabele.policyNo']}"
+									 styleClass="centeredColumnContent">
+									<h:outputText style="text-align: center;"
+										value="#{policy.policyNo}"/>
+								</p:column>
+								
+								<p:column headerText="#{msg['customeruser.plantabele.outprem']}"
+									 styleClass="centeredColumnContent">
+									<h:outputText style="font-weight:600;"
+										value="#{policy.outstandingCurrencyCode}&#160;&#160;" />
+									<h:outputText value="#{policy.outstandingAmt}"
+										style="text-align: center;">
+										<f:convertNumber pattern="###,##0.00" />
+									</h:outputText>
+								</p:column>
+								<p:column
+									headerText="#{msg['customeruser.plantabele.due.date']}"
+									 styleClass="centeredColumnContent">
+									<h:outputText value="#{policy.premiumDueDate.time}"
+										style="text-align: center;">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+						</div>
+					</div>
+				</div>
+					<div class="submenu-content settings">
+					<div class="ui-g-12">
+					
+						<h:commandLink actionListener="#{homeDetailsAction.policyListingPage}">
+							<div class="ui-g-12 ui-md-4">
+								<div class="status-box wireless-status">
+									<p:graphicImage name="images/template/p6.png"
+										library="cp-layout" />
+									 <span
+										class="status-name ">#{msg['customer.dashboard.total.policies']}: <h:outputLabel
+								value="#{summaryAction.cpSummaryDetails.policyCount}"
+								rendered="#{summaryAction.notPolicyCount}" />
+										</span>
+
+								</div>
+							</div>
+						</h:commandLink>
+						
+						<h:commandLink actionListener="#{homeDetailsAction.getMyFunds()}">
+							<div class="ui-g-12 ui-md-4">
+								<div class="status-box cooling-systems">
+									<p:graphicImage name="images/template/p7.png"
+										library="cp-layout" />
+									 <span
+										class="status-name">#{msg['customer.dashboard.fund.value']}
+										<h:outputLabel value="#{homeDetailsAction.baseCurrencyCodeStr} : #{summaryAction.cpSummaryDetails.fundValue}" /> </span>
+										</div>
+							</div>
+						</h:commandLink>
+						
+						<h:commandLink actionListener="#{homeDetailsAction.getMyOutstanding()}" >
+							<div class="ui-g-12 ui-md-4">
+								<div class="status-box help-desk-load">
+									<p:graphicImage name="images/template/p8.png"
+										library="cp-layout" />
+									 <span
+										class="status-name">#{msg['customer.dashboard.outstanding']} <h:outputLabel
+									value="#{homeDetailsAction.baseCurrencyCodeStr}" />: <h:outputLabel
+									value="#{summaryAction.cpSummaryDetails.outStandingAmount}">
+									<f:convertNumber pattern="###,##0.00" /></h:outputLabel></span>
+
+								</div>
+							</div>
+							</h:commandLink>
+					</div>
+				</div>  <br></br>  <br></br>  <br></br>
+				
+				<img src="resources/cp-layout/images/background/Customer-portal-img1.jpg"
+										alt="" />
+				
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

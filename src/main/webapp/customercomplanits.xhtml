@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card card-w-title">
+						<h1>
+							<b>Customer Complaints Feedback List</b>
+						</h1>
+
+						<p:dataTable id="UserDetails" var="feedback"
+							value="#{feedbackAction.feedBusUserList}" reflow="true"
+							paginator="true" rows="5" paginatorPosition="bottom">
+
+							<f:facet name="header">
+                                 Feedback Complaints List 
+							</f:facet>
+
+							<p:column headerText="Complaint No"
+								sortBy="#{feedback.complaintNo}">
+								<p:commandLink value="#{feedback.complaintNo}"
+									action="#{feedbackAction.getFeedbackInfo(feedback)}"
+									style="color:blue!important;"
+									oncomplete="PF('carDialog1').show()" update="form">
+								</p:commandLink>
+							</p:column>
+
+							<p:column headerText="Service Type" sortBy="#{feedback.servType}">
+								<h:outputText value="#{feedback.servType}" />
+							</p:column>
+
+							<p:column headerText="Plan Number" sortBy="#{feedback.policyNo}">
+								<h:outputText value="#{feedback.policyNo}" />
+							</p:column>
+
+							<p:column headerText="Status" sortBy="#{feedback.feedStatus}">
+								<h:outputText value="#{feedback.feedStatus}" />
+							</p:column>
+
+							<p:column headerText="Rating" sortBy="#{feedback.feedRate}">
+								<h:outputText value="#{feedback.feedRate}" />
+							</p:column>
+
+							<p:column headerText="Submitted By" sortBy="#{feedback.userId}">
+								<h:outputText value="#{feedback.userId}" />
+							</p:column>
+
+							<p:column headerText="Details Search">
+								<p:commandButton icon="fa fa-search" update="form"
+									oncomplete="PF('carDialog').show()">
+									<f:setPropertyActionListener value="#{feedback}"
+										target="#{feedbackAction.selectfeedbacklist}" />
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+
+						<p:dialog
+							header="Complaint Information for #{feedbackAction.selectfeedbacklist.complaintNo}"
+							widgetVar="carDialog" modal="true" hideEffect="fade"
+							resizable="false" responsive="true" width="auto"
+							showEffect="explode">
+
+							<p:dataList id="UserDetails1" var="feedback1" rowIndexVar="index"
+								value="#{feedbackAction.selectfeedbacklist}" style="border:none;">
+					
+										<span><b>Date: #{feedback1.compDate}</b></span> <br></br>
+										<span><b>Query Type: #{feedback1.feedbackType == 'c' ?'Complaint':'Query'}</b></span><br></br>
+										<span><b>Description: #{feedback1.feedbackNote}</b></span><br></br>
+										<span><b>Expected Call Back:#{feedback1.csdCall == 'y' ?'Yes':'No'}</b></span><br></br>
+										<span><b>Perfered Call Time: #{feedback1.callTime}</b></span><br></br>
+										<span><b>Respected Day: #{feedback1.callTime}</b></span><br></br>
+										<span><b>Remark: #{feedback1.remark}</b></span><br></br>
+																		
+								</p:dataList>
+						</p:dialog>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

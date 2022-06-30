@@ -1,0 +1,108 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+
+	<ui:define name="head">
+		<script type="text/javascript">
+            //<![CDATA[
+            function skinChart() {
+                this.cfg.shadow = false;
+                this.cfg.title = '';
+                this.cfg.seriesColors = ['#007be5', '#20d077'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#ffffff',
+                    gridLineColor: '#F5F5F5',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#666F77'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    lineWidth: 1,
+                    markerOptions: {
+                        shadow: false,
+                        size: 7,
+                        style: 'circle'
+                    }
+                }
+            }
+            //]]>  
+        </script>
+		<style type="text/css">
+			.main-content {
+				padding: 0;
+			}
+		</style>
+	</ui:define>
+	<ui:define name="content">
+		<h:form>
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card" style="margin-bottom: 20px;">
+                            <span>
+                            	<a href="#">
+                            		<i class="fa fa-arrow-left"></i>
+                            		<p:outputLabel value="Post Query"/>
+                            	</a>
+                            </span>
+                            <span style="float: right;">
+                            	<a href="#">
+                            		<i class="fa fa-arrow-left"></i>
+                            		<p:outputLabel value="Back"/>
+                            	</a>
+                            </span>
+                            <p:panel>
+                            	<h:panelGrid columns="2">
+                            		<p:graphicImage />
+                            		<p:outputLabel value="Query No: CMP039, Service Type: SWITCHING for Plan Number: ULNMA123456789 Submitted on: 29/3/2020 at 12:11 PM"/>
+                            	</h:panelGrid>
+                            </p:panel>                            
+                        </div>                            
+                        <p:panel styleClass="ui-g-12 ui-md-10 ui-md-offset-1 ui-sm-11 ui-sm-offset-1" style="margin-bottom: 20px;">
+                        	<h:panelGrid columns="2" cellpadding="10">
+                        		<img alt="img" src="resources/images/fed-executive.png" style="margin-left: -65px"/>
+                        		<p:outputLabel value="Mr. Aetins Bus -Customer Service Replied on 22/03/2017 at 11:55:43 PM"/>	
+                        		<p:outputLabel/>
+                        		<img alt="img" src="resources/images/reply_icon.png"/>
+                        	</h:panelGrid>
+                        </p:panel> 
+                        <p:panel styleClass="ui-g-12 ui-md-8 ui-md-offset-2 ui-sm-10 ui-sm-offset-2">
+	                        <h:form>
+	                        	<h:panelGrid columns="2" cellpadding="10">
+	                        		<p:outputLabel value="Reply Comments"/>
+	                        		<p:outputLabel/>
+	                        		<img alt="img" src="resources/images/fed-executive.png" style="margin-left: -65px"/>
+	                        		<p:inputTextarea placeholder="Enter Details" required="true" requiredMessage="Please provide comments"/>	
+	                        		<p:outputLabel/>
+	                        		<p:selectOneRadio value="">
+	                        			<f:selectItem itemLabel="Excellent" itemValue=""/>
+	                        			<f:selectItem itemLabel="Good" itemValue=""/>
+	                        			<f:selectItem itemLabel="Average" itemValue=""/>
+	                        			<f:selectItem itemLabel="Poor" itemValue=""/>
+	                        		</p:selectOneRadio>
+	                        		<p:outputLabel/>
+	                        		<p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+	                                          multiple="true" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="width:100%" />
+	        						<p:outputLabel/>
+	        						<h:panelGroup>
+	        							<p:commandButton value="Cancel" styleClass="ui-md-6"/>                            		
+	                            		<p:commandButton value="Save" styleClass="ui-md-6"/>
+	        						</h:panelGroup>
+	                        	</h:panelGrid>
+	                        </h:form>	
+                        </p:panel>                   
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

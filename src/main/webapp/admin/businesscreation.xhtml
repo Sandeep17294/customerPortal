@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Business user creation</ui:define>
+	<ui:define name="content">
+   
+		<h:form id="form">
+		 <p:growl id="growl" showDetail="true"  />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1><b>#{msg['admin.businesscreation']}</b></h1>
+						<div class="card">
+						
+							<h:panelGroup>
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['admin.bus.title']}"
+											style="font-weight: bold;" />
+										
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:selectOneMenu id="title" value="#{adminHomeAction.busTitle}"
+										style="margin-bottom:10px;width:150px;" required="true">
+										<f:selectItem itemLabel="Select Title" itemValue="" />
+										<f:selectItems value="#{adminHomeAction.titlist}" var="each" itemLabel="#{each.description}" itemValue="#{each.code}"/>
+									</p:selectOneMenu>
+										<p:message for="title" />
+									</div>
+								</div>
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['admin.bus.username']}"
+											style="font-weight: bold;" />
+										
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText id="userName" value="#{adminHomeAction.busUserName}" style="text-align:center;"
+											minlength="8" required="true" placeholder="#{msg['admin.bus.place.username']}"
+											requiredMessage="#{msg['admin.bus.req.username']}">
+									</p:inputText>
+									<p:message for="userName" />
+									</div>
+								</div>
+								
+							
+								<div class="ui-g-12">
+									<div class="ui-g-12 ui-md-4 ui-md-offset-2">
+										<p:outputLabel value="#{msg['admin.bus.email']}"
+											style="font-weight: bold;" />
+										
+									</div>
+									<div class="ui-g-12 ui-md-4">
+										<p:inputText id="email" value="#{adminHomeAction.busEmail}" style="text-align:center;"
+											minlength="8" required="true" placeholder="#{msg['admin.bus.place.email']}"
+											requiredMessage="#{msg['admin.bus.req.email']}">
+									</p:inputText>
+									<p:message for="email" />
+									</div>
+								</div>
+								<div>
+									<p:commandButton value="#{msg['submit']}"
+										action="#{adminHomeAction.businessUserCreation}"
+										update="form"
+										style="margin-bottom:10px;" />
+								</div>
+
+								
+
+							</h:panelGroup>
+							
+					
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

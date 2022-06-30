@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+		<p:messages id="messages" showDetail="true" closable="true">
+        <p:autoUpdate />
+    </p:messages>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['customeruser.feedback']}</b>
+						</h1>
+
+						<p:panelGrid columns="4" layout="grid">
+							<p:outputLabel value="Type" />
+							<p:selectOneMenu id="#{msg['customeruser.feedback.type']}" style="width:140px;"
+								value="#{feedbackAction.feedbackType}" >
+								<f:selectItem itemLabel="#{msg['query']}" itemValue="f"></f:selectItem>
+								<f:selectItem itemLabel="#{msg['complaint']}" itemValue="c"></f:selectItem>
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{msg['estatment.pn']}" />
+							<p:selectOneMenu id="Policy" value="#{feedbackAction.savePolNo}">
+								<f:selectItems value="#{homeDetailsAction.policyListMap}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{msg['customeruser.feedback.stype']}" />
+							<p:selectOneMenu id="serviceType" style="width:140px;"
+								value="#{feedbackAction.serviceType}">
+								<f:selectItems value="#{feedbackAction.listServiceType}"
+									var="each" itemLabel="#{each.vServiceTypeEn}"
+									itemValue="#{each.vServiceTypeEn}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{msg['customeruser.feedback.callspt']}" />
+							<p:selectOneRadio id="agentCall" 
+								value="#{feedbackAction.csdCall}" >
+								<f:selectItem itemValue="y" itemLabel="#{msg['yes']}" />
+								<f:selectItem itemValue="n" itemLabel="#{msg['no']}" />
+							</p:selectOneRadio>
+						</p:panelGrid>
+
+
+						<p:panelGrid columns="1" layout="grid">
+							<p:outputLabel id="descri" value="#{msg['customeruser.feedback.desc']}">
+							<p:ajax event="blur" update="descri"/>
+							</p:outputLabel>
+						</p:panelGrid>
+
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputTextarea id="feedbackNote"
+								style="width: -webkit-fill-available; height:100px;"
+								placeholder="#{msg['customeruser.feedback.write']}"
+								value="#{feedbackAction.feedbackNote}">
+							</p:inputTextarea>
+						</p:panelGrid> 
+												
+						<p:panelGrid columns="1" layout="grid">
+						<span style="color:red;">#{msg['customeruser.info']}</span>
+						</p:panelGrid>
+
+						<p:panelGrid columns="4" layout="grid">
+							<p:outputLabel value="#{msg['customeruser.feedback.calltime']}" />
+							
+								
+							<p:datePicker id="time" value="#{feedbackAction.callTime}" timeOnly="true" pattern="HH:mm"/>	
+								
+							<p:outputLabel value="#{msg['customeruser.feedback.day']}" />
+							
+							<p:selectOneMenu id="callDay"
+								value="#{feedbackAction.callTimeDay}">
+								<f:selectItem itemLabel="#{msg['customeruser.sun']}" itemValue="Sunday" />
+								<f:selectItem itemLabel="#{msg['customeruser.mon']}" itemValue="Monday" />
+								<f:selectItem itemLabel="#{msg['customeruser.tue']}" itemValue="Tuesday" />
+								<f:selectItem itemLabel="#{msg['customeruser.wed']}" itemValue="Wednesday" />
+								<f:selectItem itemLabel="#{msg['customeruser.thurs']}" itemValue="Thursday" />
+							</p:selectOneMenu>
+						</p:panelGrid>
+						<br></br> 
+						
+						
+
+						<p:panelGrid columns="2" layout="grid">
+							<p:commandButton value="#{msg['submit']}" style="float:right"
+								action="#{feedbackAction.btnSaveFeedback1()}"  update="form,otpform12"/>
+							
+							<br></br>
+						</p:panelGrid>
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+		
+		<h:panelGroup>
+			<p:dialog id="successTab156"
+				header="#{msg['top.not']}" modal="true"
+				widgetVar="dlg3" showEffect="explode" hideEffect="fade" width="auto">
+				<h:form id="otpform12">
+					<b><span>#{feedbackAction.returnmessage}</span></b>
+					<br></br><br></br>
+					<p:commandButton value="#{msg['ok']}"  style="float:center"
+							action="#{feedbackAction.customerfeedback()}" update="form" />
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</h:form>
+			</p:dialog>
+		</h:panelGroup>
+		
+	</ui:define>
+</ui:composition>

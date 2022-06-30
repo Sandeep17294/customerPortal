@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="viewname">
+		<li>Components</li>
+		<li>/</li>
+		<li><p:link outcome="/forms">Forms</p:link></li>
+	</ui:define>
+
+
+	<ui:define name="content">
+
+		<!-- Left Side -->
+		<div class="card">
+			<h1>Policy Details</h1>
+			<p:panelGrid  columns="4" layout="grid">
+
+				 <p:outputLabel value="Plan Status">
+				  <span class="ui-inputgroup-addon"><i class="fa fa-credit-card"></i></span>
+				 </p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				 <p:outputLabel value="Remaining Term"></p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true"/>
+				
+				 <p:outputLabel value="Payment Mode"></p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				 <p:outputLabel value="Regular Contribution">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-usd"></i>USD</span>
+				 </p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Annual Contribution">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-usd"></i>USD</span>
+				</p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				
+				<p:outputLabel value="Last Paid Contribution">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-usd"></i>USD</span>
+				</p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				 <p:outputLabel value="Last Paid Date">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+				 </p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Contribution Due Date">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+				</p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				
+				<p:outputLabel value="Total Due">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-usd"></i>USD</span>
+				</p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Assignment"></p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Contribution Holiday"></p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Total Paid Contribution">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-usd"></i>USD</span>
+				</p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Contribution Pay End Date">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+				</p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Contribution Payment Term"></p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Payment Method"></p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Auto Debit Date">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+				</p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Fund Value">
+				 <span class="ui-inputgroup-addon"><i class="fa fa-usd"></i>USD</span>
+				</p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+				<p:outputLabel value="Pending Request Count"></p:outputLabel>
+				<p:inputText placeholder="Readonly" readonly="true" />
+				
+
+			</p:panelGrid>
+
+		</div>
+
+      
+
+	</ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<f:metadata>
+			<f:event listener="#{homeDetailsAction.getPaymentStatus}" type="preRenderView" />
+		</f:metadata>
+	<h2 style="color: green; align-content: center;">#{homeDetailsAction.responseMessage}</h2>
+	<h:outputScript>
+		<!-- Need To add Loader Gif Image for rendering ContributionAlteration -->
+		setTimeout(function(){location.href="contributionAlteration.app"} , 5000);
+	</h:outputScript>
+	</ui:define>
+</ui:composition>

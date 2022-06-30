@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Salama Customer Portal</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+		<p:messages id="messages" showDetail="true" closable="true">
+        <p:autoUpdate />
+    </p:messages>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['customeruser.feedlist']}</b>
+						</h1>
+
+						<p:dataTable id="feedbacks" var="feedback"
+							value="#{feedbackAction.feedbackList}" reflow="true"
+							paginator="true" rows="5" paginatorPosition="bottom">
+
+							<f:facet name="header">
+                                 #{msg['customeruser.feedlist.complist']}
+                            </f:facet>
+
+							<p:column headerText="#{msg['customeruser.feedlist.feedno']}"
+								sortBy="#{feedback.complaintNo}">
+								<p:commandLink value="#{feedback.complaintNo}"
+									action="#{feedbackAction.getFeedbackInfo(feedback)}"
+									style="color:blue!important;">
+								</p:commandLink>
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedlist.feeddate']}" sortBy="#{feedbacks.compDate}">
+								<h:outputText value="#{feedback.compDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedback.stype']}" sortBy="#{feedbacks.feedbackType}">
+								<h:outputText
+									value="#{feedback.feedbackType == 'c' ? 'Complaint': 'Query'}" />
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedback.planno']}" sortBy="#{feedbacks.policyNo}">
+								<h:outputText value="#{feedback.policyNo}" />
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedback.desc']}"
+								sortBy="#{feedback.feedbackNote}">
+								<h:outputText id="feednote" value="#{feedback.feedbackNote}" />
+								<p:tooltip for="feednote" value="#{feedback.feedbackNote}"
+									position="bottom"
+									style="color:#fff !important; background-color:#000 !important;font-size:13px !important;" />
+							</p:column>
+
+							<p:column headerText="#{msg['customeruser.feedlist.status']}" sortBy="#{feedbacks.feedStatus}">
+								<h:outputText
+									value="#{feedback.feedStatus}"/>
+							</p:column>
+							
+							<p:column headerText="#{msg['customeruser.feedlist.cmpledate']}" sortBy="#{feedbacks.closedDate}">
+								<h:outputText
+									value="#{feedback.closedDate}" />
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

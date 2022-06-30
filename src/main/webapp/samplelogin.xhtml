@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>Aetins customer portal</title>
+</h:head>
+
+<h:body styleClass="login-body">
+	<div class="logo">
+		<p:graphicImage name="images/harmony-logo.png" library="cp-layout" />
+		<span class="app-name">Customerportal</span>
+	</div>
+
+	<h:form id="loginForm">
+		<div class="login-panel"
+			style="background-color: white; width: 550px; box-shadow: none; border: none;">
+			<p:graphicImage name="images/template/logo123.png"
+				library="cp-layout" />
+			<br></br>
+
+			<div class="row">
+				<h:panelGroup rendered="#{registrationAction.enablelogin}">
+					<div class="row">
+						<br></br> <b><p:outputLabel value="Username" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="username"
+								style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								placeholder="username" />
+						</p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<b><p:outputLabel value="Password" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="password"
+								style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								placeholder="password" />
+						</p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<br></br>
+						<p:panelGrid columns="2" layout="grid">
+							<p:commandButton value="Login " style="background-color:green;" />
+							<p:commandButton value="Sign Up"
+								actionListener="#{registrationAction.signup}" update="loginForm"
+								style="background-color:blue;" />
+						</p:panelGrid>
+					</div>
+					<div class="row">
+						<br></br>
+						<h:commandLink value="Forget Password" />
+					</div>
+				</h:panelGroup>
+
+				<h:panelGroup rendered="#{registrationAction.enablecontinue}">
+					<div class="row">
+						<br></br> <b><p:outputLabel value="Plan No" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="2" layout="grid">
+							<p:inputText id="identificationNo"  value="#{registrationAction.registrationCustomerDTO.idenNo}"
+								style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								tabindex="1" autocomplete="off" required="true"
+								requiredMessage="Please provide plan number" size="50">
+								<p:ajax	listener="#{registrationAction.fetchRegistrationDetails}" event="blur" update="loginForm" resetValues="true" />
+							</p:inputText>
+							<p:message for="identificationNo" />
+						</p:panelGrid>
+					</div>
+					<div class="row">
+						<br></br> <b><p:outputLabel value="Email ID" /></b> :
+						<p:outputLabel value="#{registrationAction.maskedEmail}" />
+					</div>
+					<div class="row">
+						<p:panelGrid columns="2" layout="grid">
+							<p:inputText id="registeredEmailId" size="50"
+								style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								tabindex="2" autocomplete="off" required="true"
+								requiredMessage="Please provide email id">
+								<f:validator validatorId="emailValidator" />
+								<f:validateLength maximum="50" />
+							</p:inputText>
+							<p:message for="registeredEmailId" />
+						</p:panelGrid>
+					</div>
+					<div class="row">
+						<br></br> <b><p:outputLabel value="Mobile No" /></b> :
+						<p:outputLabel value="#{registrationAction.maskedMobileNo}" />
+					</div>
+					<div class="row">
+						<p:panelGrid columns="2" layout="grid">
+							<p:inputText id="registeredMobileNo"
+								style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								tabindex="2" autocomplete="off" required="true"
+								requiredMessage="Please provide mobile no" size="50">
+							</p:inputText>
+							<p:message for="registeredMobileNo" />
+						</p:panelGrid>
+					</div>
+					<div class="row">
+						<br></br>
+						<p:panelGrid columns="2" layout="grid">
+							<p:commandButton value="Continue "
+								actionListener="#{registrationAction.continue1}" update="loginForm"
+								style="background-color:green;" />
+							<p:commandButton value="Cancel" actionListener="#{registrationAction.cancel1}" update="loginForm" 
+								style="background-color:red;" />
+						</p:panelGrid>
+					</div>
+				</h:panelGroup>
+
+
+				<h:panelGroup rendered="#{registrationAction.enableconfirm}">
+					<div class="row">
+						<h3>Confirm Personal Details</h3>
+						<b><p:outputLabel value="First Name" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="firstname"
+								style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								placeholder="First Name" />
+						</p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<b><p:outputLabel value="Last Name" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="lastname"
+								style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								placeholder="Last Name" />
+						</p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<b><p:outputLabel value="Date of Birth [dd//mm/yy]" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="calender"
+								style=";width:300px;border:none;border-bottom:1px solid; border-color:green" />
+						</p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<br></br>
+						<p:panelGrid columns="2" layout="grid">
+							<p:commandButton value="Coninue"
+								action="#{registrationAction.confirmbutt()}"
+								style="background-color:green;" />
+							<p:commandButton value="Cancel"
+								action="#{registrationAction.confirmcancel}" update="loginForm"
+								style="background-color:red;" />
+						</p:panelGrid>
+					</div>
+				</h:panelGroup>
+			</div>
+
+
+
+
+
+
+
+
+
+		</div>
+	</h:form>
+	<h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css"
+		library="cp-layout" />
+</h:body>
+</html>

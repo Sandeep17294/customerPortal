@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>Aetins customer portal</title>
+</h:head>
+
+<h:body styleClass="login-body">
+	<div class="logo">
+		<p:graphicImage name="images/harmony-logo.png" library="cp-layout" />
+		<span class="app-name">Customerportal</span>
+	</div>
+
+	<h:form id="loginForm">
+		<div class="login-panel"
+			style="background-color: white;overflow:auto;width:550px;border:none;">
+			<p:graphicImage name="images/template/logo123.png"
+		     library="cp-layout" />
+			<br></br>
+
+			<div class="row">
+				<h:panelGroup>
+					<div class="row">
+						<h3>User Details</h3>
+						<b><p:outputLabel value="User ID" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="username" style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								placeholder="unique/user id"  />
+					  </p:panelGrid>		
+					</div>
+					<br></br>
+					<div class="row">
+						<b><p:outputLabel value="Title (Mr/Mrs)" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="tile" style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								placeholder="tile"  />
+					  </p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<b><p:outputLabel value="Name" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="dispalyname" style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								placeholder="display Name"  />
+					  </p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<b><p:outputLabel value="Password" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="password" style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								placeholder="Enter Password"  />
+					  </p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<b><p:outputLabel value="Re-Password" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText id="repassword" style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								placeholder="Re-enter Password"  />
+					  </p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<b><p:outputLabel value="Secuirty Questions" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								 />
+					  </p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<b><p:outputLabel value="Secuirty Answer" /></b>
+					</div>
+					<div class="row">
+						<p:panelGrid columns="1" layout="grid">
+							<p:inputText style=";width:300px;border:none;border-bottom:1px solid; border-color:green"
+								 />
+					  </p:panelGrid>
+					</div>
+					<br></br>
+					<div class="row">
+						<br></br>
+						<p:panelGrid columns="2" layout="grid">
+							<p:commandButton value="Confirm " style="background-color:green;" />
+							<p:commandButton value="Cancel"
+								action="#{registrationAction.finalcancel()}" update="loginForm"
+								style="background-color:red;" />
+						</p:panelGrid>
+					</div>
+				</h:panelGroup>
+				
+			</div>
+
+
+
+
+
+
+
+
+
+		</div>
+	</h:form>
+	<h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css"
+		library="cp-layout" />
+</h:body>
+</html>

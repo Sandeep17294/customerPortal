@@ -1,0 +1,159 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['adminuser.srq']}</b>
+						</h1>
+						<div class="card w-title">
+							<h:panelGroup>
+								<p:panelGrid columns="4"
+									columnClasses="null,null,ui-g-12 ui-md-1" layout="grid"
+									styleClass="ui-panelgrid-blank form-group form-elements"
+									style="border:0px none; background-color:transparent;">
+									<p:outputLabel value="#{msg['adminuser.srq.servicetype']}"
+										style="font-weight:bold;" />
+									<p:selectOneMenu value="#{adminHomeAction.serviceName}">
+										<f:selectItem itemLabel="#{msg['selecttype']}" itemValue=""
+											noSelectionOption="true" />
+										<f:selectItems value="#{adminHomeAction.serviceTypes}" />
+										<p:ajax />
+									</p:selectOneMenu>
+								</p:panelGrid>
+								<br></br>
+								<br></br>
+								<div class="row">
+									<h:panelGroup id="quespanel"
+										rendered="#{adminHomeAction.addNewQuestionnaire}">
+										<p:panelGrid columns="2" layout="grid">
+											<p:outputLabel value="#{msg['adminuser.srq.newquestion']}" 
+												style="font-weight:bold;" />
+										</p:panelGrid>
+
+										<p:panelGrid columns="8" layout="grid"
+											columnClasses="null,ui-g-12 ui-md-2,null,ui-g-12 ui-md-2,null,ui-g-12 ui-md-1,null,ui-g-12 ui-md-1"
+											styleClass="ui-panelgrid-blank form-group form-elements"
+											style="border:0px none; background-color:transparent;">
+											<p:outputLabel value="#{msg['adminuser.srq.questiontype']}"></p:outputLabel> 
+											<p:selectOneMenu
+												value="#{adminHomeAction.questionnaire.domain}">
+												<f:selectItem itemLabel="#{msg['selecttype']}" itemValue=""  
+													noSelectionOption="true" />
+												<f:selectItem itemLabel="#{msg['adminuser.srq.med']}" itemValue="M" />
+												<f:selectItem itemLabel="#{msg['adminuser.srq.fin']}" itemValue="F" />
+												<p:ajax update="form" />
+											</p:selectOneMenu>
+											<p:outputLabel value="Answer Type"></p:outputLabel>adminuser.srq.answertype
+											<p:selectOneMenu
+												value="#{adminHomeAction.questionnaire.answerType}">
+												<f:selectItem itemLabel="#{msg['selecttype']}" itemValue=""
+													noSelectionOption="true" />
+												<f:selectItem itemLabel="#{msg['adminuser.srq.tb']}" itemValue="T" />
+												<f:selectItem itemLabel="#{msg['adminuser.srq.nb']}" itemValue="N" />
+												<f:selectItem itemLabel="#{msg['adminuser.srq.datax']}" itemValue="D" />
+												<f:selectItem itemLabel="#{msg['adminuser.srq.lb']}" itemValue="L" />
+												<p:ajax event="change"
+													listener="#{adminHomeAction.renderListBox}" update="form"
+													process="@this"></p:ajax>
+											</p:selectOneMenu>
+											<p:outputLabel value="#{msg['adminuser.srq.mandatory']}" /> 
+											<p:selectBooleanCheckbox
+												value="#{adminHomeAction.questionnaire.mandatory}"
+												update="form" />
+											<p:outputLabel value="#{msg['adminuser.srq.required']}"></p:outputLabel> 
+											<p:selectBooleanCheckbox
+												value="#{adminHomeAction.questionnaire.required }"
+												update="form" />
+										</p:panelGrid>
+
+										<!-- 	<p:panelGrid columns="4" layout="grid">
+										<p:outputLabel value="Mandatory"></p:outputLabel>
+										<p:selectBooleanCheckbox
+											value="#{adminHomeAction.questionnaire.mandatory}"
+											update="form" />
+										<p:outputLabel value="Required"></p:outputLabel>
+										<p:selectBooleanCheckbox
+											value="#{adminHomeAction.questionnaire.required }"
+											update="form" />
+									</p:panelGrid> -->
+
+										<p:panelGrid columns="2" layout="grid"
+											columnClasses="ui-g-12 ui-md-1,ui-g-12 ui-md-11">
+											<p:outputLabel value="#{msg['adminuser.srq.english']}" />
+											<p:inputTextarea
+												value="#{adminHomeAction.questionnaire.questionNameEng}"
+												style="width: -webkit-fill-available;border:none;border-bottom:1px solid;" />
+										</p:panelGrid>
+										<p:panelGrid columns="2" layout="grid"
+											columnClasses="ui-g-12 ui-md-1,ui-g-12 ui-md-11">
+											<p:outputLabel value="#{msg['adminuser.srq.arabic']}" />
+											<p:inputTextarea
+												value="#{adminHomeAction.questionnaire.questionNameArb}"
+												style="width: -webkit-fill-available;border:none;border-bottom:1px solid;" />
+										</p:panelGrid>
+										<br></br>
+										<div class="row">
+											<p:dataTable id="listBoxTable" var="answers"
+												rowIndexVar="index"
+												value="#{adminHomeAction.questionnaire.listBoxAnswers}"
+												reflow="true" paginator="true" rows="10"
+												rendered="#{adminHomeAction.questionnaire.listBox}"
+												selection="#{adminHomeAction.selectedAnswers}"
+												rowKey="#{answers.answerCode}">
+												<p:column headerText="#{msg['medical.finance.listcode']}">
+													<p:inputText value="#{answers.answerCode}" />
+												</p:column>
+												<p:column headerText="#{msg['medical.finance.listvalue']}">
+													<p:inputText value="#{answers.answer}" />
+												</p:column>
+												<p:column headerText="#{msg['adminuser.srq.an']}" style="width: 10%;">
+													<p:commandLink value="#{msg['adminuser.srq.remove']}"
+														action="#{adminHomeAction.removeRecord(answers.answerCode)}"
+														update="listBoxTable,form" />
+												</p:column>
+												<f:facet name="footer" style="width: 10%;">
+													<div class="text-right">
+														<p:commandButton value="#{msg['adminuser.srq.add']}"
+															action="#{adminHomeAction.addNewRow}"
+															styleClass="btn btn-success" update="listBoxTable,form"></p:commandButton>
+													</div>
+												</f:facet>
+											</p:dataTable>
+											<p:panelGrid columns="4"
+												columnClasses="ui-g-12 ui-md-1,ui-g-12 ui-md-3,"
+												layout="grid">
+												<p:commandButton
+													action="#{adminHomeAction.btnSaveQuestionnaire}"
+													value="#{msg['adminuser.srq.save']}" update="form" style="float:left" />
+												<p:commandButton value="#{msg['close']}"
+													action="#{adminHomeAction.btnClear}" update="form"
+													style="float:left" />
+											</p:panelGrid>
+										</div>
+									</h:panelGroup>
+									<p:panelGrid columns="2"
+										columnClasses="ui-g-12 ui-md-1,ui-g-12 ui-md-4" layout="grid">
+										<p:commandButton id="submit" styleClass="btn btn-success"
+											action="#{adminHomeAction.saveQuestionnaire}" value="#{msg['submit']}"
+											update="form" style="float:left" />
+										<p:commandButton value="#{msg['adminuser.srq.newquestion']}"
+											action="#{adminHomeAction.addQuestionnaire()}" update="form"
+											style="float:left" />
+									</p:panelGrid>
+								</div>
+							</h:panelGroup>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

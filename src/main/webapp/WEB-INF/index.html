@@ -1,0 +1,411 @@
+<%-- File: grails-app/views/admin/contract/index.gsp(contractlist) --%>
+
+<!DOCTYPE html>
+<html>
+<head>
+     <meta content="oneblock" name="layout"/>
+    	 <g:set var="entityName" value="${message(code: 'contract.label', default: 'Contract')}" />
+        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        </head>
+
+<body>
+<content tag="main1">
+
+   <div class="container" >   
+  
+  	
+        
+       <div class="row">  
+          <div class="u-full-width">        
+            <a class="home" href="${createLink(uri: '/admin')}"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;<g:message code="default.home.label"/></a> &nbsp;&nbsp;&nbsp;
+             <sec:access expression="hasAnyRole('ROLE_ADMIN','ROLE_CONTRACT_ADMIN')">
+            	<g:link class="create" action="create"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Create Contract</g:link>
+             </sec:access>
+             </li>
+            
+        </div>
+       </div>
+       
+        <div class="row">
+				   <div class="twelve columns"> &nbsp;
+				    </div>
+				   </div>
+       
+       <div class="row">  
+          <div class="six columns">        
+            <h5><g:message code="default.list.label" args="[entityName]" /></h5>
+          </div>
+          <sec:access expression="hasAnyRole('ROLE_ADMIN','ROLE_CONTRACT_APPROVER','ROLE_CONTRACT_ADMIN','ROLE_PHYSICIAN_COORDINATOR_IT','ROLE_READ_ONLY')">
+          <div class="six columns" align="right"> 
+             
+             <a class="home" href="${createLink(uri: '/contract/exportContractList')}" title="Export to excel"><i class="fa fa-file-excel-o" style="font-size:23px;color:green"></i></a>        
+          </div>
+          </sec:access>
+       </div>
+       
+       
+           
+      
+       
+       <div id="list-contract" class="content scaffold-list" role="main">
+        
+            <g:if test="${msg}">
+                <ul class="message" role="status" style="color:red;font-weight:800"><li>${msg}</li></ul>
+            </g:if>
+          
+          <table id="dataTablesList" class="display compact" cellspacing="0" width="100%">
+             <thead>
+               <tr>                   
+                                      
+                        <th>Provider</th>
+                        <th>Contract Number</th>   
+                        <th>Owner Facility</th> 
+                        <th>Start Date</th>                                     
+                        <th>End Date</th>
+                        <th>Term Date</th>
+                        <th>tiMED Creation Date</th>
+                        <th>tiMED Contract Approval Date</th>
+                        <th>Contract Organization</th>
+                        <th class='status'>tiMED Status</th>
+                    <!--    <th>Contract Type</th> -->
+                  		<th>Contract Services</th>
+                  		<th>Amend. No.</th>
+                  		<th>Renewal Number</th>
+               </tr>
+             </thead>
+             <tbody>
+               <g:each in="${contractList}" status="rowNbr" var="it">
+                    <tr class="${(rowNbr % 2) == 0 ? 'even' : 'odd'}">
+ 							<td> ${it.getContractorsPretty()} </td>
+ 							<td> <g:link method="GET" resource="${it}">${it.contractNumber}</g:link> </td>
+                            <td> ${it.facility} </td>
+                            <td> <g:formatDate format="MM/dd/yyyy" date="${it.startDate}"/> </td>
+                            <td> <g:formatDate format="MM/dd/yyyy" date="${it.endDate}"/> </td>
+                            <td> <g:formatDate format="MM/dd/yyyy" date="${it.termDate}"/> </td>
+                            <td> <g:formatDate format="MM/dd/yyyy" date="${it.creationDate}"/> </td>
+                            <td> <g:formatDate format="MM/dd/yyyy" date="${it.executedDate}"/> </td>
+                            <td> ${it.organizationStatus} </td>
+                            <td> <g:link method="GET" resource="${it}">${it.status}</g:link> </td>
+                         <!-- <td> ${it.contractType} </td> -->
+                            <td> ${it.getAllTaskTemplateNames()} </td>
+                            <td> ${it.amendmentNumber} </td>
+                            <td> ${it.renewalNumber} </td>
+                    </tr>
+               </g:each>
+             </tbody>
+           </table>
+
+
+        </div>
+       
+        
+   </div>
+  
+  <g:javascript>
+         $(document).ready(function() {
+          function createCheckBoxDropdown(column) {
+                return $('<ul>', {
+                  'class': 'checkbox-dropdown'
+                }).appendTo($('<div>', {
+                  'class': 'checkbox-dropdown-container'
+                }).appendTo(column));
+              }
+              var column;
+              var datatable = $("#dataTablesList").DataTable({
+              //Get a model attribute to set recordsTotal value
+              "processing": true,
+              "serverSide": true,
+              "length" :10,
+              "start":0,
+              "paging":true,
+              "ajax": {
+                    "url": "/timeledger/contract/contractList",
+                     "type":"POST",
+                     "columns":[
+                          { "name": "Provider" },
+                          { "name": "Contract Number" },
+                          { "name": "Owner Facility" },
+                          { "name": "Start Date" },
+                          { "name": "End Date" },
+                          { "name": "Term Date" },
+                          { "name": "tiMED Creation Date" },
+                          { "name": "tiMED Contract Approval Date" },
+                          { "name": "Organization Status" },
+                          { "name": "tiMED Status" },
+                      //    { "name": "Contract Type" },
+                          { "name": "Contract Services" },
+                          { "name": "Amend. No." },
+                          { "name": "Renewal Number" }
+                         ],
+                    },
+                    "language": {
+                         "zeroRecords": "No matching records found",
+                         "infoEmpty": "No records available"
+                        },
+
+                    initComplete: function(){
+                      this.api().columns([9]).every(function() {//9 is status header position, if order changes need to modify the index here.
+                        column = this;
+                        var dropdownmenu = createCheckBoxDropdown($(column.header()));
+
+                        //Empty option
+                        var $label = $('<label>'),
+                            $text = $('<span>', {
+                                  text: ''
+                                })
+                        $text.appendTo($label);
+
+                        dropdownmenu.append($('<li style="margin-bottom:1.5rem">').append($label));
+
+                        column.data().unique().sort().each(function(d, j) {
+                          if(!($(dropdownmenu).text().includes($(d).text().trim()))) {
+                              var // wrapped
+                                $label = $('<label>'),
+                                $text = $('<span>', {
+                                  text: $(d).text()
+                                }),
+                                $cb = $('<input>', {
+                                  type: 'checkbox',
+                                  value: $(d).text()
+                                });
+
+                              $text.appendTo($label);
+                              $cb.appendTo($label);
+
+                              dropdownmenu.append($('<li style="margin-bottom:1.5rem">').append($label));
+                          }
+                        });
+                      });
+                    }
+                 });
+                 //Wrapping th text in spans to align filter text boxes properly
+                      $('#dataTablesList thead tr th').each(function(){
+                        $(this).html("<span>"+$(this).html()+"</span>")
+                      });
+
+                      //Add textbox to enter filter input for each th in the page
+                      $('#dataTablesList thead tr th').append("<span class='filter-container'><input class='filter' type='text' value='' size='5'/></span>");
+                      $('th.status .filter').css('display','none')
+                      $('th.status span.filter-container').html($('th.status div.checkbox-dropdown-container'))
+
+                      //Set height and block display so that header column text and its filter text box aligns properly
+                      $('#dataTablesList thead tr th span').css('display','block').css('height','9.2rem')
+                      $('#dataTablesList thead tr th span.filter-container').css('height','4rem')
+                      $('.checkbox-dropdown li span').css('display','block').css('height','2.2rem')
+
+                      //Setting up data-column-index to get the index of the textbox when user enters the text in the filters
+                      $('input.filter').each(function() {
+                        $(this).attr('data-column-index', $(this).parent().parent().index())
+                      });
+
+                      //Bind keyup and change events on the newly added textboxes and filter with the given data
+                      $('input.filter').on('keyup change', function() {
+                          datatable.search('');
+                          datatable.column($(this).data('columnIndex')).search(this.value).draw();
+                      });
+
+                      var delay = (function(){
+                            var timer = 0;
+                            return function(callback, ms){
+                            clearTimeout (timer);
+                            timer = setTimeout(callback, ms);
+                         };
+                       })();
+                         //Bug -7676 changes added
+                          var currentAnchorTarget,isAnchorTargetflag= false;
+                          $(".dataTables_filter input").on("focusout", function(){
+                            if(isAnchorTargetflag){
+                                isAnchorTargetflag = false;
+                                currentAnchorTarget.click()
+                            }
+                            });
+                            $("a").on("mousedown", function(){
+                                isAnchorTargetflag = true;
+                                currentAnchorTarget = $(this);
+
+                            });
+                          //Changes end
+
+                      //Dropdown filtering using regex to support multiple values search
+                      $('ul.checkbox-dropdown input[type="checkbox"]').on('click', function() {
+                            datatable.search('');
+                            var active;
+                            var dropdownmenu = $('ul.checkbox-dropdown');
+                            var vals = $(':checked', dropdownmenu).map(function(index, element) {
+                              active = true;
+                              return $.fn.dataTable.util.escapeRegex($(element).val());
+                            }).toArray().join('|');
+
+                            column
+                              .search(vals.length > 0 ? '^(' + vals + ')$' : '', true, false)
+                              .draw();
+
+                            if (this.checked) {
+                              $(this).closest('li').addClass('active');
+                            } else {
+                              $(this).closest('li').removeClass('active');
+                            }
+
+                            var active2 = dropdownmenu.parent().is('.active');
+                            if (active && !active2) {
+                              dropdownmenu.parent().addClass('active');
+                              dropdownmenu.find('li').first().find('span').text('Filtered') // showing 'Filtered' text when any active filters
+                            } else if (!active && active2) {
+                              dropdownmenu.parent().removeClass('active');
+                              dropdownmenu.find('li').first().find('span').text('')
+                            }
+                            $('div.checkbox-dropdown-container,ul.checkbox-dropdown').scrollTop('0px')
+                      });
+
+                      //After onhover moving the dropdown position to top to show the empty option
+                      $('div.checkbox-dropdown-container,ul.checkbox-dropdown').hover(function(){}, function() {
+                        $('div.checkbox-dropdown-container,ul.checkbox-dropdown').scrollTop('0px')
+                      });
+
+                      //Prevent sorting on clicking the text boxes.
+                      $('input.filter').on('click', function(e){
+                          e.preventDefault();
+                          return false;
+                      })
+
+                      function clearFilters() {
+                          datatable.columns().search('');
+                          $('.filter').val(''); //Clear header column level filters while doing global search
+                          $('ul.checkbox-dropdown').find('li').first().find('span').text('')
+                          $('ul.checkbox-dropdown').parent().removeClass('active');
+                          $('ul.checkbox-dropdown li').each(function() {
+                            $(this).removeClass('active');
+                            $(this).find('input[type="checkbox"]').prop('checked',false)
+                          });
+                          datatable.column(0).search('').draw();
+                      }
+
+                      //Global search.
+                      //changes made for 7676 bug
+                      $(".dataTables_filter input").on('keyup', clearFilters);
+                      delay(function(){
+                      $('div#dataTablesList_length label').append('&nbsp;&nbsp;&nbsp;<span class="clearSearchFilters">Clear Filters</span>');
+                      $("span.clearSearchFilters").on('click', function() {
+                        clearFilters();
+                        $('div#dataTablesList_filter input').val("")
+                        datatable.search('').draw();
+                      });
+                     }, 1000 );
+
+                    $('div#dataTablesList_length label').append('&nbsp;&nbsp;&nbsp;<span class="clearSearchFilters">Clear Filters</span>');
+                      $("span.clearSearchFilters").on('click', function() {
+                        clearFilters();
+                        $('div#dataTablesList_filter input').val("")
+                        datatable.search('').draw();
+                      });
+
+               });
+	           function deletecontract(id) {
+	         	    
+	         	     var deleteConfirm = confirm("Are you sure you want to delete this contract?");
+	         	    
+	         	    
+	         	    if(deleteConfirm) {
+					     $.ajax(		 
+					     
+					     {
+					      type: "DELETE",
+					      url: "/contract/delete/" + id,					      
+					      success: function(data){
+		           				console.log("successfully deleted" + data);
+		           				location.reload(); 
+		         		  },
+		         		   error: function(e) {
+		        					 console.log(e);
+		         		  }
+					      
+					    })
+					}
+		       }
+			 
+	      </g:javascript> 
+  <style>
+ 		/* Styles for the checkbox-dropdown. */
+
+		span.clearSearchFilters {
+			cursor: pointer;
+			color:#1EAEDB;
+			text-decoration:underline;
+		}
+		.checkbox-dropdown-container {
+		  max-height: 8rem;
+		  position: relative;
+		  height: 1.9rem;
+		}
+		
+		.checkbox-dropdown,
+		.checkbox-dropdown li {
+		  margin: 0;
+		  padding: 0;
+		  list-style: none;
+		}
+		
+		.checkbox-dropdown {
+		  position: absolute;
+		  z-index: 1;
+		  width: 100%;
+		  height: 100%;
+		  overflow: hidden;
+		  background: #fff;
+		  padding: 0.8rem 0rem 0.9rem 0.8rem;
+		  border: 0.1rem solid #D1D1D1;
+		  border-radius: 0.4rem;
+		}
+		
+		.active .checkbox-dropdown {
+		  background: #C0C0C0;
+		}
+		
+		.checkbox-dropdown-container:hover .checkbox-dropdown {
+		  width:20rem; /* on hover width will be more */ 
+		  height: 8rem;
+		  overflow: auto;
+		  transition: 0.2s height ease-in-out;
+		}
+		
+		.checkbox-dropdown li.active {
+		  background: #90EE90;
+		}
+		
+		.checkbox-dropdown li label {
+		  display: block;
+		  position: relative;
+		  cursor: pointer;
+		  line-height: 1.9rem; 
+		}
+		
+		.checkbox-dropdown li label > input {
+		  position: absolute;
+		  right: 0;
+		  top: 0;
+		  width: 1.6rem;
+		}
+		
+		.checkbox-dropdown li label > span {
+		  display: block;
+		  margin-left: 0.3rem;
+		  margin-right: 2rem; 
+		  font-family: sans-serif;
+		  font-size: 0.8em;
+		  font-weight: normal;
+		  text-align: left;
+		}
+		
+		table.dataTable thead .sorting,
+		table.dataTable thead .sorting_asc,
+		table.dataTable thead .sorting_desc,
+		table.dataTable thead .sorting_asc_disabled,
+		table.dataTable thead .sorting_desc_disabled {
+		  background-position: 100% 1rem;
+		}
+  </style>
+ </content>
+ 	
+ </body>
+</html>
+

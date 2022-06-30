@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Customer User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1><b>#{msg['adminuser.sessionTracking']}</b></h1>
+						<p:dataTable id="tractSessionDatatable" var="Lists"
+							value="#{adminHomeAction.sessionLists}" reflow="true"
+							paginator="true" rows="5" paginatorPosition="bottom">
+							<f:facet name="header">
+                                #{msg['adminuser.sessionTracking.facet']}
+                            </f:facet>
+
+							 <p:column headerText="#{msg['adminuser.sessionTracking.userId']}" sortBy="#{Lists.vuserName}">
+                                <h:outputText value="#{Lists.vuserName}" />
+                            </p:column>
+
+                            <p:column headerText="#{msg['adminuser.sessionTracking.sessionStart']}" sortBy="#{Lists.dsessionStart}">
+                                <h:outputText value="#{Lists.dsessionStart}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+							</h:outputText>
+                            </p:column>
+
+                            <p:column headerText="#{msg['adminuser.sessionTracking.sessionEnd']}" sortBy="#{Lists.dsessionEnd}">
+                                <h:outputText value="#{Lists.dsessionEnd}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+							</h:outputText>
+                            </p:column>
+
+                            <p:column headerText="#{msg['adminuser.sessionTracking.loggedOf']}" sortBy="#{Lists.vLogOff}">
+                                <h:outputText value="#{Lists.vLogOff}" />
+                            </p:column>
+                            
+                            <p:column headerText="#{msg['adminuser.sessionTracking.clientIp']}" sortBy="#Lists.vclientIp}">
+                                <h:outputText value="#{Lists.vclientIp}" />
+                            </p:column>
+							
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

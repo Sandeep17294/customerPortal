@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+	<ui:define name="title">Admin User</ui:define>
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>
+							<b>#{msg['adminuser.dwTime']}</b>
+						</h1>
+						<div class="row">
+							<h:panelGroup>
+								<p:panelGrid columns="3" layout="grid">
+									<p:outputLabel value="#{msg['adminuser.dwTime.appDwTime']}" />
+									<p:selectOneMenu id="appDown"
+										value="#{adminHomeAction.applicationDownType}"
+										style="margin-bottom:10px;width:180px;" required="true"
+										requiredMessage="#{msg['adminuser.requwq1']}">
+										<f:selectItem itemLabel="#{msg['adminuser.dwTime.select']}" itemValue=""></f:selectItem>
+										<f:selectItem itemLabel="#{msg['adminuser.dwTime.cmpDw']}" itemValue="C"></f:selectItem>
+										<f:selectItem itemLabel="#{msg['adminuser.dwTime.tranDw']}" itemValue="T"></f:selectItem>
+										<p:ajax event="valueChange" update="form" />
+									</p:selectOneMenu>
+									<p:message for="appDown" />
+								</p:panelGrid>
+
+								<p:panelGrid columns="3" layout="grid">
+									<p:outputLabel value="#{msg['adminuser.dwTime.effFrom']}" />
+									<p:calendar id="effectiveFrom"  navigator="true"  yearRange="c-100:c+100"
+										value="#{adminHomeAction.effectiveFrom}" pattern="dd/MM/yyyy"
+										required="true" requiredMessage="#{msg['adminuser.requwq2']}"></p:calendar>
+									<p:message for="effectiveFrom" />
+								</p:panelGrid>
+
+								<p:panelGrid columns="3" layout="grid">
+									<p:outputLabel value="#{msg['adminuser.dwTime.effTill']}" />
+									<p:calendar id="effectiveTill"  navigator="true"  yearRange="c-100:c+100"
+										value="#{adminHomeAction.effectTill}" pattern="dd/MM/yyyy"
+										required="true" requiredMessage="#{msg['adminuser.requwq2']}"></p:calendar>
+									<p:message for="effectiveTill" />
+								</p:panelGrid>
+
+								<p:panelGrid columns="3" layout="grid">
+									<p:outputLabel value="#{msg['adminuser.dwTime.startdT']}" />
+									<p:calendar id="startTime" value="#{adminHomeAction.startTime}"
+										pattern="HH:mm a" timeOnly="true" required="true"
+										requiredMessage="#{msg['adminuser.requwq3']}"></p:calendar>
+									<p:message for="startTime" />
+								</p:panelGrid>
+
+								<p:panelGrid columns="3" layout="grid">
+									<p:outputLabel value="#{msg['adminuser.dwTime.endTime']}" />
+									<p:calendar name="endtIME" id="endtIME"
+										styleClass="form-control-calendar" 
+										value="#{adminHomeAction.endTime}" pattern="HH:mm a"
+										timeOnly="true" required="true"
+										requiredMessage="#{msg['adminuser.requwq3']}"></p:calendar>
+									<p:message for="endtIME" />
+								</p:panelGrid>
+								
+								<p:panelGrid columns="3" layout="grid">
+									<p:outputLabel value="#{msg['adminuser.dwTime.statusss']}" />
+									<p:selectOneMenu id="dwonstatis"
+										value="#{adminHomeAction.downtstatus}"
+										style="margin-bottom:10px;width:180px;" required="true"
+										requiredMessage="Please select the down status">
+										<f:selectItem itemLabel="#{msg['adminuser.requwq1']}" itemValue=""></f:selectItem>
+										<f:selectItem itemLabel="#{msg['adminuser.dwTime.statusdrp1']}" itemValue="A"></f:selectItem>
+										<f:selectItem itemLabel="#{msg['adminuser.dwTime.statusdrp2']}" itemValue="I"></f:selectItem>
+										<p:ajax event="valueChange" update="form" />
+									</p:selectOneMenu>
+									<p:message for="dwonstatis" />
+								</p:panelGrid>
+
+								<br></br>
+								<div class="row">
+									<p:commandButton value="#{msg['submit']}"
+										action="#{adminHomeAction.insertDownTime}" update="form"
+										style="margin-bottom:10px;float:right;">
+									</p:commandButton>
+
+								</div>
+								<br></br>
+								<br></br>
+
+							</h:panelGroup>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
